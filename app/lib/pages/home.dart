@@ -12,12 +12,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ทดสอบ Home Page'),
-        backgroundColor: Colors.green[400],
+        title: Text('Home Page'),
+        backgroundColor: Colors.pink[500],
       ),
       body: Padding(
         padding: EdgeInsets.all(15),
-        child: Text('Hello Flutter our new friend!'),
+        child: Text('Flutter ROCK!!'),
       ),
     );
   }
