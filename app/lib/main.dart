@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Overdose+ App',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
