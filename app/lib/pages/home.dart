@@ -13,11 +13,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
-        backgroundColor: Colors.pink[500],
+        backgroundColor: Colors.green[400],
       ),
       body: Padding(
         padding: EdgeInsets.all(15),
-        child: Text('Flutter ROCK!!'),
+        child: Text('Flutter ROCK not implement yed!!'),
       ),
     );
   }
