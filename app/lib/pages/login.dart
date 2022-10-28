@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 30),
             ElevatedButton(onPressed: (){
               if(username.text=='admin' && password.text.isNotEmpty) {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>HomePage()));
               }
               else if(username.text.isEmpty || password.text.isEmpty) {
                 setState(() {
