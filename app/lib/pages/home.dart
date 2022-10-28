@@ -66,12 +66,11 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // ** totally have no idea on how to add margin to searchField **
           Padding(
             padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
             child: SearchField(
               suggestions: meds.map(
-                (e) => SearchFieldListItem(
+                    (e) => SearchFieldListItem(
                   e.name,
                   item: e,
                 ),
@@ -98,8 +97,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: NavBar(),
-
+      bottomNavigationBar: const NavBar(),
     );
   }
 }
