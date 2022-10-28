@@ -27,9 +27,13 @@ class _UIPageState extends State<UIPage> {
       length: 4, 
       initialIndex: 0,
       child: Scaffold(
+        drawer: buildDrawer(),
+        appBar: AppBar(
+          title: Text('เอาชื่อหน้า มาใส่เดี๋ยวมาทำ'),
+        ),
         body: TabBarView(children: [
           Center(child: widgetBottom.elementAt(_selectedIndex)),
-        ],),
+        ]),
         bottomNavigationBar: buildBottomNavBar(),
       ),
     );
@@ -47,6 +51,31 @@ class _UIPageState extends State<UIPage> {
       onTap: _onItem,
       selectedItemColor: Colors.amber[800],
       unselectedItemColor: Colors.grey,
+    );
+  }
+
+  Widget buildDrawer() {
+    return Drawer(
+      child: Column(
+        children: [
+          Container(height: 100, color: Colors.blue),
+          ListTile(
+            leading: Icon(Icons.folder),
+            title: Text('Menu 1'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.folder),
+            title: Text('Menu 2'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.folder),
+            title: Text('Menu 3'),
+            onTap: () {},
+          ),
+        ],
+      )
     );
   }
 }
