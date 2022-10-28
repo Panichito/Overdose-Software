@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/home.dart';
 import 'package:app/pages/myMeds.dart';
-import 'package:app/pages/botBar.dart';
+import 'package:app/pages/UI.dart';
 
 void main() {
   runApp(MyApp());

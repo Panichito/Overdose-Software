@@ -22,9 +22,9 @@ class _UIPageState extends State<UIPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgetBottom=[HomePage(), FindCaretakerPage(), AddMedicinePage(), FindCaretakerPage(), MyMedsPage()];
+    List<Widget> widgetBottom=[HomePage(), FindCaretakerPage(), AddMedicinePage(), MyMedsPage()];
     return DefaultTabController(
-      length: 5, 
+      length: 4, 
       initialIndex: 0,
       child: Scaffold(
         body: TabBarView(children: [
@@ -41,7 +41,6 @@ class _UIPageState extends State<UIPage> {
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Caretaker'),
         BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add Record'),
-        BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Status'),
         BottomNavigationBarItem(icon: Icon(Icons.medication), label: 'Medicine'),
       ],
       currentIndex: _selectedIndex,
