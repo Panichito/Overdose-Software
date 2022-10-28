@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:app/pages/navBar.dart';
 
 // temp medicines constructor
 class Medicine {
@@ -15,7 +16,7 @@ List<Medicine> meds = [
 ];
 
 class HomePage extends StatefulWidget {
-  //const HomePage({super.key});
+  const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -66,15 +67,18 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // ** totally have no idea on how to add margin to searchField **
-          SearchField(
-            suggestions: meds.map(
-              (e) => SearchFieldListItem(
-                e.name,
-                item: e,
-              ),
-            ).toList(),
-            hint: 'Search Medicine',
-            marginColor: Colors.blueGrey[200], // *yawn*
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
+            child: SearchField(
+              suggestions: meds.map(
+                (e) => SearchFieldListItem(
+                  e.name,
+                  item: e,
+                ),
+              ).toList(),
+              hint: 'Search Medicine',
+              marginColor: Colors.blueGrey[200], // *yawn*
+            ),
           ),
           Expanded(
             flex: 1,
@@ -94,130 +98,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 80,
-          color: Colors.cyanAccent[400],
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // ** could put in a function **
-              // ** too tired **
+      bottomNavigationBar: NavBar(),
 
-              // home button
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.home,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Text(
-                      'Home',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // caretaker button
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.person,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Text(
-                      'Find Caretaker',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // add medicine button
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Text(
-                      'Add Medicine',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // add health status button
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.bar_chart,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Text(
-                      'Health Status',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // notification button
-              TextButton(
-                onPressed: () {},
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.notifications,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                    Text(
-                      'notification',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-        ),
-      ),
     );
   }
 }
