@@ -1,7 +1,8 @@
-import 'package:app/pages/myMeds.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/home.dart';
+import 'package:app/pages/myMeds.dart';
+import 'package:app/pages/botBar.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,9 +16,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Overdose+ App',
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: MyMedsPage(),
-      // home: LoginPage(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: LoginPage(),
     );
   }
 }

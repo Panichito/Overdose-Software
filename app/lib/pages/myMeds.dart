@@ -26,7 +26,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     return Card(
       color: Colors.lightBlue[100],
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Padding(
@@ -34,13 +34,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(
-              med.name,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey[600],
-              ),
-            ),
+            Text(med.name, style: TextStyle(fontSize: 18.0, color: Colors.grey[700])),
           ],
         ),
       )
@@ -57,7 +51,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
       body: Column(
         children: meds.map((med) => medCard(med)).toList(),
       ),
-      bottomNavigationBar: const NavBar(),
+      //bottomNavigationBar: const NavBar(),
     );
   }
 }

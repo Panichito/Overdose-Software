@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: const NavBar(),
+      // bottomNavigationBar: const bot(),
     );
   }
 }

@@ -9,18 +9,8 @@ Widget navButton(text, IconData icon) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Icon(
-          icon,
-          color: Colors.black,
-          size: 40,
-        ),
-        Text(
-          '$text',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 10,
-          ),
-        ),
+        Icon(icon, color: Colors.white, size: 40),
+        Text('$text', style: TextStyle(color: Colors.white, fontSize: 12)),
       ],
     ),
   );
@@ -62,7 +52,7 @@ class NavBar extends StatelessWidget {
     return BottomAppBar(
       child: Container(
         height: 80,
-        color: Colors.cyanAccent[400],
+        color: Colors.blueAccent[400],
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

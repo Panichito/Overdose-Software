@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register Page'), backgroundColor: Colors.cyanAccent[400]),
+      appBar: AppBar(title: Text('Register Page'), backgroundColor: Colors.blueAccent[400]),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Center(child: ListView(

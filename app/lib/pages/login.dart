@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/pages/UI.dart';
 import 'package:app/pages/home.dart';
 import 'package:app/pages/register.dart';
 
@@ -16,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login Page'), backgroundColor: Colors.cyanAccent[400]),
+      appBar: AppBar(title: Text('Login Page'), backgroundColor: Colors.blueAccent[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(child: ListView(
@@ -36,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 30),
             ElevatedButton(onPressed: (){
               if(username.text=='admin' && password.text.isNotEmpty) {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>HomePage()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>UIPage()));
               }
               else if(username.text.isEmpty || password.text.isEmpty) {
                 setState(() {
