@@ -54,7 +54,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        backgroundColor: Colors.cyanAccent[400],
+        //backgroundColor: Colors.cyanAccent[400],
+        backgroundColor: Colors.indigo[200],
         toolbarHeight: 200,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(

@@ -22,14 +22,16 @@ class _UIPageState extends State<UIPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgetBottom=[HomePage(), FindCaretakerPage(), AddMedicinePage(), MyMedsPage()];
+    var pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search Patient'];
+    List<Widget> widgetBottom=[HomePage(), Text('Find Caretaker Page'), Text('Add Record Page (for caretaker)'), MyMedsPage(), Text('Search Patient')];
     return DefaultTabController(
       length: 4, 
       initialIndex: 0,
       child: Scaffold(
         drawer: buildDrawer(),
         appBar: AppBar(
-          title: Text('เอาชื่อหน้า มาใส่เดี๋ยวมาทำ'),
+          title: Text(pagename[_selectedIndex]),
+          backgroundColor: Colors.indigo[400],
         ),
         body: TabBarView(children: [
           Center(child: widgetBottom.elementAt(_selectedIndex)),
@@ -44,12 +46,13 @@ class _UIPageState extends State<UIPage> {
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Caretaker'),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add Record'),
-        BottomNavigationBarItem(icon: Icon(Icons.medication), label: 'Medicine'),
+        BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Record'),
+        BottomNavigationBarItem(icon: Icon(Icons.medication), label: 'Med'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
       ],
       currentIndex: _selectedIndex,
       onTap: _onItem,
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: Colors.indigo[800],
       unselectedItemColor: Colors.grey,
     );
   }
@@ -58,7 +61,7 @@ class _UIPageState extends State<UIPage> {
     return Drawer(
       child: Column(
         children: [
-          Container(height: 100, color: Colors.blue),
+          Container(height: 100, color: Colors.indigo[400]),
           ListTile(
             leading: Icon(Icons.folder),
             title: Text('Menu 1'),

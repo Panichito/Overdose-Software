@@ -24,7 +24,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
 
   Widget medCard(Medicine med) {
     return Card(
-      color: Colors.lightBlue[100],
+      color: Colors.indigo[100],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -34,7 +34,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(med.name, style: TextStyle(fontSize: 18.0, color: Colors.grey[700])),
+            Text(med.name, style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
           ],
         ),
       )
@@ -44,10 +44,6 @@ class _MyMedsPageState extends State<MyMedsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Medicines'),
-        backgroundColor: Colors.blueAccent[400],
-      ),
       body: Column(
         children: meds.map((med) => medCard(med)).toList(),
       ),
