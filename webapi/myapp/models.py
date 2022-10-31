@@ -10,6 +10,8 @@ class Member(models.Model):
     Member_usertype=models.CharField(max_length=16, choices=ROLES, default='PATIENT')
     Member_birthdate=models.DateField()
     Member_gender=models.CharField(max_length=8, choices=GENDERS)
+    Member_token=models.CharField(max_length=100, default='-')
+    Member_verified=models.BooleanField(default=False)
 
     def __str__(self):
         return "M"+str(self.id)

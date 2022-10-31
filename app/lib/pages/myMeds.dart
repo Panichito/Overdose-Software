@@ -44,33 +44,36 @@ class _MyMedsPageState extends State<MyMedsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
-          SearchField(
-            suggestions: meds.map((e) => SearchFieldListItem(
-                e.name,
-                item: e,
-            )).toList(),
-            searchStyle: const TextStyle(
-              fontSize: 18,
-            ),
-            suggestionStyle: const TextStyle(
-              fontSize: 18,
-            ),
-            searchInputDecoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: SearchField(
+              suggestions: meds.map((e) => SearchFieldListItem(
+                  e.name,
+                  item: e,
+              )).toList(),
+              searchStyle: const TextStyle(
+                fontSize: 18,
               ),
-              contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-            ),
-            suggestionsDecoration: const BoxDecoration(
-              border: Border(
-                left: BorderSide(color: Colors.white, width: 8),
-                right: BorderSide(color: Colors.white, width: 8),
+              suggestionStyle: const TextStyle(
+                fontSize: 18,
               ),
+              searchInputDecoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(),
+                ),
+                contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+              ),
+              suggestionsDecoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(color: Colors.white, width: 8),
+                  right: BorderSide(color: Colors.white, width: 8),
+                ),
+              ),
+              itemHeight: 40,
+              maxSuggestionsInViewPort: 5,
             ),
-            itemHeight: 40,
-            maxSuggestionsInViewPort: 5,
           ),
           Column(
             children: meds.map((med) => medCard(med)).toList(),

@@ -9,5 +9,50 @@ from .serializers import RecordSerializer  # import serializers in here
 
 data={"message":"hello Django my old friend"}
 
+from django.contrib.auth.models import User
+import uuid
+@api_view(['POST'])
+def register_newuser(request):
+    if request.method=='POST':
+        data=request.data
+        print('REGISTER: ', data['username'])
+
+        username=data.get('username')
+        password=data.get('password')
+        email=data.get('email')
+        first_name=data.get('first_name')
+        last_name=data.get('last_name')
+        gender=data.get('gender')
+        birthday=data.get('birthday')
+        
+        print('CHECK USR: ', username, password)
+        if username==None and password==None:
+            dt={'status':'username and password cannot be empty'}
+            return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
+        
+        check=User.objects.filter(username=username)  # เช็คว่ามียูสเซอร์เนมนี้ไหม
+        if len(check)==0:
+            newuser=User()
+            newuser.username=username
+            newuser.set_password(password)  # sha256
+            newuser.first_name=first_name
+            newuser.last_name=last_name
+            newuser.email=email
+            newuser.save()
+
+            newmember=Member()
+            newmember.user=User.objects.get(username=username)
+            newmember.Member_usertype='PATIENT'
+            newmember.Member_gender=gender
+            newmember.Member_birthdate=birthday
+            gentoken=uuid.uuid1().hex
+            newmember.Member_token=gentoken
+            newmember.save()
+            dt={'status':'account created', 'token':gentoken, 'first_name':first_name, 'last_name':last_name, 'username':username}
+            return Response(data=dt, status=status.HTTP_201_CREATED)
+        else:
+            dt={'status':'user is already exist'}
+            return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
+
 def Home(request):
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})

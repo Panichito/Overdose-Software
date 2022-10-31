@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,12 +19,13 @@ class _RegisterPageState extends State<RegisterPage> {
   var email=TextEditingController(); 
   var username=TextEditingController();
   var password=TextEditingController();
+  String result='';
   String? _radioValue;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register Page'), backgroundColor: Colors.blueAccent[400]),
+      appBar: AppBar(title: Text('Register Page'), backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Center(child: ListView(
@@ -87,9 +92,11 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 30),
             ElevatedButton(onPressed: () {
-              register_newuser();
+              print(dateController);
+              //register_newuser();
             }, child: Text('Register')),
             SizedBox(height: 30),
+            Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 20)))
           ],
         )),
       ),
@@ -99,13 +106,13 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget genderRadio() {
     return Row(
       children: [
-        Radio(value: 'Male', groupValue: _radioValue, onChanged: (String? value) {
+        Radio(value: 'MALE', groupValue: _radioValue, onChanged: (String? value) {
           setState(() {
             _radioValue=value;
           });
         }),
         Text('Male', style: TextStyle(fontSize: 14)),
-        Radio(value: 'Female', groupValue: _radioValue, onChanged: (String? value) {
+        Radio(value: 'FEMALE', groupValue: _radioValue, onChanged: (String? value) {
           setState(() {
             _radioValue=value;
           });
@@ -116,11 +123,24 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future register_newuser() async {
-    var url=Uri.http('','/api/newuser');
+    //var url=Uri.https('', '/api/newuser);
+    var url=Uri.http('192.168.1.52','/api/newuser');
     Map<String, String> header={"Content-type":"application/json"};
 
     String v1='"username":"${username.text}';
     String v2='"password":"${password.text}';
-    String v3='"username":"${username.text}';
+    String v3='"email":"${email.text}';
+    String v4='"first_name":"${fname.text}';
+    String v5='"last_name":"${lname.text}';
+    String v6='"gender":"$_radioValue';
+    String v7='"birthday":"${dateController.text}';
+
+    String jsondata='{$v1, $v2, $v3, $v4, $v5, $v6, $v7}';
+    var response=await http.post(url, headers: header, body: jsondata);
+    print('---register newuser---');
+    print(response.body);  // view.py return token
+
+    var resulttext=utf8.decode(response.bodyBytes);
+    var result_json=json.decode(resulttext);
   }
 }

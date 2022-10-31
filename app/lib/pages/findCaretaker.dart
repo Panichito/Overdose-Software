@@ -70,31 +70,34 @@ class _FindCaretakerPageState extends State<FindCaretakerPage> {
     return Scaffold(
       body: ListView(
         children: [
-          SearchField(
-            suggestions: caretakers.map((e) => SearchFieldListItem(
-              e.name,
-              item: e,
-            )).toList(),
-            searchStyle: const TextStyle(
-              fontSize: 18,
-            ),
-            suggestionStyle: const TextStyle(
-              fontSize: 18,
-            ),
-            searchInputDecoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: SearchField(
+              suggestions: caretakers.map((e) => SearchFieldListItem(
+                e.name,
+                item: e,
+              )).toList(),
+              searchStyle: const TextStyle(
+                fontSize: 18,
               ),
-              contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-            ),
-            suggestionsDecoration: const BoxDecoration(
-              border: Border(
-                left: BorderSide(color: Colors.white, width: 8),
-                right: BorderSide(color: Colors.white, width: 8),
+              suggestionStyle: const TextStyle(
+                fontSize: 18,
               ),
+              searchInputDecoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(),
+                ),
+                contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+              ),
+              suggestionsDecoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(color: Colors.white, width: 8),
+                  right: BorderSide(color: Colors.white, width: 8),
+                ),
+              ),
+              itemHeight: 40,
+              maxSuggestionsInViewPort: 5,
             ),
-            itemHeight: 40,
-            maxSuggestionsInViewPort: 5,
           ),
           Column(
             children: caretakers.map((med) => caretakerCard(med)).toList(),

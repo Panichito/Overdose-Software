@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Overdose+ App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: UIPage(),  // direct to this page first due to more convenient for the coder
-      //home: LoginPage(),
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      //home: UIPage(),  // direct to this page first due to more convenient for the coder
+      home: LoginPage(),
     );
   }
 }
