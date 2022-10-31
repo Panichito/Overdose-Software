@@ -68,7 +68,7 @@ class _FindCaretakerPageState extends State<FindCaretakerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           SearchField(
             suggestions: caretakers.map((e) => SearchFieldListItem(

@@ -86,7 +86,10 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(hintText: 'password'),
             ),
             SizedBox(height: 30),
-            ElevatedButton(onPressed: () {}, child: Text('Register'))
+            ElevatedButton(onPressed: () {
+              register_newuser();
+            }, child: Text('Register')),
+            SizedBox(height: 30),
           ],
         )),
       ),
@@ -110,5 +113,14 @@ class _RegisterPageState extends State<RegisterPage> {
         Text('Female', style: TextStyle(fontSize: 14)),
       ],
     );
+  }
+
+  Future register_newuser() async {
+    var url=Uri.http('','/api/newuser');
+    Map<String, String> header={"Content-type":"application/json"};
+
+    String v1='"username":"${username.text}';
+    String v2='"password":"${password.text}';
+    String v3='"username":"${username.text}';
   }
 }
