@@ -22,7 +22,7 @@ class _FindCaretakerPageState extends State<FindCaretakerPage> {
   List<Caretaker> caretakers = [
     Caretaker('1', 'John Cena', 'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
     Caretaker('2', 'Billy Herrington', 'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
-    Caretaker('3', 'Eva Elfie', 'https://i.pinimg.com/originals/9e/9e/8e/9e9e8e0f3689482f1dcbaa2a7689ba7b.jpg'),
+    Caretaker('3', 'Eva Elfie', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
   ];
 
   Widget caretakerCard(Caretaker care) {
@@ -48,7 +48,7 @@ class _FindCaretakerPageState extends State<FindCaretakerPage> {
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(care.pfp),
-                      radius: 24,
+                      radius: 48,
                     )
                   ],
                 ),
