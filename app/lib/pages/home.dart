@@ -67,18 +67,31 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12.0, 0, 12.0, 0),
-            child: SearchField(
-              suggestions: meds.map(
-                    (e) => SearchFieldListItem(
-                  e.name,
-                  item: e,
-                ),
-              ).toList(),
-              hint: 'Search Medicine',
-              marginColor: Colors.blueGrey[200], // *yawn*
+          SearchField(
+            suggestions: meds.map((e) => SearchFieldListItem(
+              e.name,
+              item: e,
+            )).toList(),
+            searchStyle: const TextStyle(
+              fontSize: 18,
             ),
+            suggestionStyle: const TextStyle(
+              fontSize: 18,
+            ),
+            searchInputDecoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(),
+              ),
+              contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+            ),
+            suggestionsDecoration: const BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.white, width: 8),
+                right: BorderSide(color: Colors.white, width: 8),
+              ),
+            ),
+            itemHeight: 40,
+            maxSuggestionsInViewPort: 5,
           ),
           Expanded(
             flex: 1,

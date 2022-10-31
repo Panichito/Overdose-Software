@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/pages/navBar.dart';
+import 'package:searchfield/searchfield.dart';
 
 class MyMedsPage extends StatefulWidget {
   const MyMedsPage({Key? key}) : super(key: key);
@@ -45,7 +45,37 @@ class _MyMedsPageState extends State<MyMedsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: meds.map((med) => medCard(med)).toList(),
+        children: [
+          SearchField(
+            suggestions: meds.map((e) => SearchFieldListItem(
+                e.name,
+                item: e,
+            )).toList(),
+            searchStyle: const TextStyle(
+              fontSize: 18,
+            ),
+            suggestionStyle: const TextStyle(
+              fontSize: 18,
+            ),
+            searchInputDecoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(),
+              ),
+              contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
+            ),
+            suggestionsDecoration: const BoxDecoration(
+              border: Border(
+                left: BorderSide(color: Colors.white, width: 8),
+                right: BorderSide(color: Colors.white, width: 8),
+              ),
+            ),
+            itemHeight: 40,
+            maxSuggestionsInViewPort: 5,
+          ),
+          Column(
+            children: meds.map((med) => medCard(med)).toList(),
+          )
+        ],
       ),
       //bottomNavigationBar: const NavBar(),
     );
