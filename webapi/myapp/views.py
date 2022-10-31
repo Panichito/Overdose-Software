@@ -54,5 +54,24 @@ def register_newuser(request):
             dt={'status':'user is already exist'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
+from django.contrib.auth import authenticate, login
+@api_view(['POST'])
+def authentiate_app(request):
+    if request.method=='POST':
+        data=request.data
+        username=data.get('username')
+        password=data.get('password')
+        
+        try: 
+            user=authenticate(username=username, password=password)
+            login(request, user)
+            getuser=User.objects.get(username=username)  # display info back to screen
+            dt={'status':'login succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 'last_name':getuser.last_name, 'username':getuser.username}
+            print('Success', dt)
+            return Record(data=dt, status=status.HTTP_200_OK)
+        except:
+            dt={'status':'login failed'}
+            return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
+
 def Home(request):
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
