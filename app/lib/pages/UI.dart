@@ -73,8 +73,8 @@ class _UIPageState extends State<UIPage> {
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.folder),
-            title: Text('Menu 3'),
+            leading: Icon(Icons.lock_open),
+            title: Text('Logout'),
             onTap: () {},
           ),
         ],

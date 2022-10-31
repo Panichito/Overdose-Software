@@ -77,7 +77,8 @@ class _MyMedsPageState extends State<MyMedsPage> {
           )
         ],
       ),
-      //bottomNavigationBar: const NavBar(),
+      //appBar: ,  ทำแค่ body ไปเรียกใช้ appbar กับ navbar ใน UI.dart
+      //bottomNavigationBar: ,
     );
   }
 }
