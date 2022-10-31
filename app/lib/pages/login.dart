@@ -36,19 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 30),
             ElevatedButton(onPressed: (){
-              if(username.text=='admin' && password.text.isNotEmpty) {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>UIPage()));
-              }
-              else if(username.text.isEmpty || password.text.isEmpty) {
-                setState(() {
-                  result='Not correct input';
-                });
-              }
-              else {
-                setState(() {
-                  result='Please mind the gap between train and platform!';
-                });
-              }
+              //login();
             }, child: Text('Login')),
             SizedBox(height: 30),
             ElevatedButton(onPressed: (){
@@ -60,5 +48,16 @@ class _LoginPageState extends State<LoginPage> {
         )),
       ),
     );
+  }
+
+  Future login() async {
+    //var url=Uri.https('', '/api/authenticate);
+    var url=Uri.http('192.168.1.52','/api/authenticate');
+    Map<String, String> header={"Content-type":"application/json"};
+
+    String v1='"username":"${username.text}';
+    String v2='"password":"${password.text}';
+
+    String jsondata='{$v1, $v2}';
   }
 }

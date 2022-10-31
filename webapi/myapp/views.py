@@ -48,10 +48,10 @@ def register_newuser(request):
             gentoken=uuid.uuid1().hex
             newmember.Member_token=gentoken
             newmember.save()
-            dt={'status':'account created', 'token':gentoken, 'first_name':first_name, 'last_name':last_name, 'username':username}
+            dt={'status':'account-created', 'token':gentoken, 'first_name':first_name, 'last_name':last_name, 'username':username}
             return Response(data=dt, status=status.HTTP_201_CREATED)
         else:
-            dt={'status':'user is already exist'}
+            dt={'status':'user-exist'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
 from django.contrib.auth import authenticate, login
@@ -66,11 +66,11 @@ def authentiate_app(request):
             user=authenticate(username=username, password=password)
             login(request, user)
             getuser=User.objects.get(username=username)  # display info back to screen
-            dt={'status':'login succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 'last_name':getuser.last_name, 'username':getuser.username}
-            print('Success', dt)
-            return Record(data=dt, status=status.HTTP_200_OK)
+            dt={'status':'login-succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 'last_name':getuser.last_name, 'username':getuser.username}
+            print('Succeed', dt)
+            return Response(data=dt, status=status.HTTP_200_OK)
         except:
-            dt={'status':'login failed'}
+            dt={'status':'login-failed'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
 def Home(request):

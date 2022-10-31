@@ -56,17 +56,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 DateTime? pickedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(), //get today's date
-                  firstDate:DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                  firstDate: DateTime(1900), //DateTime.now() - not to allow to choose before today.
                   lastDate: DateTime(2101)
                 );
-                if(pickedDate != null ){
+                if(pickedDate!=null ){
                       print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
-                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                      String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
                       print(formattedDate); //formatted date output using intl package =>  2022-07-04
                         //You can format date as per your need
 
                       setState(() {
-                         dateController.text = formattedDate; //set foratted date to TextField value. 
+                         dateController.text=formattedDate; //set foratted date to TextField value. 
                       });
                   }
                 else{
@@ -93,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 30),
             ElevatedButton(onPressed: () {
               print(dateController);
-              //register_newuser();
+              register_newuser();
             }, child: Text('Register')),
             SizedBox(height: 30),
             Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 20)))
@@ -124,16 +124,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future register_newuser() async {
     //var url=Uri.https('', '/api/newuser);
-    var url=Uri.http('192.168.1.52','/api/newuser');
+    var url=Uri.http('192.168.1.52:8000','/api/newuser');
     Map<String, String> header={"Content-type":"application/json"};
 
-    String v1='"username":"${username.text}';
-    String v2='"password":"${password.text}';
-    String v3='"email":"${email.text}';
-    String v4='"first_name":"${fname.text}';
-    String v5='"last_name":"${lname.text}';
-    String v6='"gender":"$_radioValue';
-    String v7='"birthday":"${dateController.text}';
+    String v1='"username":"${username.text}"';
+    String v2='"password":"${password.text}"';
+    String v3='"email":"${email.text}"';
+    String v4='"first_name":"${fname.text}"';
+    String v5='"last_name":"${lname.text}"';
+    String v6='"gender":"$_radioValue"';
+    String v7='"birthday":"${dateController.text}"';
 
     String jsondata='{$v1, $v2, $v3, $v4, $v5, $v6, $v7}';
     var response=await http.post(url, headers: header, body: jsondata);
@@ -142,5 +142,30 @@ class _RegisterPageState extends State<RegisterPage> {
 
     var resulttext=utf8.decode(response.bodyBytes);
     var result_json=json.decode(resulttext);
+    String status=result_json['status'];
+
+    if(status=='account-created') {
+      String setresult='Congratulations, ${result_json['first_name']} ${result_json['last_name']}\nYou are already a new member.';
+      String token=result_json['token'];
+      setToken(token);  // เมื่อได้รับ token แล้ว ให้ทำการบันทึกลงไปในระบบ
+      setState(() {
+        result=setresult;
+      });
+    }
+    else if(status=='user-exist') {
+      setState(() {
+        result='Already has this user in our system, please try a new one!';
+      });
+    }
+    else {
+      setState(() {
+        result='Incorrect information, please check again!';
+      });
+    }
+  }
+
+  Future<void> setToken(token) async {
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    pref.setString('token', token);
   }
 }
