@@ -62,7 +62,7 @@ def authentiate_app(request):
         username=data.get('username')
         password=data.get('password')
         
-        try: 
+        try:
             user=authenticate(username=username, password=password)
             login(request, user)
             getuser=User.objects.get(username=username)  # display info back to screen

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:app/pages/navBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // temp medicines constructor
 class Medicine {
@@ -22,6 +23,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String username="User";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkUsername();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,21 +42,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Welcome Back,',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+              children: [
+                Text('Welcome Back,', style: TextStyle(fontSize: 16)),
                 SizedBox(height: 10),
-                Text(
-                  'User',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Text(username, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
               ],
             ),
             const CircleAvatar(
@@ -116,5 +115,16 @@ class _HomePageState extends State<HomePage> {
       ),
       // bottomNavigationBar: const bot(),
     );
+  }
+
+  Future<void> checkUsername() async {
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    final checkvalue=pref.get('token') ?? 0;
+    if(checkvalue!=0) {  // get username
+      setState(() {
+        var usr_name=pref.getString('username');
+        username="$usr_name";
+      });
+    }
   }
 }
