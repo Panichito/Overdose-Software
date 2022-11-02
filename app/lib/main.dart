@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Overdose+ App',
       theme: ThemeData(primarySwatch: Colors.indigo),
-      home: UIPage(),  // direct to this page first due to more convenient for the coder
-      //home: token==null ? LoginPage() : UIPage(),
+      //home: UIPage(),  // direct to this page first due to more convenient for the coder
+      home: token==null ? LoginPage() : UIPage(),
     );
   }
 }

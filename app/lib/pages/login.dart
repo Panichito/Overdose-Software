@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future login() async {
     //var url=Uri.https('', '/api/authenticate);
-    var url=Uri.http('192.168.1.52:8000','/api/authenticate');
+    var url=Uri.http('weatherreporto.pythonanywhere.com','/api/newuser');
     Map<String, String> header={"Content-type":"application/json"};
 
     String v1='"username":"${username.text}"';
