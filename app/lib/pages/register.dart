@@ -92,8 +92,16 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 30),
             ElevatedButton(onPressed: () {
-              print(dateController);
-              register_newuser();
+              if(username.text.isEmpty || password.text.isEmpty || email.text.isEmpty ||
+                dateController.text.isEmpty || fname.text.isEmpty || lname.text.isEmpty) {
+                setState(() {
+                  result='Please complete all information!';
+                });
+              }
+              else {
+                print(dateController);
+                register_newuser();
+              }
             }, child: Text('Register')),
             SizedBox(height: 30),
             Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 20)))
