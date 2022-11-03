@@ -79,7 +79,8 @@ class _MyMedsPageState extends State<MyMedsPage> {
     print('==GET MEDICINE==');
     setState(() {
       getmeds=jsonDecode(result);
-      // mapping list
+      // mapping the list
+      meds=[];  // init to empty
       for(int i=0; i<getmeds.length; ++i) {
         print(getmeds[i]['Medicine_name']);
         meds.add(Medicine(getmeds[i]['Medicine_name']));
