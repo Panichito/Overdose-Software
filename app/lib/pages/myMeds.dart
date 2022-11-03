@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:searchfield/searchfield.dart';
+import 'package:app/pages/noSuggestSearch.dart';
 
 class MyMedsPage extends StatefulWidget {
   const MyMedsPage({Key? key}) : super(key: key);
@@ -16,11 +16,19 @@ class Medicine {
 
 class _MyMedsPageState extends State<MyMedsPage> {
 // temp meds list
-  List<Medicine> meds = [
+  static List<Medicine> meds = [
     Medicine('med1'),
     Medicine('med2'),
     Medicine('med3'),
   ];
+
+  List<Medicine> display_list = List.from(meds);
+
+  void updateList(String value) {
+    setState(() {
+      display_list = meds.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+    });
+  }
 
   Widget medCard(Medicine med) {
     return Card(
@@ -48,40 +56,13 @@ class _MyMedsPageState extends State<MyMedsPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
-            child: SearchField(
-              suggestions: meds.map((e) => SearchFieldListItem(
-                  e.name,
-                  item: e,
-              )).toList(),
-              searchStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              suggestionStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              searchInputDecoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-              ),
-              suggestionsDecoration: const BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: Colors.white, width: 8),
-                  right: BorderSide(color: Colors.white, width: 8),
-                ),
-              ),
-              itemHeight: 40,
-              maxSuggestionsInViewPort: 5,
-            ),
+            child: noSuggestSearch((value) => updateList(value)),
           ),
           Column(
-            children: meds.map((med) => medCard(med)).toList(),
+            children: display_list.map((med) => medCard(med)).toList(),
           )
         ],
       ),
-      //appBar: ,  ทำแค่ body ไปเรียกใช้ appbar กับ navbar ใน UI.dart
-      //bottomNavigationBar: ,
     );
   }
 }
