@@ -26,7 +26,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
 
   void updateList(String value) {
     setState(() {
-      display_list = meds.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      display_list = meds.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 

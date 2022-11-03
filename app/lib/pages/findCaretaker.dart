@@ -29,7 +29,7 @@ class _FindCaretakerPageState extends State<FindCaretakerPage> {
 
   void updateList(String value) {
     setState(() {
-      display_list = caretakers.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      display_list = caretakers.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 
