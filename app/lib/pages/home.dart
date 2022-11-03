@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:app/pages/navBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // temp medicines constructor

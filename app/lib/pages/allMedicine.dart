@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class MyMedsPage extends StatefulWidget {
   const MyMedsPage({Key? key}) : super(key: key);
@@ -15,14 +18,17 @@ class Medicine {
 }
 
 class _MyMedsPageState extends State<MyMedsPage> {
-// temp meds list
-  static List<Medicine> meds = [
-    Medicine('med1'),
-    Medicine('med2'),
-    Medicine('med3'),
-  ];
+  List getmeds=[];
+  static List<Medicine> meds=[];
 
-  List<Medicine> display_list = List.from(meds);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMedicine();
+  }
+
+  List<Medicine> display_list=[];
 
   void updateList(String value) {
     setState(() {
@@ -64,5 +70,21 @@ class _MyMedsPageState extends State<MyMedsPage> {
         ],
       ),
     );
+  }
+
+  Future<void> getMedicine() async {
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print('==GET MEDICINE==');
+    setState(() {
+      getmeds=jsonDecode(result);
+      // mapping list
+      for(int i=0; i<getmeds.length; ++i) {
+        print(getmeds[i]['Medicine_name']);
+        meds.add(Medicine(getmeds[i]['Medicine_name']));
+        display_list=List.from(meds);
+      }
+    });
   }
 }

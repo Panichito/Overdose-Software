@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:app/pages/addMedicine.dart';
 import 'package:app/pages/findCaretaker.dart';
 import 'package:app/pages/home.dart';
-import 'package:app/pages/myMeds.dart';
+import 'package:app/pages/allMedicine.dart';
 import 'package:app/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
