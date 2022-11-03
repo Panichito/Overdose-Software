@@ -5,7 +5,7 @@ from .models import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .serializers import RecordSerializer  # import serializers in here
+from .serializers import *  # import serializers in here
 
 data={"message":"hello Django my old friend"}
 
@@ -72,6 +72,12 @@ def authentiate_app(request):
         except:
             dt={'status':'login-failed'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def all_medicine(request):
+    allmedicine=Medicine.objects.all()
+    serializer=MedicineSerializer(allmedicine, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 def Home(request):
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})

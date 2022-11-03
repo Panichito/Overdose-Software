@@ -5,4 +5,5 @@ urlpatterns = [
     path('', Home),
     path('api/newuser', register_newuser),
     path('api/authenticate', authentiate_app),
+    path('api/all-medicine', all_medicine),
 ]
