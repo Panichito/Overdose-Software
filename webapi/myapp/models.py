@@ -14,22 +14,22 @@ class Member(models.Model):
     Member_verified=models.BooleanField(default=False)
 
     def __str__(self):
-        return "M"+str(self.id)
+        return "M"+str(self.id)+" - "+str(self.user.username)
 
 class Caretaker(models.Model):
-    member=models.OneToOneField(Member, on_delete=models.CASCADE, null=True, blank=True)
+    member=models.OneToOneField(Member, on_delete=models.CASCADE)
     Caretaker_since=models.DateField(default=datetime.date.today)
     Caretaker_status=models.BooleanField(default=1)
 
     def __str__(self):
-        return "C"+str(self.id)
+        return "C"+str(self.id)+" - "+str(self.member.user.username)
 
 class Patient(models.Model):
-    member=models.OneToOneField(Member, on_delete=models.CASCADE, null=True, blank=True)
+    member=models.OneToOneField(Member, on_delete=models.CASCADE)
     caretaker=models.OneToOneField(Caretaker, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return "P"+str(self.id)
+        return "P"+str(self.id)+" - "+str(self.member.user.username)
 
 class Medicine(models.Model):
     TYPES=[('Liquid', 'Liquid'), ('Tablet', 'Tablet'), ('Capsules', 'Capsules')]
@@ -38,16 +38,32 @@ class Medicine(models.Model):
     Medicine_type=models.CharField(max_length=50, choices=TYPES)
     Medicine_info=models.TextField(null=True, blank=True)
     def __str__(self):
-        return "MED"+str(self.id)
+        return str(self.Medicine_name)
 
 class Record(models.Model):
-    patient=models.OneToOneField(Patient, on_delete=models.CASCADE, null=True, blank=True )
-    medicine=models.OneToOneField(Medicine, on_delete=models.CASCADE, null=True, blank=True)
+    patient=models.OneToOneField(Patient, on_delete=models.CASCADE)
+    medicine=models.OneToOneField(Medicine, on_delete=models.CASCADE)
     Record_disease=models.CharField(max_length=100)
     Record_amount=models.IntegerField(default=0)
     Record_start=models.DateField(default=datetime.date.today)
     Record_end=models.DateField(null=True, blank=True)
     Record_info=models.TextField(null=True, blank=True)
+    Record_isComplete=models.BooleanField(default=False)
 
     def __str__(self):
-        return "R"+str(self.id)
+        return "R"+str(self.id)+" - "+str(self.patient.member.user.username)+", "+str(self.medicine.Medicine_name)+", "+str(self.Record_disease)
+
+class Alert(models.Model):
+    record=models.ForeignKey(Record, on_delete=models.CASCADE)
+    Alert_time=models.TimeField(auto_now=False, auto_now_add=False, null=True, blank=True)  # if null means notify daily
+    Alert_isTake=models.BooleanField(default=False)
+
+    def __str__(self):
+        return "A"+str(self.id)+", "+str(self.Alert_time)
+
+class History(models.Model):
+    alert=models.OneToOneField(Alert, on_delete=models.CASCADE)
+    History_takeTime=models.DateTimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
+    
+    def __str__(self):
+        return "H"+str(self.id)
