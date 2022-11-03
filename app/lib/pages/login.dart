@@ -61,8 +61,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future login() async {
-    //var url=Uri.https('', '/api/authenticate);
-    var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
+    //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
     Map<String, String> header={"Content-type":"application/json"};
 
     String v1='"username":"${username.text}"';
@@ -85,6 +85,11 @@ class _LoginPageState extends State<LoginPage> {
     else if(status=='login-failed') {
       setState(() {
         result='Invalid username or password!';
+      });
+    }
+    else {  // neither if nor elif means json reponse wrong
+      setState(() {
+        result='Something is wrong, please try again!';
       });
     }
   }
