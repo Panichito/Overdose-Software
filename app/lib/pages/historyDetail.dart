@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:app/pages/navBar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryDetail {
   String name;
@@ -21,14 +20,14 @@ class HistoryDetailPage extends StatefulWidget {
 }
 
 class HistoryDetailPageState extends State<HistoryDetailPage> {
-  String username="User";
+  //String username="User";
 
-  @override
-  void initState() {
+  //@override
+  //void initState() {
     // TODO: implement initState
-    super.initState();
-    checkUsername();
-  }
+    //super.initState();
+    //checkUsername();
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +42,14 @@ class HistoryDetailPageState extends State<HistoryDetailPage> {
     );
   }
 
-  Future<void> checkUsername() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
-    final checkvalue=pref.get('token') ?? 0;
-    if(checkvalue!=0) {  // get username
-      setState(() {
-        var usr_name=pref.getString('username');
-        username="$usr_name";
-      });
-    }
-  }
+  //Future<void> checkUsername() async {
+    //final SharedPreferences pref=await SharedPreferences.getInstance();
+    //final checkvalue=pref.get('token') ?? 0;
+    //if(checkvalue!=0) {  // get username
+      //setState(() {
+        //var usr_name=pref.getString('username');
+        //username="$usr_name";
+      //});
+    //}
+  //}
 }

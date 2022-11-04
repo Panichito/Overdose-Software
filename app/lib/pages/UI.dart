@@ -5,6 +5,7 @@ import 'package:app/pages/allMedicine.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/addRecord.dart';
 import 'package:app/pages/search.dart';
+import 'package:app/pages/history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UIPage extends StatefulWidget {
@@ -81,7 +82,9 @@ class _UIPageState extends State<UIPage> {
           ListTile(
             leading: Icon(Icons.history_edu),
             title: Text('History'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.lock_open),
