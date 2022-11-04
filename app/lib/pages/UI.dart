@@ -4,6 +4,7 @@ import 'package:app/pages/home.dart';
 import 'package:app/pages/allMedicine.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/addRecord.dart';
+import 'package:app/pages/search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UIPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _UIPageState extends State<UIPage> {
   @override
   Widget build(BuildContext context) {
     var pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search Patient'];
-    List<Widget> widgetBottom=[HomePage(), FindCaretakerPage(), AddRecordPage(), MyMedsPage(), Text('Search Patient')];
+    List<Widget> widgetBottom=[HomePage(), FindCaretakerPage(), AddRecordPage(), MyMedsPage(), searchPatientAdv(),];
     return DefaultTabController(
       length: 1,
       initialIndex: 0,
