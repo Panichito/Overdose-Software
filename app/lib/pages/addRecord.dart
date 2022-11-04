@@ -12,7 +12,7 @@ class AddRecordPage extends StatefulWidget {
 }
 
 class _AddRecordPageState extends State<AddRecordPage> {
-  String result='';
+  String result='note field can be empty';
   String? patientId;
   // final patientIdController = TextEditingController();
   final medicineIdController = TextEditingController();
@@ -58,8 +58,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
             DateTime timeStart = DateTime.parse(startDateController.text);
             DateTime timeEnd = DateTime.parse(endDateController.text);
             if(patientId == null || medicineIdController.text.isEmpty || diseaseController.text.isEmpty ||
-                startDateController.text.isEmpty || endDateController.text.isEmpty || amountController.text.isEmpty
-                || noteController.text.isEmpty) {
+                startDateController.text.isEmpty || endDateController.text.isEmpty || amountController.text.isEmpty) {
               setState(() {
                 result='Please input all information';
               });
@@ -75,9 +74,20 @@ class _AddRecordPageState extends State<AddRecordPage> {
                 result='Create a record successfully';
               });
             }
+            final snackBar = SnackBar(
+              content: Text(result),
+              action: SnackBarAction(
+                label: 'Undo',
+                onPressed: () {
+                  print("Dafuq, I didn't implement it yet!");
+                },
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }, child: Text('Create a record')),
           const SizedBox(height: 16),
-          Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 16)))
+          Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 16))),
+          const SizedBox(height: 20),  // โดน navbar บัง
         ],
       ),
     );
