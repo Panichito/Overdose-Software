@@ -26,7 +26,7 @@ class Caretaker(models.Model):
 
 class Patient(models.Model):
     member=models.OneToOneField(Member, on_delete=models.CASCADE)
-    caretaker=models.OneToOneField(Caretaker, on_delete=models.CASCADE, null=True, blank=True)
+    caretaker=models.ForeignKey(Caretaker, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return "P"+str(self.id)+" - "+str(self.member.user.username)
@@ -41,8 +41,8 @@ class Medicine(models.Model):
         return str(self.Medicine_name)
 
 class Record(models.Model):
-    patient=models.OneToOneField(Patient, on_delete=models.CASCADE)
-    medicine=models.OneToOneField(Medicine, on_delete=models.CASCADE)
+    patient=models.ForeignKey(Patient, on_delete=models.CASCADE)
+    medicine=models.ForeignKey(Medicine, on_delete=models.CASCADE)
     Record_disease=models.CharField(max_length=100)
     Record_amount=models.IntegerField(default=0)
     Record_start=models.DateField(default=datetime.date.today)
