@@ -21,7 +21,7 @@ class HistoryDetailPageState extends State<HistoryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('History by Madam Gus'), backgroundColor: Colors.indigo[400]),
+      appBar: AppBar(title: Text('History'), backgroundColor: Colors.indigo[400]),
       body: Column(
         children: [
           Text(history.name, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
