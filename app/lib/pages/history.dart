@@ -34,6 +34,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('History by Madam Gus'), backgroundColor: Colors.indigo[400]),
       body: Container(
         child: (ListView.builder(
         itemBuilder: (context, index) {
