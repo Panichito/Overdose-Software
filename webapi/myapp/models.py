@@ -38,7 +38,7 @@ class Medicine(models.Model):
     Medicine_type=models.CharField(max_length=50, choices=TYPES)
     Medicine_info=models.TextField(null=True, blank=True)
     def __str__(self):
-        return str(self.Medicine_name)
+        return "M"+str(self.id)+": "+str(self.Medicine_name)
 
 class Record(models.Model):
     patient=models.ForeignKey(Patient, on_delete=models.CASCADE)

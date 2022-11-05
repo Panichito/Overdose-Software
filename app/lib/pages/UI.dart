@@ -105,7 +105,8 @@ class _UIPageState extends State<UIPage> {
       setState(() {
         var fname=pref.getString('first_name');
         var lname=pref.getString('last_name');
-        fullname='Hello, $fname $lname';
+        var role=pref.getString('role');
+        fullname='Hello, $fname $lname ($role)';
       });
     }
   }
