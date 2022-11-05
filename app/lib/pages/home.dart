@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:searchfield/searchfield.dart';
+import 'package:app/pages/noSuggestSearch.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 // temp medicines constructor
@@ -34,65 +35,59 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        titleSpacing: 24,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Welcome Back,', style: TextStyle(fontSize: 16)),
-                SizedBox(height: 10),
-                Text(username, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            const CircleAvatar(
-              radius: 48,
-            ),
-          ],
-        ),
-        //backgroundColor: Colors.cyanAccent[400],
-        backgroundColor: Colors.indigo[200],
-        toolbarHeight: 200,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24),
-          ),
-        ),
-      ),
-
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Container(
+            height: 200,
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+            decoration: BoxDecoration(
+              color: Colors.indigo[200],
+              borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(24),
+              ),
+              shape: BoxShape.rectangle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black54,
+                  blurRadius: 6,
+                )
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Welcome Back,',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(username,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+
+                ),
+                const CircleAvatar(
+                  radius: 48,
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(12),
-            child: SearchField(
-              suggestions: meds.map((e) => SearchFieldListItem(
-                e.name,
-                item: e,
-              )).toList(),
-              searchStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              suggestionStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              searchInputDecoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-              ),
-              suggestionsDecoration: const BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: Colors.white, width: 8),
-                  right: BorderSide(color: Colors.white, width: 8),
-                ),
-              ),
-              itemHeight: 40,
-              maxSuggestionsInViewPort: 5,
-            ),
+            child: noSuggestSearch((value) => null),
           ),
           Expanded(
             flex: 1,
