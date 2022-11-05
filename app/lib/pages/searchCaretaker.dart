@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
 
-class FindCaretakerPage extends StatefulWidget {
-  const FindCaretakerPage({super.key});
+
+class SearchCaretakerPage extends StatefulWidget {
+  const SearchCaretakerPage({super.key});
 
   @override
-  State<FindCaretakerPage> createState() => _FindCaretakerPageState();
+  State<SearchCaretakerPage> createState() => _SearchCaretakerPageState();
 }
 
 // temp caretaker constructor
@@ -17,7 +18,7 @@ class Caretaker {
   Caretaker(this.id, this.name, this.pfp);
 }
 
-class _FindCaretakerPageState extends State<FindCaretakerPage> {
+class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
   // temp caretaker list
   static List<Caretaker> caretakers = [
     Caretaker('1', 'John Cena', 'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
