@@ -1,9 +1,8 @@
-import 'package:app/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:searchfield/searchfield.dart';
-import 'package:app/pages/home.dart';
+import 'package:app/pages/noSuggestSearch.dart';
 
-// temp caretaker constructor
+
+// temp patient constructor
 class Patient {
   String id;
   String name;
@@ -23,16 +22,14 @@ List<Patient> allpatient = [
       'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
 ];
 
-class searchPatientAdv extends StatefulWidget {
-  const searchPatientAdv({super.key});
+class SearchPatientAdv extends StatefulWidget {
+  const SearchPatientAdv({super.key});
 
   @override
-  State<searchPatientAdv> createState() => _searchPatientState();
+  State<SearchPatientAdv> createState() => _SearchPatientState();
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
+// This should be in a new module
 class NewScreen extends StatelessWidget {
   final Patient patient;
   const NewScreen({super.key, required this.patient});
@@ -68,14 +65,17 @@ class NewScreen extends StatelessWidget {
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
+class _SearchPatientState extends State<SearchPatientAdv> {
+  // list of display patients
+  List<Patient> display_list = List.from(allpatient);
 
-class _searchPatientState extends State<searchPatientAdv> {
-  // temp caretaker list
-  List<Patient> patient = allpatient;
+  void updateList(String value) {
+    setState(() {
+      display_list = allpatient.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+    });
+  }
 
-  Widget caretakerCard(Patient patient) {
+  Widget patientCard(Patient patient) {
     return Card(
         color: Colors.indigo[100],
         shape: RoundedRectangleBorder(
@@ -113,6 +113,7 @@ class _searchPatientState extends State<searchPatientAdv> {
                     child: const Text('View Profile'),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
+                        // should create a new profile module file
                           builder: (context) => NewScreen(patient: patient)));
                     },
                   ),
@@ -123,9 +124,6 @@ class _searchPatientState extends State<searchPatientAdv> {
         ));
   }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,37 +131,10 @@ class _searchPatientState extends State<searchPatientAdv> {
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
-            child: SearchField(
-              suggestions: patient
-                  .map((e) => SearchFieldListItem(
-                        e.name,
-                        item: e,
-                      ))
-                  .toList(),
-              searchStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              suggestionStyle: const TextStyle(
-                fontSize: 18,
-              ),
-              searchInputDecoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-                contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),
-              ),
-              suggestionsDecoration: const BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: Colors.white, width: 8),
-                  right: BorderSide(color: Colors.white, width: 8),
-                ),
-              ),
-              itemHeight: 40,
-              maxSuggestionsInViewPort: 5,
-            ),
+            child: noSuggestSearch((value) => updateList(value)),
           ),
           Column(
-            children: patient.map((med) => caretakerCard(med)).toList(),
+            children: display_list.map((med) => patientCard(med)).toList(),
           )
         ],
       ),

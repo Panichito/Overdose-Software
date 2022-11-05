@@ -4,7 +4,7 @@ import 'package:app/pages/home.dart';
 import 'package:app/pages/allMedicine.dart';
 import 'package:app/pages/login.dart';
 import 'package:app/pages/addRecord.dart';
-import 'package:app/pages/search.dart';
+import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +42,7 @@ class _UIPageState extends State<UIPage> {
     }
     else {  // either caretaker or admin is the stuff
       pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search Patient'];
-      widgetBottom=[HomePage(), FindCaretakerPage(), AddRecordPage(), MyMedsPage(), searchPatientAdv(),];
+      widgetBottom=[HomePage(), FindCaretakerPage(), AddRecordPage(), MyMedsPage(), SearchPatientAdv(),];
     }
     return DefaultTabController(
       length: 1,
