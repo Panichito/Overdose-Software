@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-// note //
-
 class AddRecordPage extends StatefulWidget {
   const AddRecordPage({Key? key}) : super(key: key);
 
@@ -84,12 +82,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
                   fontSize: 16,
                 ),
               ),
-              // action: SnackBarAction(
-              //   label: 'Undo',
-              //   onPressed: () {
-              //     print("Dafuq, I didn't implement it yet!");
-              //   },
-              // ),
+              backgroundColor: Colors.red[900],
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }, child: const Text(
