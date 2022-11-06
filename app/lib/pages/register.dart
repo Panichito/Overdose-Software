@@ -35,12 +35,12 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 10),
             TextField(
               controller: fname,
-              decoration: InputDecoration(hintText: 'first name'),
+              decoration: InputDecoration(hintText: 'First Name'),
             ),
             SizedBox(height: 30),
             TextField(
               controller: lname,
-              decoration: InputDecoration(hintText: 'last name'),
+              decoration: InputDecoration(hintText: 'Last Name'),
             ),
             SizedBox(height: 30),
             Text('Select your gender:'),
@@ -78,23 +78,23 @@ class _RegisterPageState extends State<RegisterPage> {
             SizedBox(height: 30),
             TextField(
               controller: email,
-              decoration: InputDecoration(hintText: 'email'),
+              decoration: InputDecoration(hintText: 'Email Address'),
             ),
             SizedBox(height: 30),
             TextField(
               controller: username,
-              decoration: InputDecoration(hintText: 'username'),
+              decoration: InputDecoration(hintText: 'Username'),
             ),
             SizedBox(height: 30),
             TextField(
               controller: password,
               obscureText: true,
-              decoration: InputDecoration(hintText: 'password'),
+              decoration: InputDecoration(hintText: 'Password'),
             ),
             SizedBox(height: 30),
             TextField(  // for demo profile url image
               controller: profilepic,
-              decoration: InputDecoration(hintText: 'profile image URL (optional)'),
+              decoration: InputDecoration(hintText: 'Profile Image URL (optional)'),
             ),
             SizedBox(height: 30),
             ElevatedButton(onPressed: () {
@@ -108,9 +108,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 print(dateController);
                 register_newuser();
               }
+              final snackBar = SnackBar(
+                content: Text(
+                  result,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                backgroundColor: Colors.red[900],
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }, child: Text('Register')),
-            SizedBox(height: 30),
-            Center(child: Text(result, style: TextStyle(color: Colors.indigo, fontSize: 20)))
           ],
         )),
       ),
