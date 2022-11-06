@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:email_validator/email_validator.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var profilepic=TextEditingController();
   String result='';
   String? _radioValue;
+  bool success = false;
 
   @override
   Widget build(BuildContext context) {
@@ -97,27 +99,50 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(hintText: 'Profile Image URL (optional)'),
             ),
             SizedBox(height: 30),
-            ElevatedButton(onPressed: () {
+            ElevatedButton(onPressed: () async {
               if(username.text.isEmpty || password.text.isEmpty || email.text.isEmpty ||
                 dateController.text.isEmpty || fname.text.isEmpty || lname.text.isEmpty) {
                 setState(() {
                   result='Please complete all information!';
                 });
               }
+              else if (!EmailValidator.validate(email.text)) {
+                setState(() {
+                  result = 'Invalid email address!';
+                });
+              }
               else {
                 print(dateController);
-                register_newuser();
+                await register_newuser();
               }
-              final snackBar = SnackBar(
-                content: Text(
-                  result,
-                  style: const TextStyle(
-                    fontSize: 16,
+
+              if (!success && result.isNotEmpty) {
+                final snackBar = SnackBar(
+                  content: Text(
+                    result,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                backgroundColor: Colors.red[900],
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  backgroundColor: Colors.red[900],
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+              else if (success && result.isNotEmpty) {
+                final snackBar = SnackBar(
+                  content: Text(
+                    result,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  backgroundColor: Colors.green[900],
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                setState(() {
+                  success = !success;
+                });
+              }
             }, child: Text('Register')),
           ],
         )),
@@ -173,7 +198,8 @@ class _RegisterPageState extends State<RegisterPage> {
       String token=result_json['token'];
       setToken(token);  // เมื่อได้รับ token แล้ว ให้ทำการบันทึกลงไปในระบบ
       setState(() {
-        result=setresult;
+        result = setresult;
+        success = true;
       });
     }
     else if(status=='user-exist') {
