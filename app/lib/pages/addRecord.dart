@@ -12,6 +12,7 @@ class AddRecordPage extends StatefulWidget {
 class _AddRecordPageState extends State<AddRecordPage> {
   String result='note field can be empty';
   String? patientId;
+  bool success = false;
   // final patientIdController = TextEditingController();
   final medicineIdController = TextEditingController();
   final diseaseController = TextEditingController();
@@ -72,19 +73,37 @@ class _AddRecordPageState extends State<AddRecordPage> {
                 // createRecordFunction();
                 setState(() {
                   result='Create a record successfully';
+                  success = true;
                 });
               }
             }
-            final snackBar = SnackBar(
-              content: Text(
+            if (!success) {
+              final snackBar = SnackBar(
+                content: Text(
                   result,
-                style: const TextStyle(
-                  fontSize: 16,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              backgroundColor: Colors.red[900],
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                backgroundColor: Colors.red[900],
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+            else {
+              final snackBar = SnackBar(
+                content: Text(
+                  result,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                backgroundColor: Colors.green[900],
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              setState(() {
+                success = !success;
+              });
+            }
           }, child: const Text(
               'Create a record',
             style: TextStyle(
@@ -253,7 +272,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
       maxLines: 5,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(
-        labelText: 'Note',
+        labelText: 'Note (optional)',
         border: OutlineInputBorder(),
       ),
     );
