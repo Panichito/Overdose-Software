@@ -12,6 +12,10 @@ class Member(models.Model):
     Member_gender=models.CharField(max_length=8, choices=GENDERS)
     Member_token=models.CharField(max_length=100, default='-')
     Member_verified=models.BooleanField(default=False)
+    Member_URLPic=models.URLField(max_length=200, null=True, blank=True)
+    # store image on cloud
+    # from cloudinary.models import CloudinaryField
+    # Member_Pic=CloudinaryField('hotel', null=True, blank=True, default=None, folder='poonveh-cpe231/hotel')  
 
     def __str__(self):
         return "M"+str(self.id)+" - "+str(self.user.username)

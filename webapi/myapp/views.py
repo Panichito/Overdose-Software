@@ -66,8 +66,8 @@ def authentiate_app(request):
             user=authenticate(username=username, password=password)
             login(request, user)
             getuser=User.objects.get(username=username)  # display info back to screen
-            dt={'status':'login-succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 
-            'last_name':getuser.last_name, 'username':getuser.username, 'role':getuser.member.Member_usertype}
+            dt={'status':'login-succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 'last_name':getuser.last_name, 
+            'username':getuser.username, 'role':getuser.member.Member_usertype, 'profilepic':getuser.member.Member_URLPic}
             print('Succeed', dt)
             return Response(data=dt, status=status.HTTP_200_OK)
         except:
