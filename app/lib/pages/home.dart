@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String username="User";
+  String username="User", profilepic="https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.indigo[200],
               borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(24),
+                bottom: Radius.circular(24),
               ),
               shape: BoxShape.rectangle,
               boxShadow: [
@@ -61,26 +61,16 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Welcome Back,',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
+                    const Text('Welcome Back,', style: TextStyle(fontSize: 16, color: Colors.white)),
                     const SizedBox(height: 10),
-                    Text(username,
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    Text(username, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ],
 
                 ),
-                const CircleAvatar(
-                  radius: 48,
+                CircleAvatar(
+                  backgroundImage: NetworkImage(profilepic),
+                  radius: 50,
                 ),
               ],
             ),
@@ -96,11 +86,7 @@ class _HomePageState extends State<HomePage> {
               child: const Center(
                 // check if schedule exist
                 // ** condition not yet implemented **
-                child: Text(
-                  'No schedule',
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
+                child: Text('No schedule', style: TextStyle(fontSize: 24),
                 ),
               ),
             ),
@@ -117,7 +103,9 @@ class _HomePageState extends State<HomePage> {
     if(checkvalue!=0) {  // get username
       setState(() {
         var usr_name=pref.getString('username');
+        var profile_url=pref.getString('profilepic');
         username="$usr_name";
+        profilepic="$profile_url";
       });
     }
   }
