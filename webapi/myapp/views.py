@@ -24,6 +24,7 @@ def register_newuser(request):
         last_name=data.get('last_name')
         gender=data.get('gender')
         birthday=data.get('birthday')
+        profilepic=data.get('profilepic')
         
         print('CHECK USR: ', username, password)
         if username==None and password==None:
@@ -47,6 +48,8 @@ def register_newuser(request):
             newmember.Member_birthdate=birthday
             gentoken=uuid.uuid1().hex
             newmember.Member_token=gentoken
+            print(profilepic)
+            newmember.Member_URLPic=profilepic
             newmember.save()
             dt={'status':'account-created', 'token':gentoken, 'first_name':first_name, 'last_name':last_name, 'username':username}
             return Response(data=dt, status=status.HTTP_201_CREATED)

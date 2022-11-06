@@ -105,7 +105,9 @@ class _HomePageState extends State<HomePage> {
         var usr_name=pref.getString('username');
         var profile_url=pref.getString('profilepic');
         username="$usr_name";
-        profilepic="$profile_url";
+        if(profile_url!="no image") {
+          profilepic="$profile_url";
+        }
       });
     }
   }

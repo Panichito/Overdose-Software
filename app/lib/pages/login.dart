@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
   Future login() async {
     var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
     //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
+    //var url=Uri.http('192.168.1.52:8000','/api/authenticate');
     Map<String, String> header={"Content-type":"application/json"};
 
     String v1='"username":"${username.text}"';
@@ -105,6 +106,13 @@ class _LoginPageState extends State<LoginPage> {
     pref.setString('last_name', lname);
     pref.setString('username', usr);
     pref.setString('role', role);
-    pref.setString('profilepic', profilepic);
+
+    final response=await http.head(Uri.parse(profilepic));
+    if(response.statusCode==200) {  // validate URL (maybe not image but nvm)
+      pref.setString('profilepic', profilepic);
+    }
+    else {
+      pref.setString('profilepic', "no image");
+    }
   }
 }

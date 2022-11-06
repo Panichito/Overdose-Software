@@ -19,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var email=TextEditingController(); 
   var username=TextEditingController();
   var password=TextEditingController();
+  var profilepic=TextEditingController();
   String result='';
   String? _radioValue;
 
@@ -91,6 +92,11 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(hintText: 'password'),
             ),
             SizedBox(height: 30),
+            TextField(  // for demo profile url image
+              controller: profilepic,
+              decoration: InputDecoration(hintText: 'profile image URL (optional)'),
+            ),
+            SizedBox(height: 30),
             ElevatedButton(onPressed: () {
               if(username.text.isEmpty || password.text.isEmpty || email.text.isEmpty ||
                 dateController.text.isEmpty || fname.text.isEmpty || lname.text.isEmpty) {
@@ -133,6 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future register_newuser() async {
     var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/newuser');
     //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/newuser');
+    //var url=Uri.http('192.168.1.52:8000','/api/newuser');
     Map<String, String> header={"Content-type":"application/json"};
 
     String v1='"username":"${username.text}"';
@@ -142,8 +149,9 @@ class _RegisterPageState extends State<RegisterPage> {
     String v5='"last_name":"${lname.text}"';
     String v6='"gender":"$_radioValue"';
     String v7='"birthday":"${dateController.text}"';
+    String v8='"profilepic":"${profilepic.text}"';
 
-    String jsondata='{$v1, $v2, $v3, $v4, $v5, $v6, $v7}';
+    String jsondata='{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
     var response=await http.post(url, headers: header, body: jsondata);
     print('---register newuser---');
     print(response.body);  // view.py return token
