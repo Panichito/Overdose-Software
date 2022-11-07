@@ -137,6 +137,11 @@ class _UIPageState extends State<UIPage> {
   logout(BuildContext context) async {
     final prefs=await SharedPreferences.getInstance();
     prefs.remove('token');
+    prefs.remove('first_name');
+    prefs.remove('last_name');
+    prefs.remove('username');
+    prefs.remove('role');
+    prefs.remove('profilepic');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
   }
 }

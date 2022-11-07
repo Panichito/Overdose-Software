@@ -107,12 +107,17 @@ class _LoginPageState extends State<LoginPage> {
     pref.setString('username', usr);
     pref.setString('role', role);
 
+    if(profilepic==null||profilepic=="") profilepic="no image";  // old school method
+    pref.setString('profilepic', profilepic);
+    /*
     final response=await http.head(Uri.parse(profilepic));
+    print(response.statusCode);
     if(response.statusCode==200) {  // validate URL (maybe not image but nvm)
       pref.setString('profilepic', profilepic);
     }
     else {
       pref.setString('profilepic', "no image");
     }
+    */
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 // temp medicines constructor
@@ -105,6 +104,7 @@ class _HomePageState extends State<HomePage> {
         var usr_name=pref.getString('username');
         var profile_url=pref.getString('profilepic');
         username="$usr_name";
+        print(profile_url);
         if(profile_url!="no image") {
           profilepic="$profile_url";
         }
