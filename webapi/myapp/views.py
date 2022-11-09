@@ -78,6 +78,22 @@ def authentiate_app(request):
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
+def all_caretaker(request):
+    allcaretaker=Caretaker.objects.filter(Caretaker_status=True)
+    serializer=CaretakerSerializer(allcaretaker, many=True)
+    caretaker_list=[]
+    for i in allcaretaker:
+        dt={}
+        dt['id']=i.id
+        dt['fullname']=i.member.user.first_name+' '+i.member.user.last_name
+        dt['Caretaker_since']=i.Caretaker_since
+        dt['image_url']=i.member.Member_URLPic
+        caretaker_list.append(dt)
+
+    #print(dt)
+    return Response(data=caretaker_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
 def all_medicine(request):
     allmedicine=Medicine.objects.all()
     serializer=MedicineSerializer(allmedicine, many=True)

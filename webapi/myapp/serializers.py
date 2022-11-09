@@ -7,6 +7,11 @@ class RecordSerializer(serializers.ModelSerializer):
         # fields=('id', 'title', 'detail')
         fields='__all__'
 
+class CaretakerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Caretaker
+        fields='__all__'
+
 class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model=Medicine

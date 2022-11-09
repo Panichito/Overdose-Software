@@ -12,7 +12,7 @@ class Member(models.Model):
     Member_gender=models.CharField(max_length=8, choices=GENDERS)
     Member_token=models.CharField(max_length=100, default='-')
     Member_verified=models.BooleanField(default=False)
-    Member_URLPic=models.URLField(max_length=200, null=True, blank=True)
+    Member_URLPic=models.URLField(default='https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg', max_length=250)
     # store image on cloud
     # from cloudinary.models import CloudinaryField
     # Member_Pic=CloudinaryField('hotel', null=True, blank=True, default=None, folder='poonveh-cpe231/hotel')  
