@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 
 class SearchCaretakerPage extends StatefulWidget {
@@ -9,24 +12,28 @@ class SearchCaretakerPage extends StatefulWidget {
   State<SearchCaretakerPage> createState() => _SearchCaretakerPageState();
 }
 
-// temp caretaker constructor
+// caretaker constructor
 class Caretaker {
-  String id;
+  int id;
   String name;
   String pfp;
+  String since;
 
-  Caretaker(this.id, this.name, this.pfp);
+  Caretaker(this.id, this.name, this.pfp, this.since);
 }
 
+// จริงๆต้องมีเคสสำหรับแสดงตอนไม่มี caretaker เลยสักคนด้วย, แต่ปล่อยไปก่อน มันเป็นเรื่องของ UI ไปโฟกัส main features ก่อน
 class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
-  // temp caretaker list
-  static List<Caretaker> caretakers = [
-    Caretaker('1', 'John Cena', 'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
-    Caretaker('2', 'Billy Herrington', 'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
-    Caretaker('3', 'Eva Elfie', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-  ];
+  List rawcaretaker = [];
+  List<Caretaker> caretakers = [];
+  List<Caretaker> display_list = [];
 
-  List<Caretaker> display_list = List.from(caretakers);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCaretaker();
+  }
 
   void updateList(String value) {
     setState(() {
@@ -46,19 +53,20 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Name: ${care.name}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-                    Text('CaretakerId: ${care.id}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-                  ],
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Name: ${care.name}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
+                      SizedBox(height: 5),
+                      Text('caretaker-id: C'+'${care.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                      Text('work since: ${care.since}', style: TextStyle(fontSize: 14.0, color: Colors.grey[800])),
+                    ],
+                  ),
                 ),
                 Column(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(care.pfp),
-                      radius: 48,
-                    )
+                    CircleAvatar(backgroundImage: NetworkImage(care.pfp), radius: 48)
                   ],
                 ),
               ],
@@ -84,5 +92,20 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
         ],
       ),
     );
+  }
+
+  Future<void> getCaretaker() async {
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-caretaker');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print('==All Available Caretaker==');
+    setState(() {
+      rawcaretaker=jsonDecode(result);
+      caretakers=[];
+      for(int i=0; i<rawcaretaker.length; ++i) {
+        caretakers.add(Caretaker(rawcaretaker[i]['id'], rawcaretaker[i]['fullname'], rawcaretaker[i]['image_url'], rawcaretaker[i]['Caretaker_since']));
+      }
+      display_list=List.from(caretakers);
+    });
   }
 }

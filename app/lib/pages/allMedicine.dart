@@ -11,15 +11,17 @@ class MyMedsPage extends StatefulWidget {
   State<MyMedsPage> createState() => _MyMedsPageState();
 }
 
-// temp medicines constructor
+// medicines constructor
 class Medicine {
   String name;
+
   Medicine(this.name);
 }
 
 class _MyMedsPageState extends State<MyMedsPage> {
-  List getmeds=[];
-  static List<Medicine> meds=[];
+  List getmeds = [];
+  static List<Medicine> meds = [];  // จะใช้ static ทำไมไม่รู้, แต่อย่าไปแก้ ติดไว้เฟี้ยสๆ
+  List<Medicine> display_list = [];
 
   @override
   void initState() {
@@ -27,8 +29,6 @@ class _MyMedsPageState extends State<MyMedsPage> {
     super.initState();
     getMedicine();
   }
-
-  List<Medicine> display_list=[];
 
   void updateList(String value) {
     setState(() {
@@ -82,10 +82,9 @@ class _MyMedsPageState extends State<MyMedsPage> {
       // mapping the list
       meds=[];  // init to empty
       for(int i=0; i<getmeds.length; ++i) {
-        print(getmeds[i]['Medicine_name']);
         meds.add(Medicine(getmeds[i]['Medicine_name']));
-        display_list=List.from(meds);
       }
+      display_list=List.from(meds);
     });
   }
 }
