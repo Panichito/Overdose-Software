@@ -8,6 +8,7 @@ import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app/pages/incomeRequest.dart';
 
 class UIPage extends StatefulWidget {
   const UIPage({super.key});
@@ -118,6 +119,16 @@ class _UIPageState extends State<UIPage> {
               Navigator.pop(context);
             },
           ),
+          // user is caretaker show incoming request
+          if (_role == 'CARETAKER') ...[
+            ListTile(
+              leading: Icon(Icons.mail_outline),
+              title: Text('Incoming Requests'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>IncomingRequestPage()));
+              },
+            ),
+          ],
           ListTile(
             leading: Icon(Icons.lock_open),
             title: Text('Logout'),
