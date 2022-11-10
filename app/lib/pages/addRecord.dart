@@ -77,35 +77,22 @@ class _AddRecordPageState extends State<AddRecordPage> {
                 });
               }
             }
-            if (!success) {
-              final snackBar = SnackBar(
-                content: Text(
-                  result,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+            final snackBar = SnackBar(
+              content: Text(
+                result,
+                style: const TextStyle(
+                  fontSize: 16,
                 ),
-                backgroundColor: Colors.red[900],
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            }
-            else {
-              final snackBar = SnackBar(
-                content: Text(
-                  result,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                backgroundColor: Colors.green[900],
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              setState(() {
-                success = !success;
-              });
-            }
-          }, child: const Text(
-              'Create a record',
+              ),
+                backgroundColor: !success?
+                  Colors.red[900]:
+                  Colors.green[900]
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            success = false;
+          },
+          child: const Text(
+            'Create a record',
             style: TextStyle(
               fontSize: 16,
             ),
