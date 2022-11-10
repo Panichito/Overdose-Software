@@ -7,6 +7,7 @@ import 'package:app/pages/addRecord.dart';
 import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/history.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UIPage extends StatefulWidget {
   const UIPage({super.key});
@@ -110,6 +111,14 @@ class _UIPageState extends State<UIPage> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.contact_support),
+            title: Text('About'),
+            onTap: () {
+              launchURL();
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.lock_open),
             title: Text('Logout'),
             onTap: () {
@@ -131,6 +140,16 @@ class _UIPageState extends State<UIPage> {
         _role=pref.getString('role');
         fullname='Hello, $fname $lname ($_role)';
       });
+    }
+  }
+
+  Future<void> launchURL() async {
+    final Uri url=Uri.parse('https://tinder.com/th');
+    if(await canLaunchUrl(url)) {
+      await launchUrl(url);
+    }
+    else {
+      throw "Cannot launch $url";
     }
   }
 
