@@ -116,33 +116,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 await register_newuser();
               }
 
-              if (!success && result.isNotEmpty) {
-                final snackBar = SnackBar(
+              final snackBar = SnackBar(
                   content: Text(
                     result,
                     style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  backgroundColor: Colors.red[900],
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
-              else if (success && result.isNotEmpty) {
-                final snackBar = SnackBar(
-                  content: Text(
-                    result,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  backgroundColor: Colors.green[900],
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                setState(() {
-                  success = !success;
-                });
-              }
+                  backgroundColor: !success?
+                  Colors.red[900]:
+                  Colors.green[900]
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              success = false;
             }, child: Text('Register')),
           ],
         )),
