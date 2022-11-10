@@ -58,15 +58,24 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Name: ${care.name}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-                      SizedBox(height: 5),
+                      SizedBox(height: 4),
                       Text('caretaker-id: C'+'${care.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
                       Text('work since: ${care.since}', style: TextStyle(fontSize: 14.0, color: Colors.grey[800])),
+                      const SizedBox(height: 8,),
+                      ElevatedButton(
+                          onPressed: () {
+                            // sendRequest()
+                          },
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10)),
+                          ),
+                          child: const Text('Request Service')),
                     ],
                   ),
                 ),
                 Column(
                   children: [
-                    CircleAvatar(backgroundImage: NetworkImage(care.pfp), radius: 48)
+                    CircleAvatar(backgroundImage: NetworkImage(care.pfp), radius: 60)
                   ],
                 ),
               ],
