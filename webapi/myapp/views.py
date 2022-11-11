@@ -7,8 +7,6 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import *  # import serializers in here
 
-data={"message":"hello Django my old friend"}
-
 from django.contrib.auth.models import User
 import uuid
 @api_view(['POST'])
@@ -117,5 +115,24 @@ def post_record(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['PUT'])
+def update_profile(request, UID):
+    usr=User.objects.get(id=UID)
+    mem=Member.objects.get(user=usr)
+    print(usr.username, mem.Member_usertype, usr.id, mem.id)
+    if request.method=='PUT':
+        serializer1=UserSerializer(usr, data=request.data)
+        if serializer1.is_valid():
+            serializer2=MemberSerializer(mem, data=request.data)
+            if serializer2.is_valid():
+                serializer1.save()
+                serializer2.save()
+                profile_upd['status']='updated'
+                return Response(data=profile_upd, status=status.HTTP_201_CREATED)
+            return Response(serializer2.errors, status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer1.errors, status=status.HTTP_404_NOT_FOUND)
+
+oldhomedata={"message":"hello Django my old friend"}
+
 def Home(request):
-    return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})

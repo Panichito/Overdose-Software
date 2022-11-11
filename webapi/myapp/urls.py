@@ -8,4 +8,5 @@ urlpatterns = [
     path('api/all-caretaker', all_caretaker),
     path('api/all-medicine', all_medicine),
     path('api/post-record', post_record),
+    path('api/update-profile/<int:UID>', update_profile),
 ]
