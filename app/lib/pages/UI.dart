@@ -55,6 +55,12 @@ class _UIPageState extends State<UIPage> {
         appBar: AppBar(
           title: Text(pagename[_selectedIndex]),
           backgroundColor: Colors.indigo[400],
+          actions: [
+            IconButton(onPressed: () {
+              print("Refresh");
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>UIPage()));
+            }, icon: Icon(Icons.refresh), color: Colors.white)
+          ],
         ),
         body: TabBarView(children: [
           Center(child: widgetBottom.elementAt(_selectedIndex)),

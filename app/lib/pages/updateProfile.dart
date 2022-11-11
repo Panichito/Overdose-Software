@@ -77,13 +77,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   lastDate: DateTime(2101)
                 );
                 if(pickedDate!=null ){
-                      print(pickedDate);
-                      String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
-                      print(formattedDate);
-                      setState(() {
-                        bdate.text=formattedDate;
-                      });
-                  }
+                  print(pickedDate);
+                  String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
+                  print(formattedDate);
+                  setState(() {
+                    bdate.text=formattedDate;
+                  });
+                }
                 else{
                   print("Date is not selected");
                 }

@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// temp medicines constructor
-class Medicine {
-  String name;
-  Medicine(this.name);
-}
-
-// temp meds list
-List<Medicine> meds = [
-  Medicine('med1'),
-  Medicine('med2'),
-  Medicine('med3'),
-];
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
