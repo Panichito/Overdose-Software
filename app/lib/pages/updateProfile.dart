@@ -1,4 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+// http method packages
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final v1, v2, v3, v4, v5, v6;
@@ -13,8 +22,8 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   TextEditingController fname=TextEditingController();
   TextEditingController lname=TextEditingController();
   TextEditingController bdate=TextEditingController();
-  TextEditingController gender=TextEditingController();
   TextEditingController pfp=TextEditingController();
+  String? gender;
 
   @override
   void initState() {
@@ -28,13 +37,15 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     _v6=widget.v6;  // profile pic
     fname.text=_v2;
     lname.text=_v3;
+    bdate.text=_v4;
+    gender=_v5;
     pfp.text=_v6;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Update Profile Page'),  backgroundColor: Colors.indigo[400]),
+      appBar: AppBar(title: Text('Update Profile Info'),  backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
@@ -49,6 +60,36 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               decoration: InputDecoration(labelText: 'Last Name'),
             ),
             SizedBox(height: 30),
+            genderRadio(),
+            SizedBox(height: 30),
+            TextField(
+              controller: bdate,
+              decoration: InputDecoration(
+                icon: Icon(Icons.calendar_today),
+                labelText: 'Enter Birth Date'
+              ),
+              readOnly: true,
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2101)
+                );
+                if(pickedDate!=null ){
+                      print(pickedDate);
+                      String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(formattedDate);
+                      setState(() {
+                        bdate.text=formattedDate;
+                      });
+                  }
+                else{
+                  print("Date is not selected");
+                }
+              }
+            ),
+            SizedBox(height: 30),
             TextField(  // for demo profile url image
               controller: pfp,
               decoration: InputDecoration(labelText: 'Profile Image URL (optional)'),
@@ -58,16 +99,54 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               padding: const EdgeInsets.all(80),
               child: ElevatedButton(
                 onPressed: () {
+                  send_profile_info();
+                  final snackBar=SnackBar(content: const Text('Your information has been updated.'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 child: Text("Edit Information", style: TextStyle(color: Colors.black)),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.amber[700]),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget genderRadio() {
+    return Row(
+      children: [
+        Radio(value: 'MALE', groupValue: gender, onChanged: (String? value) {
+          setState(() {
+            gender=value;
+          });
+        }),
+        Text('Male', style: TextStyle(fontSize: 14)),
+        Radio(value: 'FEMALE', groupValue: gender, onChanged: (String? value) {
+          setState(() {
+            gender=value;
+          });
+        }),
+        Text('Female', style: TextStyle(fontSize: 14)),
+      ],
+    );
+  }
+
+  Future<void> send_profile_info() async {
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/update-profile/$_v1');
+    Map<String, String> header={"Content-type":"application/json"};
+    String jsondata='{"first_name":"${fname.text}", "last_name":"${lname.text}", "Member_gender":"$gender", "Member_birthdate":"${bdate.text}", "Member_URLPic":"${pfp.text}"}';
+    //print(jsondata);
+    var response=await http.put(url, headers: header, body: jsondata);
+    print('update profile info here');
+    print(response.body);
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    pref.setString('first_name', fname.text);
+    pref.setString('last_name', lname.text);
+    pref.setString('gender', gender!);
+    pref.setString('birthdate', bdate.text);
+    pref.setString('profilepic', pfp.text);
   }
 }

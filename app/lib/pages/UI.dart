@@ -151,8 +151,9 @@ class _UIPageState extends State<UIPage> {
       setState(() {
         var fname=pref.getString('first_name');
         var lname=pref.getString('last_name');
+        var gender=pref.getString('gender');
         _role=pref.getString('role');
-        fullname='Hello, $fname $lname ($_role)';
+        fullname='Hello, $fname $lname'+'\n'+'($gender $_role)';
       });
     }
   }
@@ -166,7 +167,14 @@ class _UIPageState extends State<UIPage> {
       var bdate=pref.getString('birthdate');
       var gen=pref.getString('gender');
       var pfp=pref.getString('profilepic');
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfilePage(id, fname, lname, bdate, gen, pfp)));
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context)=>UpdateProfilePage(id, fname, lname, bdate, gen, pfp))).then((value) {
+          setState(() {
+            if(value=='delete') {
+            }
+            checkFullname();
+          });
+        });
     });
   }
 
