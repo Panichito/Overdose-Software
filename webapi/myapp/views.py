@@ -125,6 +125,7 @@ def update_profile(request, UID):
         if serializer1.is_valid():
             serializer2=MemberSerializer(mem, data=request.data)
             if serializer2.is_valid():
+                profile_upd={}
                 serializer1.save()
                 serializer2.save()
                 profile_upd['status']='updated'
