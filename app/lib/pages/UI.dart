@@ -6,9 +6,10 @@ import 'package:app/pages/login.dart';
 import 'package:app/pages/addRecord.dart';
 import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/history.dart';
+import 'package:app/pages/updateProfile.dart';
+import 'package:app/pages/incomeRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:app/pages/incomeRequest.dart';
 
 class UIPage extends StatefulWidget {
   const UIPage({super.key});
@@ -43,7 +44,7 @@ class _UIPageState extends State<UIPage> {
       widgetBottom=[HomePage(), SearchCaretakerPage(), MyMedsPage()];
     }
     else {  // either caretaker or admin is the stuff
-      pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search Patient'];
+      pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search My Patient'];
       widgetBottom=[HomePage(), SearchCaretakerPage(), AddRecordPage(), MyMedsPage(), SearchPatientAdv(),];
     }
     return DefaultTabController(
@@ -102,7 +103,9 @@ class _UIPageState extends State<UIPage> {
           ListTile(
             leading: Icon(Icons.manage_accounts),
             title: Text('Profile'),
-            onTap: () {},
+            onTap: () {
+              push_to_edit_page();
+            },
           ),
           ListTile(
             leading: Icon(Icons.history_edu),
@@ -111,16 +114,8 @@ class _UIPageState extends State<UIPage> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage()));
             },
           ),
-          ListTile(
-            leading: Icon(Icons.contact_support),
-            title: Text('About'),
-            onTap: () {
-              launchURL();
-              Navigator.pop(context);
-            },
-          ),
           // user is caretaker show incoming request
-          if (_role == 'CARETAKER') ...[
+          if(_role=='CARETAKER') ...[
             ListTile(
               leading: Icon(Icons.mail_outline),
               title: Text('Incoming Requests'),
@@ -129,6 +124,14 @@ class _UIPageState extends State<UIPage> {
               },
             ),
           ],
+          ListTile(
+            leading: Icon(Icons.contact_support),
+            title: Text('About'),
+            onTap: () {
+              launchURL();
+              Navigator.pop(context);
+            },
+          ),
           ListTile(
             leading: Icon(Icons.lock_open),
             title: Text('Logout'),
@@ -154,6 +157,19 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
+  void push_to_edit_page() async {
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    setState(() {
+      var id=pref.getInt('id');
+      var fname=pref.getString('first_name');
+      var lname=pref.getString('last_name');
+      var bdate=pref.getString('birthdate');
+      var gen=pref.getString('gender');
+      var pfp=pref.getString('profilepic');
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfilePage(id, fname, lname, bdate, gen, pfp)));
+    });
+  }
+
   Future<void> launchURL() async {
     final Uri url=Uri.parse('https://tinder.com/th');
     if(await canLaunchUrl(url)) {
@@ -166,12 +182,8 @@ class _UIPageState extends State<UIPage> {
 
   logout(BuildContext context) async {
     final prefs=await SharedPreferences.getInstance();
-    prefs.remove('token');
-    prefs.remove('first_name');
-    prefs.remove('last_name');
-    prefs.remove('username');
-    prefs.remove('role');
-    prefs.remove('profilepic');
+    await prefs.clear();
+    //prefs.remove('token');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
   }
 }

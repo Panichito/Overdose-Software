@@ -80,7 +80,8 @@ class _LoginPageState extends State<LoginPage> {
 
     if(status=='login-succeed') {
       setToken(result_json['token']);  // save token into shared preferences
-      setUserInfo(result_json['first_name'], result_json['last_name'], result_json['username'], result_json['role'], result_json['profilepic']);
+      setUserInfo(result_json['first_name'], result_json['last_name'], result_json['username'], result_json['role'],
+      result_json['profilepic'], result_json['birthdate'], result_json['gender'], result_json['id']);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context)=>UIPage()));
     }
     else if(status=='login-failed') {
@@ -100,20 +101,23 @@ class _LoginPageState extends State<LoginPage> {
     pref.setString('token', token);
   }
 
-  Future<void> setUserInfo(fname, lname, usr, role, profilepic) async {
+  Future<void> setUserInfo(fname, lname, usr, role, pfp, bdate, gen, id) async {
     final SharedPreferences pref=await SharedPreferences.getInstance();
+    pref.setInt('id', id);
     pref.setString('first_name', fname);
     pref.setString('last_name', lname);
     pref.setString('username', usr);
     pref.setString('role', role);
+    pref.setString('birthdate', bdate);
+    pref.setString('gender', gen);
 
-    if(profilepic==null||profilepic=="") profilepic="no image";  // old school method
-    pref.setString('profilepic', profilepic);
+    if(pfp==null||pfp=="") pfp="no image";  // old school method
+    pref.setString('profilepic', pfp);
     /*
-    final response=await http.head(Uri.parse(profilepic));
+    final response=await http.head(Uri.parse(pfp));
     print(response.statusCode);
     if(response.statusCode==200) {  // validate URL (maybe not image but nvm)
-      pref.setString('profilepic', profilepic);
+      pref.setString('profilepic', pfp);
     }
     else {
       pref.setString('profilepic', "no image");

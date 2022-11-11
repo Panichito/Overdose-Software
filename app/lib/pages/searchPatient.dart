@@ -40,6 +40,7 @@ class NewScreen extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 24,
         title: const Text('Patient Information'),
+        backgroundColor: Colors.indigo[400]
       ),
       body: SingleChildScrollView(
         child: Center(
