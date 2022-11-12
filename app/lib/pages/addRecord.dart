@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddRecordPage extends StatefulWidget {
   const AddRecordPage({Key? key}) : super(key: key);
@@ -23,9 +24,11 @@ class _AddRecordPageState extends State<AddRecordPage> {
   final endDateController = TextEditingController();
   final amountController = TextEditingController();
   final noteController = TextEditingController();
+  var caretakerid;
 
-  // temp list of patient for demonstration
-  final patientList = ['P001', 'P002', 'P003', 'P004', 'P005', 'P006'];
+  // list of patient
+  List rawpatient = [];
+  var patientList = ['No Patient'];
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     // patientIdController.addListener(() => setState(() {}));
     medicineIdController.addListener(() => setState(() {}));
     diseaseController.addListener(() => setState(() {}));
+    getMyPatient();
   }
   
   @override
@@ -266,7 +270,36 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  Future<void> getCaretakerID() async {
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    var id=pref.getInt('id');
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/ask-caretakerid/$id');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print('get my careataker id');
+    print(result);
+    setState(() {
+      caretakerid=result;
+    });
+  }
+
   Future<void> getMyPatient() async {
+    await getCaretakerID();
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print(url);
+    print('Get my patient');
+    print(result);
+    setState(() {
+      rawpatient=jsonDecode(result);
+      if(rawpatient.length>0) {
+        patientList=[];
+        for(int i=0; i<rawpatient.length; ++i) {
+          patientList.add(rawpatient[i]['name']);
+        }
+      }
+    });
   }
 
   Future<void> getMedicine() async {
