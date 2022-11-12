@@ -133,6 +133,22 @@ def update_profile(request, UID):
             return Response(serializer2.errors, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer1.errors, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['GET'])
+def get_mypatient(request, CID):
+    mypatient=Patient.objects.filter(caretaker=CID)
+    #serializer=PatientSerializer(mypatient, many=True)  # in fact no need
+    patientlist=[]
+    for i in mypatient:
+        patientlist.append('P'+str(i.id)+': '+i.member.user.first_name+' '+i.member.user.last_name)
+    print(patientlist)
+    return Response(data=patientlist, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def ask_caretakerid(request, UID):
+    this_member=Member.objects.get(user=UID)
+    this_caretaker=Caretaker.objects.get(member=this_member)
+    return Response(data=this_caretaker.id, status=status.HTTP_200_OK)
+
 oldhomedata={"message":"hello Django my old friend"}
 
 def Home(request):

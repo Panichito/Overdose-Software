@@ -27,3 +27,8 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model=Member
         fields=('id', 'Member_birthdate', 'Member_gender', 'Member_URLPic')
+    
+class PatientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Patient
+        fields='__all__'
