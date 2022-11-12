@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class AddRecordPage extends StatefulWidget {
   const AddRecordPage({Key? key}) : super(key: key);
@@ -70,7 +73,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
                 });
               }
               else {
-                // createRecordFunction();
+                createRecord();
                 setState(() {
                   result='Create a record successfully';
                   success = true;
@@ -84,9 +87,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
                   fontSize: 16,
                 ),
               ),
-                backgroundColor: !success?
-                  Colors.red[900]:
-                  Colors.green[900]
+                backgroundColor: !success ? Colors.red[900]: Colors.green[900]
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
             success = false;
@@ -263,5 +264,31 @@ class _AddRecordPageState extends State<AddRecordPage> {
         border: OutlineInputBorder(),
       ),
     );
+  }
+
+  Future<void> getMyPatient() async {
+  }
+
+  Future<void> getMedicine() async {
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+  }
+
+  Future<void> createRecord() async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String v1='"patient":"$patientId"';
+    String v2='"medicine":"${medicineIdController.text}"';
+    String v3='"Record_disease":"${diseaseController.text}"';
+    String v4='"Record_amount":"${amountController.text}"';
+    String v5='"Record_start":${startDateController.text}""';
+    String v6='"Record_end":"${endDateController.text}"';
+    String v7='"Record_info":"${noteController.text}"';
+    String v8='"Record_isComplete":"false"';
+    String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    print('ADD RECORD!');
+    print(response.body);
   }
 }

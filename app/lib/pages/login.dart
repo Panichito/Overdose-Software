@@ -106,8 +106,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future login() async {
-    var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
     //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
     //var url=Uri.http('192.168.1.52:8000','/api/authenticate');
     Map<String, String> header = {"Content-type": "application/json"};
@@ -135,8 +134,7 @@ class _LoginPageState extends State<LoginPage> {
           result_json['birthdate'],
           result_json['gender'],
           result_json['id']);
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => UIPage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UIPage()));
     } else if (status == 'login-failed') {
       setState(() {
         result = 'Invalid username or password!';
