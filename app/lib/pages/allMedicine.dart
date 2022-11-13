@@ -82,7 +82,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
       // mapping the list
       meds=[];  // init to empty
       for(int i=0; i<getmeds.length; ++i) {
-        meds.add(Medicine(getmeds[i]['Medicine_name']));
+        meds.add(Medicine('M'+"${getmeds[i]['id']}"+' - '+getmeds[i]['Medicine_name']));
       }
       display_list=List.from(meds);
     });

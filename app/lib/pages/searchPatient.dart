@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 
-// temp patient constructor
+// patient constructor
 class Patient {
   String id;
   String name;
@@ -12,14 +15,10 @@ class Patient {
 }
 
 List<Patient> allpatient = [
-  Patient('1', 'John Cena',
-      'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
-  Patient('2', 'Billy Herrington',
-      'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
-  Patient('3', 'Eva Elfie',
-      'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-  Patient('4', 'Evan Alfred',
-      'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
+  Patient('1', 'John Cena', 'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
+  Patient('2', 'Billy Herrington', 'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
+  Patient('3', 'Eva Elfie', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
+  Patient('4', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
 ];
 
 class SearchPatientAdv extends StatefulWidget {
