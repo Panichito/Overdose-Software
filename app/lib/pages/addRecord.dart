@@ -14,11 +14,11 @@ class AddRecordPage extends StatefulWidget {
 }
 
 class _AddRecordPageState extends State<AddRecordPage> {
-  String result='note field can be empty';
-  String? patientId;
+  String result='Note field can be empty';
+  String? patientId, medId;
   bool success = false;
-  // final patientIdController = TextEditingController();
-  final medicineIdController = TextEditingController();
+  //final patientIdController = TextEditingController();
+  //final medicineIdController = TextEditingController();
   final diseaseController = TextEditingController();
   final startDateController = TextEditingController();
   final endDateController = TextEditingController();
@@ -30,14 +30,19 @@ class _AddRecordPageState extends State<AddRecordPage> {
   List rawpatient = [];
   var patientList = ['No Patient'];
 
+  // list of medicine
+  List rawmed = [];
+  var medList = ['No Medicine'];
+
   @override
   void initState() {
     super.initState();
     
-    // patientIdController.addListener(() => setState(() {}));
-    medicineIdController.addListener(() => setState(() {}));
+    //patientIdController.addListener(() => setState(() {}));
+    //medicineIdController.addListener(() => setState(() {}));
     diseaseController.addListener(() => setState(() {}));
     getMyPatient();
+    getMedicine();
   }
   
   @override
@@ -62,10 +67,10 @@ class _AddRecordPageState extends State<AddRecordPage> {
           const SizedBox(height: 16,),
           ElevatedButton(onPressed: () {
 
-            if(patientId == null || medicineIdController.text.isEmpty || diseaseController.text.isEmpty ||
+            if(patientId == null || medList == null || diseaseController.text.isEmpty ||
                 startDateController.text.isEmpty || endDateController.text.isEmpty || amountController.text.isEmpty) {
               setState(() {
-                result='Please input all information';
+                result='Please input all information!';
               });
             }
             else {
@@ -73,14 +78,21 @@ class _AddRecordPageState extends State<AddRecordPage> {
               DateTime timeEnd = DateTime.parse(endDateController.text);
               if(timeStart.isAfter(timeEnd)) {
                 setState(() {
-                  result='End medicine intake date must be after Start date';
+                  result='End medicine intake date must be after Start date!';
                 });
               }
               else {
                 createRecord();
                 setState(() {
-                  result='Create a record successfully';
+                  result='Create a record successfully!';
                   success = true;
+                  patientId=null;
+                  medId=null;
+                  diseaseController.clear();
+                  startDateController.clear();
+                  endDateController.clear();
+                  amountController.clear();
+                  noteController.clear();
                 });
               }
             }
@@ -122,8 +134,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
             value: patientId,
             isExpanded: true,
             items: patientList.map(buildPatient).toList(),
-            onChanged: (patientId) =>
-                setState(() => this.patientId = patientId),
+            onChanged: (patientId) => setState(() => this.patientId = patientId),
           ),
         ),
         Container(
@@ -145,22 +156,32 @@ class _AddRecordPageState extends State<AddRecordPage> {
       ),
     );
   }
+
   Widget buildMedicineId() {
-    return TextField(
-      controller: medicineIdController,
-      decoration: InputDecoration(
-        hintText: 'M001',
-        labelText: 'Medicine ID',
-        prefixIcon: Icon(Icons.medication),
-        suffixIcon: medicineIdController.text.isEmpty
-            ? Container(width: 0)
-            : IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () => medicineIdController.clear(),
+    return Stack(
+      children: [
+        Container(
+          padding: EdgeInsets.fromLTRB(48, 2, 12, 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: Colors.grey,),
+          ),
+          child: DropdownButton<String>(
+            hint: Text('Medicine ID'),
+            value: medId,
+            isExpanded: true,
+            items: medList.map(buildPatient).toList(),
+            onChanged: (medId) => setState(() => this.medId = medId),
+          ),
         ),
-        border: OutlineInputBorder(),
-      ),
-      textInputAction: TextInputAction.done,
+        Container(
+          margin: EdgeInsets.only(top: 14.0, left: 12.0),
+          child: Icon(
+            Icons.medication,
+            color: Colors.grey,
+          ),
+        ),
+      ],
     );
   }
   Widget buildDisease() {
@@ -306,22 +327,56 @@ class _AddRecordPageState extends State<AddRecordPage> {
     var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
     var response=await http.get(url);
     var result=utf8.decode(response.bodyBytes);
+    setState(() {
+      rawmed=jsonDecode(result);
+      if(rawmed.length>0) {
+        medList=[];
+        for(int i=0; i<rawmed.length; ++i) {
+          medList.add("M"+"${rawmed[i]['id']}"+": "+rawmed[i]['Medicine_name']);
+        }
+      }
+    });
   }
 
   Future<void> createRecord() async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
     Map<String, String> header = {"Content-type": "application/json"};
-    String v1='"patient":"$patientId"';
-    String v2='"medicine":"${medicineIdController.text}"';
+
+    String temp_string_pid='', temp_string_mid='';
+    int temp_int_pid=0, temp_int_mid=0;
+    if(patientId!=null) {
+      temp_string_pid=patientId!;
+      int i=1;
+      while(temp_string_pid[i]!=':') {
+        ++i;
+      }
+      temp_string_pid=temp_string_pid.substring(1, i);
+      temp_int_pid=int.parse(temp_string_pid);
+    }
+    if(medId!=null) {
+      temp_string_mid=medId!;
+      int i=1;
+      while(temp_string_mid[i]!=':') {
+        ++i;
+      }
+      temp_string_mid=temp_string_mid.substring(1, i);
+      temp_int_mid=int.parse(temp_string_mid);
+    }
+    
+    String v1='"patient":$temp_int_pid';
+    String v2='"medicine":$temp_int_mid';
     String v3='"Record_disease":"${diseaseController.text}"';
-    String v4='"Record_amount":"${amountController.text}"';
-    String v5='"Record_start":${startDateController.text}""';
+    String v4='"Record_amount":${amountController.text}';
+    String v5='"Record_start":"${startDateController.text}"';
     String v6='"Record_end":"${endDateController.text}"';
     String v7='"Record_info":"${noteController.text}"';
     String v8='"Record_isComplete":"false"';
     String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
+    //print(jsondata);
+
     var response = await http.post(url, headers: header, body: jsondata);
+    var uft8result=utf8.decode(response.bodyBytes);
     print('ADD RECORD!');
-    print(response.body);
+    print(uft8result);
   }
 }
