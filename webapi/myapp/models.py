@@ -41,6 +41,7 @@ class Medicine(models.Model):
     Medicine_name=models.CharField(max_length=100)
     Medicine_type=models.CharField(max_length=50, choices=TYPES)
     Medicine_info=models.TextField(null=True, blank=True)
+    Medicine_URLPic=models.URLField(default='https://cdn.pixabay.com/photo/2013/07/18/10/55/dna-163466_960_720.jpg', max_length=250)
     def __str__(self):
         return "M"+str(self.id)+": "+str(self.Medicine_name)
 

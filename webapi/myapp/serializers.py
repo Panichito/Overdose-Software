@@ -15,7 +15,7 @@ class CaretakerSerializer(serializers.ModelSerializer):
 class MedicineSerializer(serializers.ModelSerializer):
     class Meta:
         model=Medicine
-        fields=('id', 'Medicine_name', 'Medicine_type', 'Medicine_info')
+        fields='__all__'
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
