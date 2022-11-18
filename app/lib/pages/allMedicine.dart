@@ -13,9 +13,13 @@ class MyMedsPage extends StatefulWidget {
 
 // medicines constructor
 class Medicine {
-  String name;
+  String medid;
+  String medname;
+  String medtype;
+  String medinfo;
+  String medpic;
 
-  Medicine(this.name);
+  Medicine(this.medid, this.medname, this.medtype, this.medinfo, this.medpic);
 }
 
 class _MyMedsPageState extends State<MyMedsPage> {
@@ -30,28 +34,50 @@ class _MyMedsPageState extends State<MyMedsPage> {
     getMedicine();
   }
 
-  void updateList(String value) {
-    setState(() {
-      display_list = meds.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
-    });
-  }
-
   Widget medCard(Medicine med) {
+    /* ไปลองใช้ container
     return Card(
       color: Colors.indigo[100],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+          children: [
             Text(med.name, style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
+            TextButton(onPressed: () {
+            }, child: Text("More")),
           ],
         ),
       )
+    ); */
+    return Container(
+      margin: EdgeInsets.only(bottom: 15),
+      padding: EdgeInsets.all(20),
+      height: 122,
+      width: 330,
+      decoration: BoxDecoration(
+        color: Colors.blue[50],
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+          image: NetworkImage(med.medpic),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.darken)
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(med.medname, style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
+          SizedBox(height: 5),
+          TextButton(onPressed: () {
+          }, child: Text("More Info", style: TextStyle(color: Colors.indigo[200])))
+        ],
+      ),
     );
   }
 
@@ -62,7 +88,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
-            child: noSuggestSearch((value) => updateList(value)),
+            child: noSuggestSearch((value) => update_list(value)),
           ),
           Column(
             children: display_list.map((med) => medCard(med)).toList(),
@@ -70,6 +96,12 @@ class _MyMedsPageState extends State<MyMedsPage> {
         ],
       ),
     );
+  }
+
+  void update_list(String value) {
+    setState(() {
+      display_list = meds.where((element) => element.medname.toLowerCase().contains(value.toLowerCase())).toList();
+    });
   }
 
   Future<void> getMedicine() async {
@@ -82,7 +114,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
       // mapping the list
       meds=[];  // init to empty
       for(int i=0; i<getmeds.length; ++i) {
-        meds.add(Medicine('M'+"${getmeds[i]['id']}"+' - '+getmeds[i]['Medicine_name']));
+        meds.add(Medicine('M'+"${getmeds[i]['id']}", getmeds[i]['Medicine_name'], getmeds[i]['Medicine_type'], getmeds[i]['Medicine_info'], getmeds[i]['Medicine_URLPic']));
       }
       display_list=List.from(meds);
     });

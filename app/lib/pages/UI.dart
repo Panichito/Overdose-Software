@@ -123,7 +123,7 @@ class _UIPageState extends State<UIPage> {
           // user is caretaker show incoming request
           if(_role=='CARETAKER') ...[
             ListTile(
-              leading: Icon(Icons.mail_outline),
+              leading: Icon(Icons.notifications),
               title: Text('Incoming Requests'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>IncomingRequestPage()));
