@@ -1,3 +1,4 @@
+import 'package:app/pages/medicineDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
 import 'package:http/http.dart' as http;
@@ -75,6 +76,8 @@ class _MyMedsPageState extends State<MyMedsPage> {
           Text(med.medname, style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
           SizedBox(height: 5),
           TextButton(onPressed: () {
+            print('MED INFO');
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>MedicineDetail(med.medid, med.medname, med.medtype, med.medinfo, med.medpic)));
           }, child: Text("More Info", style: TextStyle(color: Colors.indigo[200])))
         ],
       ),
