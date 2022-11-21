@@ -317,7 +317,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
       if(rawpatient.length>0) {
         patientList=[];
         for(int i=0; i<rawpatient.length; ++i) {
-          patientList.add(rawpatient[i]['name']);
+          patientList.add('P'+'${rawpatient[i]['pid']}'+': '+rawpatient[i]['name']);
         }
       }
     });

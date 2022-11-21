@@ -3,25 +3,24 @@ import 'package:app/pages/noSuggestSearch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 // patient constructor
 class Patient {
   String id;
   String name;
+  String email;
+  String gender;
+  String usertype;
+  String birthdate;
   String pfp;
 
-  Patient(this.id, this.name, this.pfp);
+  Patient(this.id, this.name, this.email, this.gender, this.usertype, this.birthdate, this.pfp);
 }
 
-List<Patient> allpatient = [
-  Patient('1', 'John Cena', 'https://image-cdn.essentiallysports.com/wp-content/uploads/John-Cena-Salute.png?width=600'),
-  Patient('2', 'Billy Herrington', 'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
-  Patient('3', 'Eva Elfie', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-  Patient('4', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-  Patient('5', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-  Patient('6', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
-];
+List rawpatient = [];
+List<Patient> allpatient = [];
 
 class SearchPatientAdv extends StatefulWidget {
   const SearchPatientAdv({super.key});
@@ -50,16 +49,23 @@ class NewScreen extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    const SizedBox(
-                      height: 25,
-                    ),
+                    const SizedBox(height: 10),
+                    Text(patient.name, style: TextStyle(fontSize: 20.0, color: Colors.grey[800], fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
+                    const SizedBox(height: 10),
+                    Text('Patient ID: P${patient.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800], fontStyle: FontStyle.italic)),
+                    const SizedBox(height: 10),
                     CircleAvatar(
                       backgroundImage: NetworkImage(patient.pfp),
-                      radius: 48,
+                      radius: 80,
                     ),
-                    Text('Name: ${patient.name}',
-                        style:
-                            TextStyle(fontSize: 18.0, color: Colors.grey[800])),
+                    const SizedBox(height: 15),
+                    Text('Role: ${patient.usertype}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 10),
+                    Text('Gender: ${patient.gender}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 10),
+                    Text('Birthdate: ${patient.birthdate}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 10),
+                    Text('Email: ${patient.email}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
                   ])),
         ),
       ),
@@ -68,8 +74,15 @@ class NewScreen extends StatelessWidget {
 }
 
 class _SearchPatientState extends State<SearchPatientAdv> {
-  // list of display patients
-  List<Patient> display_list = List.from(allpatient);
+  var caretakerid;
+  List<Patient> display_list=[];  // list of display patients
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getMyPatient();
+  }
 
   void updateList(String value) {
     setState(() {
@@ -94,19 +107,15 @@ class _SearchPatientState extends State<SearchPatientAdv> {
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(patient.pfp),
-                    radius: 20,
-                  )
+                    radius: 22,
+                  ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Name: ${patient.name}',
-                      style:
-                          TextStyle(fontSize: 12.0, color: Colors.grey[800])),
-                  Text('CaretakerId: ${patient.id}',
-                      style:
-                          TextStyle(fontSize: 12.0, color: Colors.grey[800])),
+                  Text('Name: ${patient.name}', style: TextStyle(fontSize: 13.0, color: Colors.grey[800])),
+                  Text('patient-id: P${patient.id}', style: TextStyle(fontSize: 11.0, color: Colors.grey[800])),
                 ],
               ),
               Column(
@@ -143,24 +152,37 @@ class _SearchPatientState extends State<SearchPatientAdv> {
     );
   }
 
-/*
+  Future<void> getCaretakerID() async {
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    var id=pref.getInt('id');
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/ask-caretakerid/$id');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print('my staff id');
+    print(result);
+    setState(() {
+      caretakerid=result;
+    });
+  }
+
   Future<void> getMyPatient() async {
     await getCaretakerID();
     var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
     var response=await http.get(url);
     var result=utf8.decode(response.bodyBytes);
     print(url);
-    print('Get my patient');
+    print('For search my patient');
     print(result);
     setState(() {
       rawpatient=jsonDecode(result);
       if(rawpatient.length>0) {
-        patientList=[];
+        allpatient=[];
         for(int i=0; i<rawpatient.length; ++i) {
-          patientList.add(rawpatient[i]['name']);
+          allpatient.add(Patient('${rawpatient[i]['pid']}', rawpatient[i]['name'], rawpatient[i]['email'], 
+          rawpatient[i]['gender'], rawpatient[i]['usertype'], rawpatient[i]['birthdate'], rawpatient[i]['profilepic']));
         }
+        display_list=List.from(allpatient);
       }
     });
   }
-  */
 }

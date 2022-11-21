@@ -58,8 +58,8 @@ class _MyMedsPageState extends State<MyMedsPage> {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       padding: EdgeInsets.all(20),
-      height: 122,
-      width: 330,
+      height: 124,
+      width: 329,
       decoration: BoxDecoration(
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(20),
