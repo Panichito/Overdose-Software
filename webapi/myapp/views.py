@@ -140,7 +140,13 @@ def get_mypatient(request, CID):
     patient_list=[]
     for i in mypatient:
         patient_dict={}
-        patient_dict['name']='P'+str(i.id)+': '+i.member.user.first_name+' '+i.member.user.last_name
+        patient_dict['pid']=i.id
+        patient_dict['name']=i.member.user.first_name+' '+i.member.user.last_name
+        patient_dict['email']=i.member.user.email
+        patient_dict['profilepic']=i.member.Member_URLPic
+        patient_dict['gender']=i.member.Member_gender
+        patient_dict['usertype']=i.member.Member_usertype
+        patient_dict['birthdate']=i.member.Member_birthdate
         patient_list.append(patient_dict)
     print(patient_list)
     return Response(data=patient_list, status=status.HTTP_200_OK)
