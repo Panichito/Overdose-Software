@@ -19,6 +19,8 @@ List<Patient> allpatient = [
   Patient('2', 'Billy Herrington', 'https://steamuserimages-a.akamaihd.net/ugc/1758065622195690212/39CC6E1AE7E6769F9D1E98270D21FCCC64AF064C/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
   Patient('3', 'Eva Elfie', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
   Patient('4', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
+  Patient('5', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
+  Patient('6', 'Evan Alfred', 'https://i.pinimg.com/736x/3e/53/e7/3e53e755ef19e573c0cad1b3a0c83f3e.jpg'),
 ];
 
 class SearchPatientAdv extends StatefulWidget {
@@ -140,4 +142,25 @@ class _SearchPatientState extends State<SearchPatientAdv> {
       ),
     );
   }
+
+/*
+  Future<void> getMyPatient() async {
+    await getCaretakerID();
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
+    var response=await http.get(url);
+    var result=utf8.decode(response.bodyBytes);
+    print(url);
+    print('Get my patient');
+    print(result);
+    setState(() {
+      rawpatient=jsonDecode(result);
+      if(rawpatient.length>0) {
+        patientList=[];
+        for(int i=0; i<rawpatient.length; ++i) {
+          patientList.add(rawpatient[i]['name']);
+        }
+      }
+    });
+  }
+  */
 }

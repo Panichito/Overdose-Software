@@ -32,7 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.5
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
   shared_preferences: ^2.0.15
   sqflite: ^2.1.0+1
   intl: ^0.17.0
@@ -70,6 +70,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icon/Overdose_logo1.png
+    - assets/icon/logo_fullbackground_bl.jpg
+    - assets/icon/logo_transparent_bl.png
+    - assets/icon/logo_fullbackground_ind.png
+    - assets/icon/logo_background_ind.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -101,4 +105,4 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/Overdose_logo1.png"
+  image_path: "assets/icon/logo_background_ind.png"
