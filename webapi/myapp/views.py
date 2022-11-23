@@ -49,6 +49,12 @@ def register_newuser(request):
             print(profilepic)
             newmember.Member_URLPic=profilepic
             newmember.save()
+
+            # create patient table
+            newpatient=Patient()
+            newpatient.member=newmember
+            newpatient.save()
+
             dt={'status':'account-created', 'token':gentoken, 'first_name':first_name, 'last_name':last_name, 'username':username}
             return Response(data=dt, status=status.HTTP_201_CREATED)
         else:
