@@ -64,7 +64,8 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                       const SizedBox(height: 8,),
                       ElevatedButton(
                         onPressed: () {
-                          // sendRequest();  // เด่วไปทำ
+                          print('REQUEST C'+'${care.id}');
+                          request_caretaker(care.id);
                         },
                         style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))),
                         child: const Text('Request Service')
@@ -115,5 +116,10 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
       }
       display_list=List.from(caretakers);
     });
+  }
+
+  Future<void> request_caretaker(int cid) async {
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-caretaker');
+    //var response=await http.post(url);
   }
 }

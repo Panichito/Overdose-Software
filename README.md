@@ -12,6 +12,8 @@ Caretaker can be assigned to maximum of 3 patients<br>
 
 <h3 align="left">Languages and Tools:</h3>
 <p align="left"> 
+<a href="https://www.python.org/" target="_blank" rel="noreferrer"> <img src="https://assets.stickpng.com/images/5848152fcef1014c0b5e4967.png" alt="python" width="40" height="40"/> </a> 
 <a href="https://www.djangoproject.com/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/django.svg" alt="django" width="40" height="40"/> </a> 
-<a href="https://www.django-rest-framework.org/" target="_blank" rel="noreferrer"> <img src="https://keenethics.com/wp-content/uploads/2022/01/rest-api-1.svg" alt="restframework" width="40" height="40"/> </a> 
+<a href="https://www.django-rest-framework.org/" target="_blank" rel="noreferrer"> <img src="https://www.flowgear.net/wp-content/uploads/2019/03/Rest-API-Large.png" alt="restframework" width="40" height="40"/> </a> 
+<a href="https://dart.dev/" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Dart_logo.png" alt="dart" width="40" height="40"/> </a> </p>
 <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> </p>
