@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String username="", profilepic="https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
+  // temp schedules list
   List<Schedule> allSchedule = [
     Schedule('1', '1', '12:34', 'Ya Ba', 69),
     Schedule('2', '1', '12:34', 'Ya Ma', 13),
@@ -31,14 +32,21 @@ class _HomePageState extends State<HomePage> {
     Schedule('5', '1', '12:34', 'Mai wa gub krai', 2),
     Schedule('6', '1', '12:34', 'Kao jai mai?', 3),
     Schedule('7', '1', '12:34', 'Bird Thongchai', 4),
-
   ];
+  List<Schedule> display_list = [];
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     checkUsername();
+  }
+
+  void updateList(String value) {
+    setState(() {
+      display_list = allSchedule.where((element) => element.medicine.toLowerCase().contains(value.toLowerCase())).toList();
+    });
   }
 
   @override
@@ -137,12 +145,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Padding(
             padding: const EdgeInsets.all(12),
-            child: noSuggestSearch((value) => null),
+            child: noSuggestSearch((value) => updateList(value)),
           ),
           Expanded(
             child: ListView(
               children: [
-                ...allSchedule.map((schedule) => scheduleCard(schedule)).toList(),
+                ...display_list.map((schedule) => scheduleCard(schedule)).toList(),
                 const SizedBox(height: 16,)
               ],
             ),
