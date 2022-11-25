@@ -163,6 +163,23 @@ def ask_caretakerid(request, UID):
     this_caretaker=Caretaker.objects.get(member=this_member)
     return Response(data=this_caretaker.id, status=status.HTTP_200_OK)
 
+
+@api_view(['PUT'])
+def request_service(request, UID):
+    usr=User.objects.get(id=UID)
+    mem=Member.objects.get(user=usr)
+    ptn=Patient.objects.get(member=mem)
+    print(request.data)
+    print(ptn.member.user.username)
+    if request.method=='PUT':
+        serializer=PatientSerializer(ptn, data=request.data)
+        if serializer.is_valid():
+            caretaker_upd={}
+            serializer.save()
+            caretaker_upd['status']='updated'
+            return Response(data=caretaker_upd, status=status.HTTP_201_CREATED)
+        return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
 oldhomedata={"message":"hello Django my old friend"}
 
 def Home(request):
