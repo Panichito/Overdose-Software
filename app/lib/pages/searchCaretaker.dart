@@ -3,6 +3,7 @@ import 'package:app/pages/noSuggestSearch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class SearchCaretakerPage extends StatefulWidget {
@@ -66,6 +67,16 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                         onPressed: () {
                           print('REQUEST C'+'${care.id}');
                           request_caretaker(care.id);
+                          final snackBar = SnackBar(
+                            content: Text('C'+'${care.id}'+' is your caretaker from now!', style: const TextStyle(fontSize: 14)),
+                            backgroundColor: Colors.orange[900],
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              textColor: Colors.orange[100],
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         style: ButtonStyle(padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))),
                         child: const Text('Request Service')
@@ -119,7 +130,12 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
   }
 
   Future<void> request_caretaker(int cid) async {
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-caretaker');
-    //var response=await http.post(url);
+    final SharedPreferences pref=await SharedPreferences.getInstance();
+    var _hereid=pref.getInt('id');
+    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/request-caretaker/$_hereid');
+    Map<String, String> header={"Content-type":"application/json"};
+    String jsondata='{"caretaker":$cid}';
+    var response=await http.put(url, headers: header, body: jsondata);
+    print(response.body);
   }
 }
