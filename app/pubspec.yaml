@@ -74,6 +74,7 @@ flutter:
     - assets/icon/logo_transparent_bl.png
     - assets/icon/logo_fullbackground_ind.png
     - assets/icon/logo_background_ind.png
+    - assets/icon/logo_gradient_curve.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -102,7 +103,7 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-flutter_icons:
+flutter_icons:  # flutter pub run flutter_launcher_icons:main
   android: true
   ios: true
-  image_path: "assets/icon/logo_background_ind.png"
+  image_path: "assets/icon/logo_gradient_curve.png"
