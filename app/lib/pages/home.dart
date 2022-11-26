@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // temp patient constructor
@@ -25,13 +26,13 @@ class _HomePageState extends State<HomePage> {
 
   // temp schedules list
   List<Schedule> allSchedule = [
-    Schedule('1', '1', '12:34', 'Ya Ba', 69),
-    Schedule('2', '1', '12:34', 'Ya Ma', 13),
-    Schedule('3', '1', '12:34', 'Ya E', 11),
-    Schedule('4', '1', '12:34', 'Ya Tum yang nee', 1),
-    Schedule('5', '1', '12:34', 'Mai wa gub krai', 2),
-    Schedule('6', '1', '12:34', 'Kao jai mai?', 3),
-    Schedule('7', '1', '12:34', 'Bird Thongchai', 4),
+    Schedule('1', '1', "12:31", 'Ya Ba', 69),
+    Schedule('2', '1', "12:34", 'Ya Ma', 13),
+    Schedule('4', '1', "12:34", 'Ya Tum yang nee', 1),
+    Schedule('3', '1', "12:34", 'Ya E', 11),
+    Schedule('5', '1', "12:34", 'Mai wa gub krai', 2),
+    Schedule('6', '1', "12:34", 'Kao jai mai?', 3),
+    Schedule('7', '1', "12:34", 'Bird Thongchai', 4),
   ];
   List<Schedule> display_list = [];
 
@@ -52,6 +53,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget scheduleCard(Schedule schedule) {
+    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    DateTime dt = DateTime.parse(formattedDate + " " + schedule.time).toLocal();
+    String formattedTime = DateFormat('kk:mm').format(dt);
     return Card(
       color: schedule.isTaken?
         Colors.green[100]:
@@ -72,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                     Text(schedule.medicine, style: TextStyle(fontSize: 36.0, color: Colors.grey[800]),),
                     Text('Amount: ${schedule.amount}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
                     const SizedBox(height: 20),
-                    Text('Time: ${schedule.time}', style: TextStyle(fontSize: 20.0, color: Colors.grey[800])),
+                    Text('Time: ${formattedTime}', style: TextStyle(fontSize: 20.0, color: Colors.grey[800])),
                     // const SizedBox(height: 4),
                     // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
                     // const SizedBox(height: 4),
