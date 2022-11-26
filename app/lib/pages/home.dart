@@ -65,18 +65,20 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(schedule.medicine, style: TextStyle(fontSize: 32.0, color: Colors.grey[800])),
-                Text('Amount: ${schedule.amount}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                const SizedBox(height: 20),
-                Text('Time: ${schedule.time}', style: TextStyle(fontSize: 20.0, color: Colors.grey[800])),
-                // const SizedBox(height: 4),
-                // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                // const SizedBox(height: 4),
-                // Text('Record-id: R${schedule.recordId}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-              ],
+            Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(schedule.medicine, style: TextStyle(fontSize: 36.0, color: Colors.grey[800]),),
+                    Text('Amount: ${schedule.amount}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 20),
+                    Text('Time: ${schedule.time}', style: TextStyle(fontSize: 20.0, color: Colors.grey[800])),
+                    // const SizedBox(height: 4),
+                    // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    // const SizedBox(height: 4),
+                    // Text('Record-id: R${schedule.recordId}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                  ],
+                ),
             ),
             Column(
               children: [

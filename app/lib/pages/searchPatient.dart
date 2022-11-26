@@ -111,12 +111,14 @@ class _SearchPatientState extends State<SearchPatientAdv> {
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Name: ${patient.name}', style: TextStyle(fontSize: 13.0, color: Colors.grey[800])),
-                  Text('patient-id: P${patient.id}', style: TextStyle(fontSize: 11.0, color: Colors.grey[800])),
-                ],
+              Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('Name: ${patient.name}', style: TextStyle(fontSize: 13.0, color: Colors.grey[800])),
+                      Text('patient-id: P${patient.id}', style: TextStyle(fontSize: 11.0, color: Colors.grey[800])),
+                    ],
+                  ),
               ),
               Column(
                 children: [
