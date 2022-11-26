@@ -28,113 +28,210 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register Page'), backgroundColor: Colors.indigo[400]),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text(''),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            color: Colors.black,
+            onPressed: () => Navigator.pop(context, false)),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: Center(child: ListView(
+        child: Center(
+            child: ListView(
           children: [
-            Center(child: Text('Registration Form')),
-            SizedBox(height: 10),
-            TextField(
-              controller: fname,
-              decoration: InputDecoration(hintText: 'First Name'),
+            Text(
+              'Register',
+              style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  color: Colors.indigo[400],
+                  fontSize: 70),
+              textAlign: TextAlign.left,
             ),
             SizedBox(height: 30),
+            Center(
+                child: Text('Personal Information',
+                    style: TextStyle(fontSize: 20))),
+            SizedBox(height: 30),
+            /* First Name TextField */
+            TextField(
+              controller: fname,
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'First Name',
+              ),
+            ),
+            SizedBox(height: 30),
+            /* Last Name TextField */
             TextField(
               controller: lname,
-              decoration: InputDecoration(hintText: 'Last Name'),
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Last Name',
+              ),
+            ),
+            SizedBox(height: 30),
+            /* Email Address TextField */
+            TextField(
+              controller: email,
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Email Address',
+              ),
             ),
             SizedBox(height: 30),
             Text('Select your gender:'),
+            SizedBox(height: 10),
             genderRadio(),
-            SizedBox(height: 15),
+            SizedBox(height: 30),
             TextField(
-              controller: dateController,
-              decoration: InputDecoration(
-                icon: Icon(Icons.calendar_today),
-                labelText: 'Enter Birth Date'
-              ),
-              readOnly: true,
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(), //get today's date
-                  firstDate: DateTime(1900), //DateTime.now() - not to allow to choose before today.
-                  lastDate: DateTime(2101)
-                );
-                if(pickedDate!=null ){
-                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
-                      String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
-                        //You can format date as per your need
+                controller: dateController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Enter Birthdate'),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(), //get today's date
+                      firstDate: DateTime(
+                          1900), //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2101));
+                  if (pickedDate != null) {
+                    print(
+                        pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                    String formattedDate = DateFormat('yyyy-MM-dd').format(
+                        pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2022-07-04
+                    //You can format date as per your need
 
-                      setState(() {
-                         dateController.text=formattedDate; //set foratted date to TextField value. 
-                      });
+                    setState(() {
+                      dateController.text =
+                          formattedDate; //set foratted date to TextField value.
+                    });
+                  } else {
+                    print("Date is not selected");
                   }
-                else{
-                  print("Date is not selected");
-                }
-              }
-            ),
+                }),
             SizedBox(height: 30),
-            TextField(
-              controller: email,
-              decoration: InputDecoration(hintText: 'Email Address'),
-            ),
+            Center(
+                child: Text('Account Information',
+                    style: TextStyle(fontSize: 20))),
             SizedBox(height: 30),
+            /* First Name TextField */
             TextField(
               controller: username,
-              decoration: InputDecoration(hintText: 'Username'),
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Username',
+              ),
             ),
             SizedBox(height: 30),
+            /* First Name TextField */
             TextField(
               controller: password,
-              obscureText: true,
-              decoration: InputDecoration(hintText: 'Password'),
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Password',
+              ),
             ),
             SizedBox(height: 30),
-            TextField(  // for demo profile url image
-              controller: profilepic,
-              decoration: InputDecoration(hintText: 'Profile Image URL (optional)'),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(onPressed: () async {
-              if(username.text.isEmpty || password.text.isEmpty || email.text.isEmpty ||
-                dateController.text.isEmpty || fname.text.isEmpty || lname.text.isEmpty) {
-                setState(() {
-                  result='Please complete all information!';
-                });
-              }
-              else if (!EmailValidator.validate(email.text)) {
-                setState(() {
-                  result = 'Invalid email address!';
-                });
-              }
-              else {
-                print(dateController);
-                await register_newuser();
-              }
+            Text('Optional:', style: TextStyle(color: Colors.indigo[400])),
 
-              final snackBar = SnackBar(
-                  content: Text(
-                    result,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  backgroundColor: !success?
-                  Colors.red[900]:
-                  Colors.green[900]
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              success = false;
-            }, child: Text('Register')),
+            /* First Name TextField */
+            SizedBox(height: 10),
+            TextField(
+              controller: profilepic,
+              textAlignVertical: TextAlignVertical.bottom,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Profile Image URL (Optional)',
+              ),
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+                onPressed: () async {
+                  if (username.text.isEmpty ||
+                      password.text.isEmpty ||
+                      email.text.isEmpty ||
+                      dateController.text.isEmpty ||
+                      fname.text.isEmpty ||
+                      lname.text.isEmpty) {
+                    setState(() {
+                      result = 'Please complete all information!';
+                    });
+                  } else if (!EmailValidator.validate(email.text)) {
+                    setState(() {
+                      result = 'Invalid email address!';
+                    });
+                  } else {
+                    print(dateController);
+                    await register_newuser();
+                  }
+
+                  final snackBar = SnackBar(
+                      content: Text(
+                        result,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      backgroundColor:
+                          !success ? Colors.red[900] : Colors.green[900]);
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  success = false;
+                },
+                child: Text('Register')),
           ],
         )),
       ),
     );
   }
+
 
   Widget genderRadio() {
     return Row(
