@@ -35,12 +35,13 @@ class _HomePageState extends State<HomePage> {
   ];
   List<Schedule> display_list = [];
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     checkUsername();
+    // add all schedule into the display list
+    display_list = List.from(allSchedule);
   }
 
   void updateList(String value) {
