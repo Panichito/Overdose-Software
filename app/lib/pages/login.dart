@@ -20,15 +20,24 @@ class _LoginPageState extends State<LoginPage> {
   String result = '';
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login'), backgroundColor: Colors.indigo[400]),
+      //appBar: AppBar(title: Text('Login'), backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
             child: ListView(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 50),
+            Text(
+              'Login',
+              style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  color: Colors.indigo[400],
+                  fontSize: 70),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(height: 50),
             Text('User Name'),
             SizedBox(height: 10),
             TextField(
@@ -104,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 
   Future login() async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
