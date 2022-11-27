@@ -143,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
           result_json['profilepic'],
           result_json['birthdate'],
           result_json['gender'],
+          result_json['cid'],
           result_json['id']);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UIPage()));
     } else if (status == 'login-failed') {
@@ -162,9 +163,10 @@ class _LoginPageState extends State<LoginPage> {
     pref.setString('token', token);
   }
 
-  Future<void> setUserInfo(fname, lname, usr, role, pfp, bdate, gen, id) async {
+  Future<void> setUserInfo(fname, lname, usr, role, pfp, bdate, gen, cid, id) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('id', id);
+    pref.setInt('cid', cid);
     pref.setString('first_name', fname);
     pref.setString('last_name', lname);
     pref.setString('username', usr);
