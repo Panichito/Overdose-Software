@@ -164,6 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextField(
               controller: password,
               textAlignVertical: TextAlignVertical.bottom,
+              obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -211,6 +212,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   } else {
                     print(dateController);
                     await register_newuser();
+                  }
+
+                  if (success) {
+                    username.clear();
+                    password.clear();
+                    email.clear();
+                    dateController.clear();
+                    fname.clear();
+                    lname.clear();
+                    _radioValue=null;
                   }
 
                   final snackBar = SnackBar(

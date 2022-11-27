@@ -68,7 +68,7 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                           print('REQUEST C'+'${care.id}');
                           request_caretaker(care.id);
                           final snackBar = SnackBar(
-                            content: Text('C'+'${care.id}'+' is your caretaker from now!', style: const TextStyle(fontSize: 14)),
+                            content: Text('${care.name}'+' is your caretaker from now!', style: const TextStyle(fontSize: 14)),
                             backgroundColor: Colors.orange[900],
                             action: SnackBarAction(
                               label: 'Undo',
