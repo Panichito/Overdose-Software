@@ -68,14 +68,20 @@ def authentiate_app(request):
         data=request.data
         username=data.get('username')
         password=data.get('password')
+        getuser1=User.objects.get(username=username)  # display info back to screen
         
         try:
             user=authenticate(username=username, password=password)
             login(request, user)
             getuser=User.objects.get(username=username)  # display info back to screen
+            try:
+                cid=getuser.member.patient.caretaker.id
+            except:
+                cid=0
+
             dt={'status':'login-succeed', 'token':getuser.member.Member_token, 'first_name':getuser.first_name, 'last_name':getuser.last_name, 
             'username':getuser.username, 'role':getuser.member.Member_usertype, 'profilepic':getuser.member.Member_URLPic,
-            'birthdate':getuser.member.Member_birthdate, 'gender':getuser.member.Member_gender, 'id':getuser.id}
+            'birthdate':getuser.member.Member_birthdate, 'gender':getuser.member.Member_gender, 'cid':cid, 'id':getuser.id}
             print('Succeed', dt)
             return Response(data=dt, status=status.HTTP_200_OK)
         except:
