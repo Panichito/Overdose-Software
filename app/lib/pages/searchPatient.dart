@@ -92,7 +92,8 @@ class _SearchPatientState extends State<SearchPatientAdv> {
 
   Widget patientCard(Patient patient) {
     return Card(
-        color: Colors.indigo[100],
+        color: Colors.white,
+        elevation: 8.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -102,36 +103,51 @@ class _SearchPatientState extends State<SearchPatientAdv> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(patient.pfp),
-                    radius: 22,
-                  ),
+                      backgroundImage: NetworkImage(patient.pfp), radius: 50),
+                  const SizedBox(width: 20.0),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            width: 180,
+                            child: Text('${patient.name}',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.grey[800],
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              child: Text('patient-id: P${patient.id}',
+                                  style: TextStyle(
+                                      fontSize: 16.0, color: Colors.grey[800])),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              child: (ElevatedButton(
+                                child: const Text('View Profile'),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      // should create a new profile module file
+                                      builder: (context) =>
+                                          NewScreen(patient: patient)));
+                                },
+                              )),
+                            ))
+                      ]),
                 ],
               ),
-              Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('Name: ${patient.name}', style: TextStyle(fontSize: 13.0, color: Colors.grey[800])),
-                      Text('patient-id: P${patient.id}', style: TextStyle(fontSize: 11.0, color: Colors.grey[800])),
-                    ],
-                  ),
-              ),
-              Column(
-                children: [
-                  ElevatedButton(
-                    child: const Text('View Profile'),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        // should create a new profile module file
-                          builder: (context) => NewScreen(patient: patient)));
-                    },
-                  ),
-                ],
-              )
             ],
           ),
         ));
