@@ -113,42 +113,63 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: 200,
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-            decoration: BoxDecoration(
-              color: Colors.indigo[200],
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(24),
-              ),
-              shape: BoxShape.rectangle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black54,
-                  blurRadius: 6,
-                )
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.indigo[500],
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(24),
+                    top: Radius.circular(24),
+                  )),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Text('Welcome Back,', style: TextStyle(fontSize: 16, color: Colors.white)),
-                    const SizedBox(height: 10),
-                    Text(username, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Welcome Back,',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            )),
+                        const SizedBox(height: 5),
+                        Container(
+                          width: 50,
+                          child: Text(
+                            username,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(width: 100),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(profilepic),
+                      radius: 30,
                     ),
                   ],
-
                 ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(profilepic),
-                  radius: 50,
-                ),
-              ],
+              ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 20),
+              Text('My Schedule',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.indigo[400],
+                      fontFamily: 'Quicksand',
+                      fontWeight: FontWeight.bold)),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(12),
@@ -157,8 +178,12 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView(
               children: [
-                ...display_list.map((schedule) => scheduleCard(schedule)).toList(),
-                const SizedBox(height: 16,)
+                ...display_list
+                    .map((schedule) => scheduleCard(schedule))
+                    .toList(),
+                const SizedBox(
+                  height: 16,
+                )
               ],
             ),
           ),
