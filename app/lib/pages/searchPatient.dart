@@ -97,7 +97,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
                                 onPressed: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
-                                      ProfilePage(patient: patient)
+                                      ProfilePage(patient)
                                   ));
                                 },
                               )),

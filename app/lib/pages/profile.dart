@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   final Patient patient;
-  const ProfilePage({super.key, required this.patient});
+  const ProfilePage(this.patient);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class Record {
+
+
+}
+
+Widget RecordCard(Record record) {
+  return Card(
+
+  );
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,32 +31,44 @@ class ProfilePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 10),
-                    Text(patient.name, style: TextStyle(fontSize: 20.0, color: Colors.grey[800], fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
-                    const SizedBox(height: 10),
-                    Text('Patient ID: P${patient.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800], fontStyle: FontStyle.italic)),
-                    const SizedBox(height: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                // height: 400,
+                color: Colors.red,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    Text(widget.patient.name, style: TextStyle(fontSize: 20.0, color: Colors.grey[800], fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
+                    const SizedBox(height: 8),
+                    Text('Patient ID: P${widget.patient.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800], fontStyle: FontStyle.italic)),
+                    const SizedBox(height: 8),
                     CircleAvatar(
-                      backgroundImage: NetworkImage(patient.pfp),
+                      backgroundImage: NetworkImage(widget.patient.pfp),
                       radius: 80,
                     ),
-                    const SizedBox(height: 15),
-                    Text('Role: ${patient.usertype}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    const SizedBox(height: 10),
-                    Text('Gender: ${patient.gender}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    const SizedBox(height: 10),
-                    Text('Birthdate: ${patient.birthdate}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    const SizedBox(height: 10),
-                    Text('Email: ${patient.email}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                  ])),
+                    const SizedBox(height: 16),
+                    Text('Role: ${widget.patient.usertype}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 8),
+                    Text('Gender: ${widget.patient.gender}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 8),
+                    Text('Birthdate: ${widget.patient.birthdate}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(height: 8),
+                    Text('Email: ${widget.patient.email}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16,),
+              Column(
+                children: [
+                  Text('fuck'),
+                ],
+              ),
+            ]
+          )
         ),
       ),
     );
   }
 }
- 
