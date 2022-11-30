@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
   List<Schedule> allSchedule = [
     Schedule('1', '1', "12:31", 'Ya Ba', 69),
     Schedule('2', '1', "12:34", 'Ya Ma', 13),
-    Schedule('4', '1', "12:34", 'Ya Tum yang nee', 1),
     Schedule('3', '1', "12:34", 'Ya E', 11),
+    Schedule('4', '1', "12:34", 'Ya Tum yang nee', 1),
     Schedule('5', '1', "12:34", 'Mai wa gub krai', 2),
     Schedule('6', '1', "12:34", 'Kao jai mai?', 3),
     Schedule('7', '1', "12:34", 'Bird Thongchai', 4),
