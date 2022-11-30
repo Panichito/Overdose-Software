@@ -10,17 +10,64 @@ class ProfilePage extends StatefulWidget {
 }
 
 class Record {
+  String patientId;
+  String medicineId;
+  String disease;
+  String startDate;
+  String endDate;
+  int amount;
+  String note;
 
+  Record(this.patientId, this.medicineId, this.disease, this.startDate, this.endDate, this.amount, this.note);
+}
+
+class Alert {
 
 }
 
 Widget RecordCard(Record record) {
   return Card(
-
+    color: Colors.red[100],
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Disease: ${record.disease}'),
+              const SizedBox(height: 8,),
+              // it suppose to show a medicine name not id
+              Text('Medicine: ${record.medicineId}'),
+              const SizedBox(height: 8,),
+              Text('Amount: ${record.amount.toString()}'),
+              const SizedBox(height: 8,),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('Start: ${record.startDate}'),
+              const SizedBox(height: 8,),
+              Text('End: ${record.endDate}'),
+            ],
+          ),
+        ],
+      ),
+    ),
   );
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  List<Record> allRecord = [
+    Record('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero'),
+    Record('P01', 'M02', 'Cancer', '2022-02-22', '2022-03-30', 1, 'chances of surviving is zero'),
+    Record('P01', 'M03', 'Diabetes', '2022-02-22', '2022-03-30', 4, 'chances of surviving is zero'),
+    Record('P01', 'M04', 'Covid', '2022-02-22', '2022-03-30', 5, 'chances of surviving is zero'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +107,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 16,),
-              Column(
-                children: [
-                  Text('fuck'),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ...allRecord.map((record) => RecordCard(record)).toList(),
+                    const SizedBox(height: 8,),
+                  ],
+                ),
               ),
             ]
           )
