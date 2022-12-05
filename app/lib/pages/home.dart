@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/noSuggestSearch.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app/pages/viewrecord.dart';
 
 // temp patient constructor
 class Schedule {
@@ -159,15 +160,126 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Row(
+          SizedBox(height: 10),
+          Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      RawMaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RecordPage()));
+                        },
+                        elevation: 2.0,
+                        fillColor: Colors.white,
+                        child: Icon(
+                          Icons.edit_note_sharp,
+                          size: 35.0,
+                          color: Colors.indigo[400],
+                        ),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'View Record',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.indigo[400],
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 2.0,
+                        fillColor: Colors.white,
+                        child: Icon(
+                          Icons.question_mark,
+                          size: 35.0,
+                          color: Colors.indigo[400],
+                        ),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Empty',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.indigo[400],
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 2.0,
+                        fillColor: Colors.white,
+                        child: Icon(
+                          Icons.question_mark,
+                          size: 35.0,
+                          color: Colors.indigo[400],
+                        ),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Empty',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.indigo[400],
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 2.0,
+                        fillColor: Colors.white,
+                        child: Icon(
+                          Icons.question_mark,
+                          size: 35.0,
+                          color: Colors.indigo[400],
+                        ),
+                        padding: EdgeInsets.all(15.0),
+                        shape: CircleBorder(),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Empty',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.indigo[400],
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
               Text('My Schedule',
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.indigo[400],
-                      fontFamily: 'Quicksand',
+                      //color: Colors.indigo[400],
+                      //fontFamily: 'Quicksand',
                       fontWeight: FontWeight.bold)),
             ],
           ),
