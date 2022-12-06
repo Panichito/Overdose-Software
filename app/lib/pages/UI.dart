@@ -44,8 +44,8 @@ class _UIPageState extends State<UIPage> {
       widgetBottom=[HomePage(), SearchCaretakerPage(), MyMedsPage()];
     }
     else {  // either caretaker or admin is the stuff
-      pagename=['Home Page', 'Find Caretaker Page', 'Add Record Page', 'All Medicine', 'Search My Patient'];
-      widgetBottom=[HomePage(), SearchCaretakerPage(), AddRecordPage(), MyMedsPage(), SearchPatientAdv(),];
+      pagename=['Home Page', 'Find Caretaker Page', 'All Medicine', 'Search My Patient'];
+      widgetBottom=[HomePage(), SearchCaretakerPage(), MyMedsPage(), SearchPatientAdv(),];
     }
     return DefaultTabController(
       length: 1,
@@ -89,7 +89,6 @@ class _UIPageState extends State<UIPage> {
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Caretaker'),
-        BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Record'),
         BottomNavigationBarItem(icon: Icon(Icons.medication), label: 'Med'),
         BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
       ],
