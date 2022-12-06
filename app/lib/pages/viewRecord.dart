@@ -73,14 +73,6 @@ class _RecordPageState extends State<RecordPage> {
                     );
                   },
                 ),
-                TextButton(
-                  child: const Text('Edit'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.red,
-                  ),
-                  onPressed: () => {},
-                ),
               ],
             ),
           ],
