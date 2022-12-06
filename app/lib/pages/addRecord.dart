@@ -175,7 +175,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
             hint: Text('Medicine ID'),
             value: medId,
             isExpanded: true,
-            items: medList.map(buildPatient).toList(),
+            items: medList.map(buildMedicine).toList(),
             onChanged: (medId) => setState(() => this.medId = medId),
           ),
         ),
@@ -189,6 +189,16 @@ class _AddRecordPageState extends State<AddRecordPage> {
       ],
     );
   }
+
+  DropdownMenuItem<String> buildMedicine(String medicine) {
+    return DropdownMenuItem(
+      value: medicine,
+      child: Text(
+        medicine,
+      ),
+    );
+  }
+
   Widget buildDisease() {
     return TextField(
       controller: diseaseController,
