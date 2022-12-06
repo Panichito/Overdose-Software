@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/addRecord.dart';
+import 'package:app/pages/recordDetails.dart';
 
 class RecordPage extends StatefulWidget {
   // final Patient patient;
@@ -19,75 +20,74 @@ class BriefRecord {
   BriefRecord(this.recordId, this.patientId, this.medicineId, this.disease);
 }
 
-Widget recordCard(BriefRecord record) {
-  return Card(
-    color: Colors.red[100],
-    child: Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('RecordId: ${record.recordId}'),
-              const SizedBox(height: 8,),
-              Text('Disease: ${record.disease}'),
-              const SizedBox(height: 8,),
-              // it suppose to show a medicine name not id
-              Text('Medicine: ${record.medicineId}'),
-              const SizedBox(height: 8,),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextButton(
-                child: const Text('View Alert'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.green,
-                ),
-                onPressed: () => {},
-              ),
-              TextButton(
-                child: const Text('View'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                ),
-                onPressed: () => {},
-              ),
-              TextButton(
-                child: const Text('Edit'),
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.red,
-                ),
-                onPressed: () => {},
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
 class _RecordPageState extends State<RecordPage> {
-  // List<BriefRecord> allRecord = [
-  //   BriefRecord('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M02', 'Cancer', '2022-02-22', '2022-03-30', 1, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M03', 'Diabetes', '2022-02-22', '2022-03-30', 4, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M04', 'Covid', '2022-02-22', '2022-03-30', 5, 'chances of surviving is zero'),
-  // ];
   List<BriefRecord> allRecord = [
     BriefRecord('R01','P01', 'M01', 'HIV'),
     BriefRecord('R02', 'P01', 'M02', 'Cancer'),
     BriefRecord('R03', 'P01', 'M03', 'Diabetes'),
     BriefRecord('R04', 'P01', 'M04', 'Covid'),
   ];
+
+  Widget recordCard(BriefRecord record) {
+    return Card(
+      color: Colors.red[100],
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('RecordId: ${record.recordId}'),
+                const SizedBox(height: 8,),
+                Text('Disease: ${record.disease}'),
+                const SizedBox(height: 8,),
+                // it suppose to show a medicine name not id
+                Text('Medicine: ${record.medicineId}'),
+                const SizedBox(height: 8,),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextButton(
+                  child: const Text('View Alert'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: () => {},
+                ),
+                TextButton(
+                  child: const Text('View'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RecordDetailsPage())
+                    );
+                  },
+                ),
+                TextButton(
+                  child: const Text('Edit'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: () => {},
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
