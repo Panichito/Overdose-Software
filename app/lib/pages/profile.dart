@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
-import 'package:app/pages/addRecord.dart';
+import 'package:app/pages/viewRecord.dart';
 
 class ProfilePage extends StatefulWidget {
   final Patient patient;
@@ -76,18 +76,6 @@ Widget recordCard(BriefRecord record) {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // List<BriefRecord> allRecord = [
-  //   BriefRecord('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M02', 'Cancer', '2022-02-22', '2022-03-30', 1, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M03', 'Diabetes', '2022-02-22', '2022-03-30', 4, 'chances of surviving is zero'),
-  //   BriefRecord('P01', 'M04', 'Covid', '2022-02-22', '2022-03-30', 5, 'chances of surviving is zero'),
-  // ];
-  List<BriefRecord> allRecord = [
-    BriefRecord('R01','P01', 'M01', 'HIV'),
-    BriefRecord('R02', 'P01', 'M02', 'Cancer'),
-    BriefRecord('R03', 'P01', 'M03', 'Diabetes'),
-    BriefRecord('R04', 'P01', 'M04', 'Covid'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +84,6 @@ class _ProfilePageState extends State<ProfilePage> {
           titleSpacing: 24,
           title: const Text('Patient Information'),
           backgroundColor: Colors.indigo[400],
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddRecordPage())
-                );
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -142,8 +120,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    ...allRecord.map((record) => recordCard(record)).toList(),
-                    const SizedBox(height: 8,),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => RecordPage())
+                        );
+                      },
+                      child: const Text('View List of Records'),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),
