@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
+import 'package:app/pages/addRecord.dart';
 
 class ProfilePage extends StatefulWidget {
   final Patient patient;
@@ -9,23 +10,16 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class Record {
+class BriefRecord {
+  String recordId;
   String patientId;
   String medicineId;
   String disease;
-  String startDate;
-  String endDate;
-  int amount;
-  String note;
 
-  Record(this.patientId, this.medicineId, this.disease, this.startDate, this.endDate, this.amount, this.note);
+  BriefRecord(this.recordId, this.patientId, this.medicineId, this.disease);
 }
 
-class Alert {
-
-}
-
-Widget RecordCard(Record record) {
+Widget recordCard(BriefRecord record) {
   return Card(
     color: Colors.red[100],
     child: Padding(
@@ -37,21 +31,42 @@ Widget RecordCard(Record record) {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text('RecordId: ${record.recordId}'),
+              const SizedBox(height: 8,),
               Text('Disease: ${record.disease}'),
               const SizedBox(height: 8,),
               // it suppose to show a medicine name not id
               Text('Medicine: ${record.medicineId}'),
-              const SizedBox(height: 8,),
-              Text('Amount: ${record.amount.toString()}'),
               const SizedBox(height: 8,),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('Start: ${record.startDate}'),
-              const SizedBox(height: 8,),
-              Text('End: ${record.endDate}'),
+              TextButton(
+                child: const Text('View Alert'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () => {},
+              ),
+              TextButton(
+                child: const Text('View'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: () => {},
+              ),
+              TextButton(
+                child: const Text('Edit'),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () => {},
+              ),
             ],
           ),
         ],
@@ -61,11 +76,17 @@ Widget RecordCard(Record record) {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  List<Record> allRecord = [
-    Record('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero'),
-    Record('P01', 'M02', 'Cancer', '2022-02-22', '2022-03-30', 1, 'chances of surviving is zero'),
-    Record('P01', 'M03', 'Diabetes', '2022-02-22', '2022-03-30', 4, 'chances of surviving is zero'),
-    Record('P01', 'M04', 'Covid', '2022-02-22', '2022-03-30', 5, 'chances of surviving is zero'),
+  // List<BriefRecord> allRecord = [
+  //   BriefRecord('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero'),
+  //   BriefRecord('P01', 'M02', 'Cancer', '2022-02-22', '2022-03-30', 1, 'chances of surviving is zero'),
+  //   BriefRecord('P01', 'M03', 'Diabetes', '2022-02-22', '2022-03-30', 4, 'chances of surviving is zero'),
+  //   BriefRecord('P01', 'M04', 'Covid', '2022-02-22', '2022-03-30', 5, 'chances of surviving is zero'),
+  // ];
+  List<BriefRecord> allRecord = [
+    BriefRecord('R01','P01', 'M01', 'HIV'),
+    BriefRecord('R02', 'P01', 'M02', 'Cancer'),
+    BriefRecord('R03', 'P01', 'M03', 'Diabetes'),
+    BriefRecord('R04', 'P01', 'M04', 'Covid'),
   ];
 
   @override
@@ -74,7 +95,17 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
           titleSpacing: 24,
           title: const Text('Patient Information'),
-          backgroundColor: Colors.indigo[400]
+          backgroundColor: Colors.indigo[400],
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddRecordPage())
+                );
+              },
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -111,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    ...allRecord.map((record) => RecordCard(record)).toList(),
+                    ...allRecord.map((record) => recordCard(record)).toList(),
                     const SizedBox(height: 8,),
                   ],
                 ),

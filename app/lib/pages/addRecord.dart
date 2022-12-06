@@ -48,6 +48,11 @@ class _AddRecordPageState extends State<AddRecordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 24,
+        title: const Text('Add Record'),
+        backgroundColor: Colors.indigo[400],
+      ),
       body: ListView(
         padding: EdgeInsets.fromLTRB(12, 16, 12, 12),
         children: [
