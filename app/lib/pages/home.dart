@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+bool _isShow = false;
+
 // patient constructor
 class Schedule {
   String disease;
@@ -73,11 +75,20 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     schedule.medName,
-                    style: TextStyle(fontSize: 30.0, color: Colors.grey[700], fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 30.0,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold),
                   ),
-                  Text('Disease: ${schedule.disease}', style: TextStyle(fontSize: 12.0, color: Colors.grey[700])),
+                  Text('Disease: ${schedule.disease}',
+                      style:
+                          TextStyle(fontSize: 12.0, color: Colors.grey[700])),
                   const SizedBox(height: 20),
-                  Text('Time: ${formattedTime}', style: TextStyle(fontSize: 22.0, color: Colors.grey[700], fontStyle: FontStyle.italic)),
+                  Text('Time: ${formattedTime}',
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          color: Colors.grey[700],
+                          fontStyle: FontStyle.italic)),
                   // const SizedBox(height: 4),
                   // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
                   // const SizedBox(height: 4),
@@ -119,13 +130,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.indigo[500],
+                  color: Colors.indigo[400],
                   borderRadius: BorderRadius.vertical(
                     bottom: Radius.circular(24),
                     top: Radius.circular(24),
@@ -146,11 +157,11 @@ class _HomePageState extends State<HomePage> {
                             )),
                         const SizedBox(height: 5),
                         Container(
-                          width: 50,
+                          width: 150,
                           child: Text(
                             username,
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                            maxLines: 1,
                             style: const TextStyle(
                                 fontSize: 20, color: Colors.white),
                           ),
@@ -167,126 +178,145 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          /*Four circle button
+            and text"Schedule"
+            inside this Column()
+          */
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          getMyId();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RecordPage(myid)));
-                        },
-                        elevation: 2.0,
-                        fillColor: Colors.white,
-                        child: Icon(
-                          Icons.edit_note_sharp,
-                          size: 35.0,
-                          color: Colors.indigo[400],
-                        ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'View Record',
-                        style: TextStyle(
-                            fontSize: 13,
+              Visibility(
+                visible: _isShow,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        RawMaterialButton(
+                          onPressed: () {
+                            getMyId();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RecordPage(myid)));
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: Icon(
+                            Icons.edit_note_sharp,
+                            size: 35.0,
                             color: Colors.indigo[400],
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.white,
-                        child: Icon(
-                          Icons.question_mark,
-                          size: 35.0,
-                          color: Colors.indigo[400],
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
                         ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Empty',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.indigo[400],
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.white,
-                        child: Icon(
-                          Icons.question_mark,
-                          size: 35.0,
-                          color: Colors.indigo[400],
+                        SizedBox(height: 5),
+                        Text(
+                          'View Record',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.indigo[400],
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
                         ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Empty',
-                        style: TextStyle(
-                            fontSize: 13,
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        RawMaterialButton(
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: Icon(
+                            Icons.question_mark,
+                            size: 35.0,
                             color: Colors.indigo[400],
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {},
-                        elevation: 2.0,
-                        fillColor: Colors.white,
-                        child: Icon(
-                          Icons.question_mark,
-                          size: 35.0,
-                          color: Colors.indigo[400],
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
                         ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Empty',
-                        style: TextStyle(
-                            fontSize: 13,
+                        SizedBox(height: 5),
+                        Text(
+                          'Empty',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.indigo[400],
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        RawMaterialButton(
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: Icon(
+                            Icons.question_mark,
+                            size: 35.0,
                             color: Colors.indigo[400],
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Empty',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.indigo[400],
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        RawMaterialButton(
+                          onPressed: () {},
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: Icon(
+                            Icons.question_mark,
+                            size: 35.0,
+                            color: Colors.indigo[400],
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'Empty',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.indigo[400],
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
+              /* End of Four Button*/
+
+              IconButton(
+                onPressed: () {
+                  setState(
+                    () {
+                      _isShow = !_isShow;
+                    },
+                  );
+                },
+                icon: Icon(
+                  _isShow ? Icons.expand_less : Icons.expand_circle_down,
+                  color: Colors.indigo[400],
+                ),
+              ),
               Text('My Schedule',
                   style: TextStyle(
                       fontSize: 20,
-                      //color: Colors.indigo[400],
+                      color: Colors.indigo[400],
                       //fontFamily: 'Quicksand',
                       fontWeight: FontWeight.bold)),
             ],
