@@ -43,7 +43,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
     super.initState();
 
     diseaseController.addListener(() => setState(() {}));
-    getMyPatient();
     getMedicine();
   }
 
@@ -325,25 +324,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
     });
   }
 
-  Future<void> getMyPatient() async {
-    await getCaretakerID();
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
-    var response=await http.get(url);
-    var result=utf8.decode(response.bodyBytes);
-    print(url);
-    print('Get my patient');
-    print(result);
-    setState(() {
-      rawpatient=jsonDecode(result);
-      if(rawpatient.length>0) {
-        patientList=[];
-        for(int i=0; i<rawpatient.length; ++i) {
-          patientList.add('P'+'${rawpatient[i]['pid']}'+': '+rawpatient[i]['name']);
-        }
-      }
-    });
-  }
-
   Future<void> getMedicine() async {
     var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
     var response=await http.get(url);
@@ -363,19 +343,10 @@ class _EditRecordPageState extends State<EditRecordPage> {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
     Map<String, String> header = {"Content-type": "application/json"};
 
-    String temp_string_pid='', temp_string_mid='';
-    int temp_int_pid=0, temp_int_mid=0;
-    if(patientId!=null) {
-      temp_string_pid=patientId!;
-      int i=1;
-      while(temp_string_pid[i]!=':') {
-        ++i;
-      }
-      temp_string_pid=temp_string_pid.substring(1, i);
-      temp_int_pid=int.parse(temp_string_pid);
-    }
+    String temp_string_mid='';
+    int temp_int_mid=0;
     if(medId!=null) {
-      temp_string_mid=medId!;
+      temp_string_mid=medId;
       int i=1;
       while(temp_string_mid[i]!=':') {
         ++i;
@@ -384,6 +355,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
       temp_int_mid=int.parse(temp_string_mid);
     }
 
+/*
     String v1='"patient":$temp_int_pid';
     String v2='"medicine":$temp_int_mid';
     String v3='"Record_disease":"${diseaseController.text}"';
@@ -399,6 +371,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     var uft8result=utf8.decode(response.bodyBytes);
     print('EDIT RECORD!');
     print(uft8result);
+*/
   }
 }
 
