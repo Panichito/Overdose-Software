@@ -84,20 +84,16 @@ class _RecordPageState extends State<RecordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddRecordPage()));
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         titleSpacing: 24,
         title: const Text('List of Records'),
         backgroundColor: Colors.indigo[400],
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddRecordPage())
-                );
-              },
-              icon: Icon(Icons.add))
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
