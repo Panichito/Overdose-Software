@@ -117,11 +117,39 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                             backgroundColor: Colors.red,
                           ),
                           onPressed: () {
-                            // delete information
-                            // placeholderDelete();
+                            // ask for confirmation
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                    title: const Text('Delete this Record'),
+                                    content: const Text(
+                                        'All of the alert of this record will be cleared. Do you wish to proceed?'
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          // cancel
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        // delete information
+                                        // placeholderDelete();
 
-                            // go back
-                            Navigator.pop(context);
+                                        // pop to RecordPage
+                                        onPressed: () {
+                                          int count = 0;
+                                          Navigator.popUntil(context, (route) {
+                                            return count++ == 2;
+                                          });
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ]
+                                )
+                            );
+
                           },
                           child: const Text('Delete'),
                         ),
@@ -132,6 +160,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                             backgroundColor: Colors.blue,
                           ),
                           onPressed: () {
+                            // ask for confirmation
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
