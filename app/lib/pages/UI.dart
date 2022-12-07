@@ -184,7 +184,7 @@ class _UIPageState extends State<UIPage> {
   }
 
   Future<void> launchURL() async {
-    final Uri url=Uri.parse('https://tinder.com/th');
+    final Uri url=Uri.parse('https://weatherreporto.pythonanywhere.com/');
     if(await canLaunchUrl(url)) {
       await launchUrl(url);
     }
