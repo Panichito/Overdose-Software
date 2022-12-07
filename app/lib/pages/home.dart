@@ -3,17 +3,18 @@ import 'package:app/pages/noSuggestSearch.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/pages/viewRecord.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
-// temp patient constructor
+// patient constructor
 class Schedule {
-  String id;
-  String recordId;
+  String disease;
+  String medName;
   String time;
-  String medicine;
-  int amount;
-  bool isTaken = false;
+  bool isTake;
 
-  Schedule(this.id, this.recordId, this.time, this.medicine, this.amount);
+  Schedule(this.disease, this.medName, this.time, this.isTake);
 }
 
 class HomePage extends StatefulWidget {
@@ -23,32 +24,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String username="", profilepic="https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
+  String username = "",
+      profilepic =
+          "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
-  // temp schedules list
-  List<Schedule> allSchedule = [
-    Schedule('1', '1', "12:31", 'Ya Ba', 69),
-    Schedule('2', '1', "12:34", 'Ya Ma', 13),
-    Schedule('3', '1', "12:34", 'Ya E', 11),
-    Schedule('4', '1', "12:34", 'Ya Tum yang nee', 1),
-    Schedule('5', '1', "12:34", 'Mai wa gub krai', 2),
-    Schedule('6', '1', "12:34", 'Kao jai mai?', 3),
-    Schedule('7', '1', "12:34", 'Bird Thongchai', 4),
-  ];
-  List<Schedule> display_list = [];
+  // schedules list
+  List getAlert = [];
+  List<Schedule> allSchedule = [];
+  List<Schedule> scheduleList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     checkUsername();
-    // add all schedule into the display list
-    display_list = List.from(allSchedule);
+    getAlerts();
   }
 
   void updateList(String value) {
     setState(() {
-      display_list = allSchedule.where((element) => element.medicine.toLowerCase().contains(value.toLowerCase())).toList();
+      scheduleList = allSchedule
+          .where((element) =>
+              element.medName.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
@@ -58,9 +56,7 @@ class _HomePageState extends State<HomePage> {
     DateTime dt = DateTime.parse(formattedDate + " " + schedule.time).toLocal();
     String formattedTime = DateFormat('kk:mm').format(dt);
     return Card(
-      color: schedule.isTaken?
-        Colors.green[100]:
-        Colors.red[100],
+      color: schedule.isTake ? Colors.green[100] : Colors.red[100],
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -71,36 +67,45 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(schedule.medicine, style: TextStyle(fontSize: 36.0, color: Colors.grey[800]),),
-                    Text('Amount: ${schedule.amount}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    const SizedBox(height: 20),
-                    Text('Time: ${formattedTime}', style: TextStyle(fontSize: 20.0, color: Colors.grey[800])),
-                    // const SizedBox(height: 4),
-                    // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    // const SizedBox(height: 4),
-                    // Text('Record-id: R${schedule.recordId}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    schedule.medName,
+                    style: TextStyle(fontSize: 30.0, color: Colors.grey[700], fontWeight: FontWeight.bold),
+                  ),
+                  Text('Disease: ${schedule.disease}', style: TextStyle(fontSize: 12.0, color: Colors.grey[700])),
+                  const SizedBox(height: 20),
+                  Text('Time: ${formattedTime}', style: TextStyle(fontSize: 22.0, color: Colors.grey[700], fontStyle: FontStyle.italic)),
+                  // const SizedBox(height: 4),
+                  // Text('Schedule-id: S${schedule.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                  // const SizedBox(height: 4),
+                  // Text('Record-id: R${schedule.recordId}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                ],
+              ),
             ),
             Column(
               children: [
                 ElevatedButton(
-                    onPressed: () {
-                      // set isTaken to false
-                      setState(() {
-                        schedule.isTaken = !schedule.isTaken;
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(16),
-                      backgroundColor: Colors.grey[700],
-                    ),
-                    child: !schedule.isTaken?
-                      const Text('Take', style: TextStyle(fontSize: 20),):
-                      const Text('Untake', style: TextStyle(fontSize: 20),),
+                  onPressed: () {
+                    // set isTaken to false
+                    setState(() {
+                      schedule.isTake = !schedule.isTake;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(16),
+                    backgroundColor: Colors.grey[700],
+                  ),
+                  child: !schedule.isTake
+                      ? const Text(
+                          'Take',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      : const Text(
+                          'Untake',
+                          style: TextStyle(fontSize: 20),
+                        ),
                 ),
               ],
             ),
@@ -109,6 +114,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -290,7 +296,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: ListView(
               children: [
-                ...display_list
+                ...scheduleList
                     .map((schedule) => scheduleCard(schedule))
                     .toList(),
                 const SizedBox(
@@ -306,18 +312,39 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> checkUsername() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
-    final checkvalue=pref.get('token') ?? 0;
-    if(checkvalue!=0) {  // get username
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final checkvalue = pref.get('token') ?? 0;
+    if (checkvalue != 0) {
+      // get username
       setState(() {
-        var usr_name=pref.getString('username');
-        var profile_url=pref.getString('profilepic');
-        username="$usr_name";
+        var usr_name = pref.getString('username');
+        var profile_url = pref.getString('profilepic');
+        username = "$usr_name";
         print(profile_url);
-        if(profile_url!="no image") {
-          profilepic="$profile_url";
+        if (profile_url != "no image") {
+          profilepic = "$profile_url";
         }
       });
     }
+  }
+
+  Future<void> getAlerts() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    var uid = pref.getInt('id');
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-alerts/$uid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    print('RECEIVE MY ALERT LIST');
+    setState(() {
+      getAlert = jsonDecode(result);
+      allSchedule = [];
+      for (int i = 0; i < getAlert.length; ++i) {
+        allSchedule.add(Schedule(getAlert[i]['disease'], getAlert[i]['medname'],
+            getAlert[i]['time'], getAlert[i]['isTake']));
+      }
+      scheduleList =
+          List.from(allSchedule); // add all schedule into the display list
+    });
   }
 }
