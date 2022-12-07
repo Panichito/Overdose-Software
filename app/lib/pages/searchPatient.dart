@@ -6,6 +6,20 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/pages/profile.dart';
 
+class SizeConfig {
+  static late MediaQueryData mediaQueryData;
+  static late double screenWidth;
+  static late double screenHeight;
+  static late double defaultSize;
+  static late Orientation orientation;
+
+  static void init(BuildContext context) {
+    mediaQueryData = MediaQuery.of(context);
+    screenWidth = mediaQueryData.size.width;
+    screenHeight = mediaQueryData.size.height;
+    orientation = mediaQueryData.orientation;
+  }
+}
 
 // patient constructor
 class Patient {
@@ -17,7 +31,8 @@ class Patient {
   String birthdate;
   String pfp;
 
-  Patient(this.id, this.name, this.email, this.gender, this.usertype, this.birthdate, this.pfp);
+  Patient(this.id, this.name, this.email, this.gender, this.usertype,
+      this.birthdate, this.pfp);
 }
 
 List rawpatient = [];
@@ -32,7 +47,7 @@ class SearchPatientAdv extends StatefulWidget {
 
 class _SearchPatientState extends State<SearchPatientAdv> {
   var caretakerid;
-  List<Patient> display_list=[];  // list of display patients
+  List<Patient> display_list = []; // list of display patients
 
   @override
   void initState() {
@@ -43,11 +58,16 @@ class _SearchPatientState extends State<SearchPatientAdv> {
 
   void updateList(String value) {
     setState(() {
-      display_list = allpatient.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+      display_list = allpatient
+          .where((element) =>
+              element.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
   Widget patientCard(Patient patient) {
+    SizeConfig.init(context);
+    SizeConfig.mediaQueryData;
     return Card(
         color: Colors.white,
         elevation: 8.0,
@@ -60,51 +80,41 @@ class _SearchPatientState extends State<SearchPatientAdv> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                      backgroundImage: NetworkImage(patient.pfp), radius: 50),
-                  const SizedBox(width: 20.0),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            width: 180,
-                            child: Text('${patient.name}',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 3,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              child: Text('patient-id: P${patient.id}',
-                                  style: TextStyle(
-                                      fontSize: 16.0, color: Colors.grey[800])),
-                            )),
-                        Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              child: (ElevatedButton(
-                                child: const Text('View Profile'),
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                      ProfilePage(patient)
-                                  ));
-                                },
-                              )),
-                            ))
-                      ]),
-                ],
-              ),
+              CircleAvatar(
+                  backgroundImage: NetworkImage(patient.pfp), radius: 50),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    width: SizeConfig.screenWidth / 2,
+                    child: Text('${patient.name}',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.bold)),
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      child: Text('patient-id: P${patient.id}',
+                          style: TextStyle(
+                              fontSize: 16.0, color: Colors.grey[800])),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      child: (ElevatedButton(
+                        child: const Text('View Profile'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ProfilePage(patient)));
+                        },
+                      )),
+                    ))
+              ]),
             ],
           ),
         ));
@@ -128,35 +138,43 @@ class _SearchPatientState extends State<SearchPatientAdv> {
   }
 
   Future<void> getCaretakerID() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
-    var id=pref.getInt('id');
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/ask-caretakerid/$id');
-    var response=await http.get(url);
-    var result=utf8.decode(response.bodyBytes);
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    var id = pref.getInt('id');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/ask-caretakerid/$id');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
     print('my staff id');
     print(result);
     setState(() {
-      caretakerid=result;
+      caretakerid = result;
     });
   }
 
   Future<void> getMyPatient() async {
     await getCaretakerID();
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
-    var response=await http.get(url);
-    var result=utf8.decode(response.bodyBytes);
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/get-mypatient/$caretakerid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
     print(url);
     print('For search my patient');
     print(result);
     setState(() {
-      rawpatient=jsonDecode(result);
-      if(rawpatient.length>0) {
-        allpatient=[];
-        for(int i=0; i<rawpatient.length; ++i) {
-          allpatient.add(Patient('${rawpatient[i]['pid']}', rawpatient[i]['name'], rawpatient[i]['email'], 
-          rawpatient[i]['gender'], rawpatient[i]['usertype'], rawpatient[i]['birthdate'], rawpatient[i]['profilepic']));
+      rawpatient = jsonDecode(result);
+      if (rawpatient.length > 0) {
+        allpatient = [];
+        for (int i = 0; i < rawpatient.length; ++i) {
+          allpatient.add(Patient(
+              '${rawpatient[i]['pid']}',
+              rawpatient[i]['name'],
+              rawpatient[i]['email'],
+              rawpatient[i]['gender'],
+              rawpatient[i]['usertype'],
+              rawpatient[i]['birthdate'],
+              rawpatient[i]['profilepic']));
         }
-        display_list=List.from(allpatient);
+        display_list = List.from(allpatient);
       }
     });
   }
