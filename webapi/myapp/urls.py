@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/ask-caretakerid/<int:UID>', ask_caretakerid),
     path('api/get-mypatient/<int:CID>', get_mypatient),
     path('api/request-caretaker/<int:UID>', request_service),
+    path('api/get-alerts/<int:UID>', get_alerts),
 ]

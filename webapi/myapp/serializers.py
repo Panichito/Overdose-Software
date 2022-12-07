@@ -32,3 +32,8 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model=Patient
         fields=('id', 'caretaker')  # เอา id ออกแล้วขึ้น http 500
+
+class AlertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Alert
+        fields='__all__'
