@@ -1,0 +1,93 @@
+{% extends 'overdoseweb/base.html' %}
+{% load static %}
+{% block title %} About Us | {% endblock title %}
+{% block content %}
+        <header class="top-header-2">
+            <nav>
+                <a href="home.html"><img src="{% static 'img/logo.png' %}" class="logo-header" ></a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home-page' %}" ><b>Home</b></a></li>
+                    <li><a href="{% url 'about-page' %}"><b>About us</b></a></li>
+                    <li><a href="{% url 'contact-page' %}"><b>Contact</b></a></li>
+                    <!--Download button--> 
+                    <li class="btn"><b>Download</b></li>
+                </ul>  
+            </nav>
+        </header>
+        <!--Topic-->
+        <div>
+            <h2 class="topic">Executive House</h2>
+        </div>
+        <!--Display team member-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 profile text-center" style="margin-right: 90px;">
+                    <div class="img-box">
+                        <img src="{% static 'img/big.jpg' %}" class="img-responsive" style="width: 230px; height: 300px; object-fit: cover;">
+                            <ul>
+                                <a href="https://www.facebook.com/panithi.suwanno/"><li><i class="icon ion-social-facebook"></i></li></a>
+                                <a href="https://www.linkedin.com/in/panithi-suwanno-89171a1a3/"><li><i class="icon ion-social-linkedin"></i></li></a>
+                                <a href="https://github.com/Panichito"><li><i class="icon ion-social-github"></i></li></a>
+                        </ul>
+                    </div>
+                    <h2>Panithi S.</h2>
+                    <h3>Cheif Executive Officer (CEO)</h3>
+                    <p>CPE34 @KMUTT</p>
+                </div>
+                <div class="col-md-3 profile text-center" style="margin-right: 90px;">
+                    <div class="img-box">
+                        <img src="{% static 'img/map.jpg' %}" class="img-responsive" style="width: 230px; height: 300px; object-fit: cover;">
+                            <ul>
+                                <a href="https://www.facebook.com/map.kantawat"><li><i class="icon ion-social-facebook"></i></li></a>
+                                <a href="https://twitter.com/vansamaofficial"><li><i class="icon ion-social-twitter"></i></li></a>
+                                <a href="https://www.twitch.tv/amouranth"><li><i class="icon ion-social-twitch"></i></li></a>
+                                <a href="https://www.youtube.com/watch?v=LXJioby2vq4#t=12s"><li><i class="icon ion-social-youtube"></i></li></a>
+                                <a href="https://github.com/Mirantee"><li><i class="icon ion-social-github"></i></li></a>
+                        </ul>
+                    </div>
+                    <h2>Kantawat S.</h2>
+                    <h3>Cheif Technology Officer (CTO)</h3>
+                    <p>CPE34 @KMUTT</p>
+                </div>
+                <div class="col-md-3 profile text-center" style="margin-right: 90px;">
+                    <div class="img-box">
+                        <img src="{% static 'img/min.jpg' %}" class="img-responsive" style="width: 230px; height: 300px; object-fit: cover;">
+                            <ul>
+                                <a href="https://www.facebook.com/profile.php?id=100007113468193"><li><i class="icon ion-social-facebook"></i></li></a>
+                                <a href="https://www.instagram.com/mymint._.mymin/"><li><i class="icon ion-social-instagram"></i></li></a>
+                                <a href="https://github.com/PhoramintTaweeros"><li><i class="icon ion-social-github"></i></li></a>
+                        </ul>
+                    </div>
+                    <h2>Phoramint T.</h2>
+                    <h3>Cheif Marketing Officer (CMO)</h3>
+                    <p>CPE34 @KMUTT</p>
+                </div>
+                <div class="col-md-3 profile text-center" style="margin-right: 90px;">
+                    <div class="img-box">
+                        <img src="{% static 'img/pup.jpg' %}" class="img-responsive" style="width: 230px; height: 300px; object-fit: cover;">
+                            <ul>
+                                <a href="https://www.facebook.com/poonyavee.wongwisetsuk"><li><i class="icon ion-social-facebook"></i></li></a>
+                                <a href="https://www.instagram.com/pup_pw/"><li><i class="icon ion-social-instagram"></i></li></a>
+                                <a href="https://www.linkedin.com/in/poonyavee-wongwisetsuk-9a0197253/"><li><i class="icon ion-social-linkedin"></i></li></a>
+                                <a href="https://github.com/pupshi"><li><i class="icon ion-social-github"></i></li></a>
+                        </ul>
+                    </div>
+                    <h2>Poonyavee W.</h2>
+                    <h3>Cheif Financial Officer (CFO)</h3>
+                    <p>CPE34 @KMUTT</p>
+                </div>
+                <div class="col-md-3 profile text-center" style="margin-right: 90px;">
+                    <div class="img-box">
+                        <img src="{% static 'img/gus.jpg' %}" class="img-responsive" style="width: 230px; height: 300px; object-fit: cover;">
+                            <ul>
+                                <a href="https://www.facebook.com/pornsawalee.kanjanatiti"><li><i class="icon ion-social-facebook"></i></li></a>
+                                <a href="https://github.com/sugus-ss"><li><i class="icon ion-social-github"></i></li></a>
+                        </ul>
+                    </div>
+                    <h2>Pornsawalee K.</h2>
+                    <h3>Cheif Operating Officer (COO) </h3>
+                    <p>CPE34 @KMUTT</p>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

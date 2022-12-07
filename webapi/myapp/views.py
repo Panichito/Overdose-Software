@@ -224,7 +224,13 @@ def get_alerts(request, UID):
             alert_list.append(alert_dict)
     return Response(data=alert_list, status=status.HTTP_200_OK)
 
-oldhomedata={"message":"hello Django my old friend"}
 
 def Home(request):
-    return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
+    #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
+    return render(request, 'overdoseweb/home.html')
+
+def About(request):
+    return render(request, 'overdoseweb/about.html')
+
+def Contact(request):
+    return render(request, 'overdoseweb/contact.html')

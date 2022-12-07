@@ -1,0 +1,56 @@
+{% load static %}
+<!--Home page-->
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <title> {% block title %} Default | {% endblock title %} Overdose </title>
+    </head>
+    <body>
+    {% block content %}
+        Overdose Software ERROR - NOT FOUND PAGE !
+    {% endblock content %}
+    <!--Footer start-->
+    <footer>
+        <div class="footer-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">App design</a></li>
+                            <li><a href="#">Development</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 item text">
+                        <h3>Overdose Software</h3>
+                        <p>Witsawawatthana Building, Bang Mod, Thung Khru, Bangkok 10140</p>
+                    </div>
+                    <div class="col item social" style="margin-top: 20px;">
+                        <a href="#"><i class="icon ion-social-facebook" style="padding: 1px"></i></a>
+                        <a href="#"><i class="icon ion-social-twitter" style="padding: 1px"></i></a>
+                        <a href="#"><i class="icon ion-social-snapchat" style="padding: 1px"></i></a><a href="#">
+                        <i class="icon ion-social-instagram" style="padding: 1px"></i></a>
+                    </div>
+                </div>
+                <p class="copyright">Overdose Software | MIT LICENSE © 2022</p>
+            </div>
+        </div>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </footer>
+    <!--Footer end-->
+    </body>
+</html>

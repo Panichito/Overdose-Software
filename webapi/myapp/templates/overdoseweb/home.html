@@ -1,0 +1,148 @@
+{% extends 'overdoseweb/base.html' %}
+{% load static %}
+{% block title %} Home | {% endblock title %}
+{% block content %}
+        <header class="top-header">
+            <img src="{% static 'img/medicine.jpg' %}" class="top-image">
+            <nav>
+                <a href="home.html"><img src="{% static 'img/logo.png' %}" class="logo-header" ></a>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home-page' %}" ><b>Home</b></a></li>
+                    <li><a href="{% url 'about-page' %}"><b>About us</b></a></li>
+                    <li><a href="{% url 'contact-page' %}"><b>Contact</b></a></li>
+                    <!--Download button--> 
+                    <li class="btn"><b>Download</b></li>
+                </ul>  
+            </nav>
+            <!--Content on picture-->
+            <div class="content">
+                <h1>Patient Tracking Application</h1>
+                <form>
+                    <!--How to use button--> 
+                    <a class="button_howtouse" href="#howtouse">How to use</a>
+                </form>
+            </div>
+        </header>
+        <!--Excellent Sensor section-->
+        <section>
+            <div class="ex-col">
+                <div class="ex-sensor">
+                    <p class="color-bk">Excellent&nbsp;</p>
+                    <p class="color-bl">Sensor</p>
+                </div>
+                <div class="ex-def">
+                    <p>Automated Early Warning Scores, Charting, & Reports, Pulse Decomposition AnalysisTM Technology</p>
+                </div>
+                <div class="ex-row">
+                    <div class="left-col">
+                        <div class="block-chart">
+                            <img class="img-chart" src="{% static 'img/Chart.webp' %}" style="object-fit: cover;">
+                            <div class="txt-chart">Chart and Reports</div>
+                            <img class="img-star" src="{% static 'img/Star.svg' %}">
+                        </div>
+                        <div class="block-alarm" style="margin-top: 2rem;">
+                            <img class="img-alarm" src="{% static 'img/red-alarm.jpg' %}" style="object-fit: cover;">
+                            <div class="txt-chart">Alarm in Application</div>
+                            <img class="img-star" src="{% static 'img/Star.svg' %}">
+                        </div>
+                    </div>
+                    <div class="right-col" style="margin-top: 4rem; margin-left: 2rem;">
+                        <div class="block-med">
+                            <img class="img-med" src="{% static 'img/medicine.webp' %}" style="object-fit: cover;">
+                            <div class="txt-med">Filter Medicine</div>
+                            <img class="img-star" src="{% static 'img/Star.svg' %}">
+                        </div>
+                        <div class="block-health" style="margin-top: 2rem;">
+                            <img class="img-health" src="{% static 'img/health.jpg' %}" style="object-fit: cover;">
+                            <div class="txt-health">Sensor check health</div>
+                            <img class="img-star" src="{% static 'img/Star.svg' %}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--New software section -->
+        <section>
+            <div class="new-software">
+                <div class="ex-sensor">
+                    <p class="color-bk">New&nbsp;</p>
+                    <p class="color-bl">Software</p>
+                </div>
+                <div class="software-detail">
+                    <img class="img-iot" src="{% static 'img/internet-of-things.svg' %}">
+                    <div class="software-right">
+                        <div class="software-right-topic">
+                            <p class="color-bk">New technology software<br>applied for<br></p>
+                            <p class="color-bl">Care Taker</p>
+                        </div>
+                        <div class="software-right-detail">
+                            <p>A big win for patient comfort and clinician productivity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Smart clinic section-->
+        <section>
+            <div class="container">
+                <div class="ex-sensor">
+                    <p class="color-bk">Smart&nbsp;</p>
+                    <p class="color-bl">Clinic</p>
+                </div>
+                <div class="smart-in-detail" style="margin-top: 2rem; margin-bottom: 2rem;">
+                    <p style="text-align: left; padding-left: 1.5rem; padding-right: 1.5rem;">
+                        <span class="color-bk">&emsp;&emsp;&emsp;&emsp;Caretaker’s ability to stream continuous blood pressure and vital information using only a comfortable finger cuff 
+                            means I will no longer have to disturb my patients to ‘spot check’ vital signs using bulky wires, leads, or arm cuffs or deal with Alarm Fatigue associated. 
+                            This is a big win for patient comfort and clinician productivity, not to mention the value of having realtime streaming data to make better clinical decisions 
+                            without the “alarm fatigue” associated with in-room monitors</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!--How to use section that display all appplication pages-->
+        <section class="collaboration">
+            <div class="container">
+                <div class="ex-sensor">
+                    <p class="color-bl" style=" margin-top: 1rem; margin-bottom: 3.5rem;" id="howtouse">How to use</p>
+                </div>
+            </div>
+            <div class="main-content-2">
+                <div class="box">
+                    <img src="{% static 'img/home_app.jpg' %}" class="app-image">    
+                    <div class="column">
+                        <h2>Home page</h2>
+                        <p class="text-page">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    </div>          
+                </div>    
+            </div>      
+            <div class="main-content-1">
+                <div class="box">
+                    <div class="column">
+                        <h2>Home page</h2>
+                        <p class="text-page">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                    </div> 
+                    <img src="{% static 'img/home_app.jpg' %}" class="app-image">          
+                </div>    
+            </div>
+            <div class="main-content-2">
+                <div class="box">
+                    <img src="{% static 'img/home_app.jpg' %}" class="app-image">    
+                    <div class="column">
+                        <h2>Home page</h2>
+                        <p class="text-page">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                    </div>          
+                </div>    
+            </div>
+            <div class="main-content-1">
+                <div class="box">
+                    <div class="column">
+                        <h2>Home page</h2>
+                        <p class="text-page">is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                    </div>   
+                    <img src="{% static 'img/home_app.jpg' %}" class="app-image">          
+                </div>    
+            </div>    
+            <script src="{% static 'js/script.js' %}"></script>
+        </section>
+
+{% endblock content %}
