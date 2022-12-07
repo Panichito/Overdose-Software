@@ -187,11 +187,31 @@ def request_service(request, UID):
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
+def get_records(request, UID):
+    usr=User.objects.get(id=UID)
+    mem=Member.objects.get(user=usr)
+    ptn=Patient.objects.get(member=mem)
+    rec=Record.objects.filter(patient=ptn, Record_isComplete=False)
+    record_list=[]
+    for r in rec:
+        record_dict={}
+        record_dict['id']=r.id
+        record_dict['patientname']=r.patient.member.user.first_name+' '+r.patient.member.user.last_name
+        record_dict['medname']=r.medicine.Medicine_name
+        record_dict['disease']=r.Record_disease
+        record_dict['amount']=r.Record_amount
+        record_dict['start']=r.Record_start
+        record_dict['end']=r.Record_end
+        record_dict['info']=r.Record_info
+        record_list.append(record_dict)
+    return Response(data=record_list, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
 def get_alerts(request, UID):
     usr=User.objects.get(id=UID)
     mem=Member.objects.get(user=usr)
     ptn=Patient.objects.get(member=mem)
-    rec=Record.objects.filter(patient=ptn)
+    rec=Record.objects.filter(patient=ptn, Record_isComplete=False)
     alert_list=[]
     for r in rec:
         alt=Alert.objects.filter(record=r)
