@@ -70,15 +70,7 @@ class _RecordPageState extends State<RecordPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextButton(
-                  child: const Text('View Alert'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
-                  ),
-                  onPressed: () => {},
-                ),
-                TextButton(
-                  child: const Text('View'),
+                  child: const Text('View Information'),
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue,
