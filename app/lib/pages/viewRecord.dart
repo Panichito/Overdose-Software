@@ -51,18 +51,21 @@ class _RecordPageState extends State<RecordPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Record ID: R${record.recordId}'),
-                const SizedBox(height: 8,),
-                Text('Disease: ${record.disease}'),
-                const SizedBox(height: 8,),
-                // it suppose to show a medicine name not id
-                Text('Medicine: ${record.medicineName}'),
-                const SizedBox(height: 8,),
-              ],
+            Expanded(
+              child:  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Record ID: R${record.recordId}'),
+                  const SizedBox(height: 8,),
+                  Text('Disease: ${record.disease}'),
+                  const SizedBox(height: 8,),
+                  // it suppose to show a medicine name not id
+                  Text('Medicine: ${record.medicineName}'),
+                  const SizedBox(height: 8,),
+                ],
+              ),
             ),
+            const SizedBox(width: 16,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
