@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => RecordPage())
+                            MaterialPageRoute(builder: (context) => RecordPage(widget.patient.id))
                         );
                       },
                       child: const Text('View List of Records'),

@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
       profilepic =
           "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
+  int? myid;
   // schedules list
   List getAlert = [];
   List<Schedule> allSchedule = [];
@@ -177,10 +178,11 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       RawMaterialButton(
                         onPressed: () {
+                          getMyId();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RecordPage()));
+                                  builder: (context) => RecordPage(myid)));
                         },
                         elevation: 2.0,
                         fillColor: Colors.white,
@@ -328,11 +330,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> getAlerts() async {
+  void getMyId() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    var uid = pref.getInt('id');
+    myid = pref.getInt('id');
+  }
+
+  Future<void> getAlerts() async {
+    getMyId();
     var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-alerts/$uid');
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-alerts/$myid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     print('RECEIVE MY ALERT LIST');

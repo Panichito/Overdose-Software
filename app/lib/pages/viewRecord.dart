@@ -2,31 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/addRecord.dart';
 import 'package:app/pages/recordDetails.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+class BriefRecord {
+  int recordId;
+  String patientName;
+  String medicineName;
+  String disease;
+  int amount;
+  String startDate;
+  String endDate;
+  String note;
+
+  BriefRecord(this.recordId, this.patientName, this.medicineName, this.disease,
+      this.amount, this.startDate, this.endDate, this.note);
+}
 
 class RecordPage extends StatefulWidget {
-  // final Patient patient;
-  // const RecordPage(this.patient);
+  final uid;
+  const RecordPage(this.uid);
 
   @override
   State<RecordPage> createState() => _RecordPageState();
 }
 
-class BriefRecord {
-  String recordId;
-  String patientId;
-  String medicineId;
-  String disease;
-
-  BriefRecord(this.recordId, this.patientId, this.medicineId, this.disease);
-}
-
 class _RecordPageState extends State<RecordPage> {
-  List<BriefRecord> allRecord = [
-    BriefRecord('R01','P01', 'M01', 'HIV'),
-    BriefRecord('R02', 'P01', 'M02', 'Cancer'),
-    BriefRecord('R03', 'P01', 'M03', 'Diabetes'),
-    BriefRecord('R04', 'P01', 'M04', 'Covid'),
-  ];
+  var _userid;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _userid=widget.uid;
+    getRecords();
+  }
+
+  List getRec = [];
+  List<BriefRecord> allRecord = [];
 
   Widget recordCard(BriefRecord record) {
     return Card(
@@ -40,12 +54,12 @@ class _RecordPageState extends State<RecordPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('RecordId: ${record.recordId}'),
+                Text('Record ID: R${record.recordId}'),
                 const SizedBox(height: 8,),
                 Text('Disease: ${record.disease}'),
                 const SizedBox(height: 8,),
                 // it suppose to show a medicine name not id
-                Text('Medicine: ${record.medicineId}'),
+                Text('Medicine: ${record.medicineName}'),
                 const SizedBox(height: 8,),
               ],
             ),
@@ -112,6 +126,29 @@ class _RecordPageState extends State<RecordPage> {
         )
       ),
     );
+  }
+
+  Future<void> getRecords() async {
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-records/$_userid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    setState(() {
+      getRec = jsonDecode(result);
+      print(getRec);
+      allRecord = [];
+      for (int i = 0; i < getRec.length; ++i) {
+        allRecord.add(BriefRecord(
+            getRec[i]['id'],
+            getRec[i]['patientname'],
+            getRec[i]['medname'],
+            getRec[i]['disease'],
+            getRec[i]['amount'],
+            getRec[i]['start'],
+            getRec[i]['end'],
+            getRec[i]['info']));
+      }
+    });
   }
 }
 
