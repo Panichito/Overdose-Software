@@ -1,5 +1,6 @@
-import 'package:app/pages/editRecord.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/editRecord.dart';
+import 'package:app/pages/viewAlert.dart';
 
 class RecordDetailsPage extends StatefulWidget {
   const RecordDetailsPage({Key? key}) : super(key: key);
@@ -21,8 +22,19 @@ class RecordInformation {
 }
 
 class _RecordDetailsPageState extends State<RecordDetailsPage> {
-   RecordInformation record = RecordInformation('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero');
+  RecordInformation record = RecordInformation('P01', 'M01', 'HIV', '2022-02-22', '2022-04-30', 3, 'chances of surviving is zero');
 
+  // text in record information
+  // more convenient when styling
+  Widget _recordInfoText(text) {
+    return Text(
+        text,
+        style: const TextStyle(
+            fontSize: 16
+        ),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,103 +47,68 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Card(
-              color: Colors.red[100],
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'RecordId: ${record.recordId}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    // should show medicine name instead of id
-                    Text(
-                      'MedicineId: ${record.medicineId}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Text(
-                      'Disease: ${record.disease}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Text(
-                      'Start Date: ${record.startDate}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Text(
-                      'End Date: ${record.endDate}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Text(
-                      'Amount: ${record.amount.toString()}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Text(
-                      'Note: ${record.note}',
-                      style: const TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                    const SizedBox(height: 16,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                Card(
+                  color: Colors.red[100],
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.green,
-                          ),
-                          onPressed: () {
-                            // go to edit page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => EditRecordPage())
-                            );
-                            // change information
-                          },
-                          child: const Text('Edit'),
-                        ),
-                        const SizedBox(width: 8,),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.red,
-                          ),
-                          onPressed: () {
-                            // ask for confirmation
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
+                        _recordInfoText('RecordId: ${record.recordId}'),
+                        const SizedBox(height: 8,),
+                        // should show medicine name instead of id
+                        _recordInfoText('MedicineId: ${record.medicineId}'),
+                        const SizedBox(height: 8,),
+                        _recordInfoText('Disease: ${record.disease}'),
+                        const SizedBox(height: 8,),
+                        _recordInfoText('Start Date: ${record.startDate}'),
+                        const SizedBox(height: 8,),
+                        _recordInfoText('End Date: ${record.endDate}'),
+                        const SizedBox(height: 8,),
+                        _recordInfoText('Amount: ${record.amount.toString()}'),
+                        const SizedBox(height: 8,),
+                        _recordInfoText('Note: ${record.note}'),
+                        const SizedBox(height: 16,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.green,
+                              ),
+                              onPressed: () {
+                                // go to edit page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => EditRecordPage())
+                                );
+                                // change information
+                              },child: const Text('Edit'),
+                            ),
+                            const SizedBox(width: 8,),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.red,
+                              ),
+                              onPressed: () {
+                                // ask for confirmation
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
                                     title: const Text('Delete this Record'),
                                     content: const Text(
                                         'All of the alert of this record will be cleared. Do you wish to proceed?'
                                     ),
                                     actions: [
                                       TextButton(
+                                        // cancel
                                         onPressed: () {
-                                          // cancel
                                           Navigator.pop(context);
-                                        },
-                                        child: const Text('Cancel'),
+                                        },child: const Text('Cancel'),
                                       ),
                                       TextButton(
                                         // delete information
@@ -143,63 +120,61 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                           Navigator.popUntil(context, (route) {
                                             return count++ == 2;
                                           });
-                                        },
-                                        child: const Text('OK'),
+                                        },child: const Text('OK'),
                                       ),
                                     ]
-                                )
-                            );
+                                  )
+                                );
+                              },child: const Text('Delete'),
+                            ),
+                            const SizedBox(width: 8,),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.blue,
+                              ),
+                              onPressed: () {
+                                // ask for confirmation
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Complete the Medication'),
+                                    content: const Text(
+                                      'All of the alert of this record will be cleared. Do you wish to proceed?'
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        // cancel
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        // mark the record complete
+                                        // placeholderComplete();
 
-                          },
-                          child: const Text('Delete'),
-                        ),
-                        const SizedBox(width: 8,),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.blue,
-                          ),
-                          onPressed: () {
-                            // ask for confirmation
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Complete the Medication'),
-                                content: const Text(
-                                  'All of the alert of this record will be cleared. Do you wish to proceed?'
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // cancel
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    // mark the record complete
-                                    // placeholderComplete();
-
-                                    // pop to RecordPage
-                                    onPressed: () {
-                                      int count = 0;
-                                      Navigator.popUntil(context, (route) {
-                                        return count++ == 2;
-                                      });
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ]
-                              )
-                            );
-                          },
-                          child: const Text('Mark as Complete'),
+                                        // pop to RecordPage
+                                        onPressed: () {
+                                          int count = 0;
+                                          Navigator.popUntil(context, (route) {
+                                            return count++ == 2;
+                                          });
+                                        },child: const Text('OK'),
+                                      ),
+                                    ]
+                                  )
+                                );
+                              },child: const Text('Mark as Complete'),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+                // showing list of alert
+                ViewAlert(),
+              ],
             ),
           ),
         ),
