@@ -330,13 +330,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void getMyId() async {
+  Future<void> getMyId() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     myid = pref.getInt('id');
   }
 
   Future<void> getAlerts() async {
-    getMyId();
+    await getMyId();
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/get-alerts/$myid');
     var response = await http.get(url);
