@@ -28,10 +28,10 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
   // more convenient when styling
   Widget _recordInfoText(text) {
     return Text(
-        text,
-        style: const TextStyle(
-            fontSize: 16
-        ),
+      text,
+      style: const TextStyle(
+          fontSize: 16
+      ),
     );
   }
   
