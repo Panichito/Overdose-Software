@@ -231,6 +231,7 @@ def get_specific_alerts(request, RID):
     alert_list=[]
     for a in alt:
         alert_dict={}
+        alert_dict['id']=a.id
         alert_dict['disease']=a.record.Record_disease
         alert_dict['medname']=a.record.medicine.Medicine_name
         alert_dict['time']=a.Alert_time
