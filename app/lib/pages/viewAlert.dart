@@ -117,6 +117,7 @@ class _ViewAlertState extends State<ViewAlert> {
                   ),
                   onPressed: () {
                     // delete the alert
+                    deleteAlert();
                     setState(() {
                       allThisAlert.remove(alert);
                     });
@@ -167,9 +168,9 @@ class _ViewAlertState extends State<ViewAlert> {
                       if (newTime == null) return;
 
                       // if ok use new time to create new alert
-                      addAlert(newTime);
-                      print(newTime.format(context));
+                      await addAlert(newTime);
                       setState(() {
+                        print(newTime.format(context));
                         getSpecificAlert();
                       });
                     },
@@ -195,6 +196,9 @@ class _ViewAlertState extends State<ViewAlert> {
     var response = await http.post(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);
     print(uft8result);
+  }
+
+  Future<void> deleteAlert() async {
   }
 
   Future<void> getSpecificAlert() async {
