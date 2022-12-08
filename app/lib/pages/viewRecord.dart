@@ -35,7 +35,7 @@ class _RecordPageState extends State<RecordPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _userid=widget.uid;
+    _userid = widget.uid;
     getRecords();
   }
 
@@ -52,20 +52,28 @@ class _RecordPageState extends State<RecordPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child:  Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Record ID: R${record.recordId}'),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   Text('Disease: ${record.disease}'),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   // it suppose to show a medicine name not id
                   Text('Medicine: ${record.medicineName}'),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
-            const SizedBox(width: 16,),
+            const SizedBox(
+              width: 16,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -78,8 +86,8 @@ class _RecordPageState extends State<RecordPage> {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RecordDetailsPage())
-                    );
+                        MaterialPageRoute(
+                            builder: (context) => RecordDetailsPage()));
                   },
                 ),
               ],
@@ -95,7 +103,8 @@ class _RecordPageState extends State<RecordPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddRecordPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddRecordPage(_userid)));
         },
         child: Icon(Icons.add),
       ),
@@ -105,27 +114,27 @@ class _RecordPageState extends State<RecordPage> {
         backgroundColor: Colors.indigo[400],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   ...allRecord.map((record) => recordCard(record)).toList(),
-                  const SizedBox(height: 8,),
+                  const SizedBox(
+                    height: 8,
+                  ),
                 ],
               ),
             ),
-          ]
-        )
-      ),
+          ])),
     );
   }
 
   Future<void> getRecords() async {
-    var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-records/$_userid');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/get-records/$_userid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     setState(() {
@@ -146,4 +155,3 @@ class _RecordPageState extends State<RecordPage> {
     });
   }
 }
-
