@@ -167,9 +167,10 @@ class _ViewAlertState extends State<ViewAlert> {
                       if (newTime == null) return;
 
                       // if ok use new time to create new alert
+                      addAlert(newTime);
+                      print(newTime.format(context));
                       setState(() {
-                        // go nuts
-                        print(newTime);
+                        getSpecificAlert();
                       });
                     },
                     child: const Text('Add Alert'),
@@ -185,12 +186,23 @@ class _ViewAlertState extends State<ViewAlert> {
     );
   }
 
+  Future<void> addAlert(TimeOfDay timetotake) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/add-alert');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String v1 = '"record":$_recordid';
+    String v2 = '"Alert_time":"${formatTimeOfDay(timetotake)}"';
+    String jsondata = '{$v1, $v2}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    var uft8result = utf8.decode(response.bodyBytes);
+    print(uft8result);
+  }
+
   Future<void> getSpecificAlert() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
-    print(_recordid);
+    //print(_recordid);
     setState(() {
       getAlert = jsonDecode(result);
       allThisAlert = [];
