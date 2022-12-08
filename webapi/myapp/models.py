@@ -59,7 +59,7 @@ class Record(models.Model):
         return "R"+str(self.id)+" - "+str(self.patient.member.user.username)+", "+str(self.medicine.Medicine_name)+", "+str(self.Record_disease)
 
 class Alert(models.Model):
-    record=models.ForeignKey(Record, on_delete=models.CASCADE)
+    record=models.ForeignKey(Record, on_delete=models.CASCADE, null=True, blank=True)  # null&blank true for using at update (no record required, just alertid)
     Alert_time=models.TimeField(auto_now=False, auto_now_add=False, null=True, blank=True)  # if null means notify daily
     Alert_isTake=models.BooleanField(default=False)
 
