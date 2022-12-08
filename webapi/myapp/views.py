@@ -249,6 +249,18 @@ def add_alert(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['PUT'])
+def update_alert(request, AID):
+    alt=Alert.objects.get(id=AID)
+    if request.method=='PUT':
+        data={}
+        serializer=AlertSerializer(alt, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            data['status']='alert has been updated'
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['DELETE'])
 def delete_alert(request, AID):
     alt=Alert.objects.get(id=AID)
@@ -256,7 +268,7 @@ def delete_alert(request, AID):
         data={}
         delete=alt.delete()
         if delete:
-            data['status']='This alert has been deleted'
+            data['status']='alert has been deleted'
             statuscode=status.HTTP_200_OK
         else:
             data['status']='failed to delete alert'
