@@ -98,11 +98,10 @@ class _ViewAlertState extends State<ViewAlert> {
                     // if cancel return
                     if (newTime == null) return;
                     // if ok use new time to edit alert
+                    updateAlert(alert.alertId, newTime);
                     setState(() {
-                      // go nuts
-
                       // change time on the alert
-                      alert.time = formatTimeOfDay(newTime);
+                      alert.time = formatTimeOfDay(newTime);  // i think it much faster than initState
                     });
 
                     // change alert information
@@ -187,15 +186,23 @@ class _ViewAlertState extends State<ViewAlert> {
     );
   }
 
-  Future<void> addAlert(TimeOfDay timetotake) async {
+  Future<void> addAlert(TimeOfDay timeToTake) async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/add-alert');
     Map<String, String> header = {"Content-type": "application/json"};
     String v1 = '"record":$_recordid';
-    String v2 = '"Alert_time":"${formatTimeOfDay(timetotake)}"';
+    String v2 = '"Alert_time":"${formatTimeOfDay(timeToTake)}"';
     String jsondata = '{$v1, $v2}';
     var response = await http.post(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);
     print(uft8result);
+  }
+
+  Future<void> updateAlert(int aid, TimeOfDay newTimeToTake) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
+    Map<String, String> header={"Content-type":"application/json"};
+    String jsondata = '{"Alert_time":"${formatTimeOfDay(newTimeToTake)}"}';
+    var response = await http.put(url, headers: header, body: jsondata);
+    print(response.body);
   }
 
   Future<void> deleteAlert(int aid) async {
