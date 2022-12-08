@@ -239,6 +239,16 @@ def get_specific_alerts(request, RID):
         alert_list.append(alert_dict)
     return Response(data=alert_list, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def add_alert(request):
+    if request.method=='POST':
+        serializer=AlertSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
     return render(request, 'overdoseweb/home.html')
