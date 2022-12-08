@@ -207,7 +207,7 @@ def get_records(request, UID):
     return Response(data=record_list, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def get_alerts(request, UID):
+def get_all_alerts(request, UID):
     usr=User.objects.get(id=UID)
     mem=Member.objects.get(user=usr)
     ptn=Patient.objects.get(member=mem)
@@ -224,6 +224,19 @@ def get_alerts(request, UID):
             alert_list.append(alert_dict)
     return Response(data=alert_list, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_specific_alerts(request, RID):
+    rec=Record.objects.get(id=RID)
+    alt=Alert.objects.filter(record=rec)
+    alert_list=[]
+    for a in alt:
+        alert_dict={}
+        alert_dict['disease']=a.record.Record_disease
+        alert_dict['medname']=a.record.medicine.Medicine_name
+        alert_dict['time']=a.Alert_time
+        alert_dict['isTake']=a.Alert_isTake
+        alert_list.append(alert_dict)
+    return Response(data=alert_list, status=status.HTTP_200_OK)
 
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
