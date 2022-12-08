@@ -25,7 +25,8 @@ class Medicine {
 
 class _MyMedsPageState extends State<MyMedsPage> {
   List getmeds = [];
-  static List<Medicine> meds = [];  // จะใช้ static ทำไมไม่รู้, แต่อย่าไปแก้ ติดไว้เฟี้ยสๆ
+  static List<Medicine> meds =
+      []; // จะใช้ static ทำไมไม่รู้, แต่อย่าไปแก้ ติดไว้เฟี้ยสๆ
   List<Medicine> display_list = [];
 
   @override
@@ -64,21 +65,36 @@ class _MyMedsPageState extends State<MyMedsPage> {
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
-          image: NetworkImage(med.medpic),
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.55), BlendMode.darken)
-        ),
+            image: NetworkImage(med.medpic),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.55), BlendMode.darken)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(med.medname, style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold)),
+          Text(med.medname,
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
           SizedBox(height: 5),
-          TextButton(onPressed: () {
-            print('MED INFO');
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>MedicineDetail(med.medid, med.medname, med.medtype, med.medinfo, med.medpic)));
-          }, child: Text("More Info", style: TextStyle(color: Colors.indigo[200])))
+          TextButton(
+              onPressed: () {
+                print('MED INFO');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MedicineDetail(
+                            med.medid,
+                            med.medname,
+                            med.medtype,
+                            med.medinfo,
+                            med.medpic)));
+              },
+              child: Text("More Info",
+                  style: TextStyle(color: Colors.indigo[200])))
         ],
       ),
     );
@@ -103,23 +119,32 @@ class _MyMedsPageState extends State<MyMedsPage> {
 
   void update_list(String value) {
     setState(() {
-      display_list = meds.where((element) => element.medname.toLowerCase().contains(value.toLowerCase())).toList();
+      display_list = meds
+          .where((element) =>
+              element.medname.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
   Future<void> getMedicine() async {
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
-    var response=await http.get(url);
-    var result=utf8.decode(response.bodyBytes);
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
     print('==GET MEDICINE==');
     setState(() {
-      getmeds=jsonDecode(result);
+      getmeds = jsonDecode(result);
       // mapping the list
-      meds=[];  // init to empty
-      for(int i=0; i<getmeds.length; ++i) {
-        meds.add(Medicine('M'+"${getmeds[i]['id']}", getmeds[i]['Medicine_name'], getmeds[i]['Medicine_type'], getmeds[i]['Medicine_info'], getmeds[i]['Medicine_URLPic']));
+      meds = []; // init to empty
+      for (int i = 0; i < getmeds.length; ++i) {
+        meds.add(Medicine(
+            'M' + "${getmeds[i]['id']}",
+            getmeds[i]['Medicine_name'],
+            getmeds[i]['Medicine_type'],
+            getmeds[i]['Medicine_info'],
+            getmeds[i]['Medicine_URLPic']));
       }
-      display_list=List.from(meds);
+      display_list = List.from(meds);
     });
   }
 }

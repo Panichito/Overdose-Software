@@ -24,9 +24,10 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('History'), backgroundColor: Colors.indigo[400]),
+      appBar:
+          AppBar(title: Text('History'), backgroundColor: Colors.indigo[400]),
       body: Container(
-        child: (ListView.builder(
+          child: (ListView.builder(
         itemBuilder: (context, index) {
           return ListTile(
             leading: Icon(Icons.access_time_filled_sharp),
@@ -35,7 +36,8 @@ class _HistoryPageState extends State<HistoryPage> {
             trailing: Icon(Icons.search),
             onTap: () {
               //widget.onItem();
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryDetailPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HistoryDetailPage()));
             },
           );
         },

@@ -107,7 +107,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
                     padding: const EdgeInsets.all(5.0),
                     child: Container(
                       child: (ElevatedButton(
-                        child: const Text('View Profile'),
+                        child: const Text('View this Patient'),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ProfilePage(patient)));

@@ -14,14 +14,14 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  var fname=TextEditingController();
-  var lname=TextEditingController(); 
-  var dateController=TextEditingController(); 
-  var email=TextEditingController(); 
-  var username=TextEditingController();
-  var password=TextEditingController();
-  var profilepic=TextEditingController();
-  String result='';
+  var fname = TextEditingController();
+  var lname = TextEditingController();
+  var dateController = TextEditingController();
+  var email = TextEditingController();
+  var username = TextEditingController();
+  var password = TextEditingController();
+  var profilepic = TextEditingController();
+  String result = '';
   String? _radioValue;
   bool success = false;
 
@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     dateController.clear();
                     fname.clear();
                     lname.clear();
-                    _radioValue=null;
+                    _radioValue = null;
                   }
 
                   final snackBar = SnackBar(
@@ -243,73 +243,77 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
   Widget genderRadio() {
     return Row(
       children: [
-        Radio(value: 'MALE', groupValue: _radioValue, onChanged: (String? value) {
-          setState(() {
-            _radioValue=value;
-          });
-        }),
+        Radio(
+            value: 'MALE',
+            groupValue: _radioValue,
+            onChanged: (String? value) {
+              setState(() {
+                _radioValue = value;
+              });
+            }),
         Text('Male', style: TextStyle(fontSize: 14)),
-        Radio(value: 'FEMALE', groupValue: _radioValue, onChanged: (String? value) {
-          setState(() {
-            _radioValue=value;
-          });
-        }),
+        Radio(
+            value: 'FEMALE',
+            groupValue: _radioValue,
+            onChanged: (String? value) {
+              setState(() {
+                _radioValue = value;
+              });
+            }),
         Text('Female', style: TextStyle(fontSize: 14)),
       ],
     );
   }
 
   Future register_newuser() async {
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/newuser');
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/newuser');
     //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/newuser');
     //var url=Uri.http('192.168.1.52:8000','/api/newuser');
-    Map<String, String> header={"Content-type":"application/json"};
+    Map<String, String> header = {"Content-type": "application/json"};
 
-    String v1='"username":"${username.text}"';
-    String v2='"password":"${password.text}"';
-    String v3='"email":"${email.text}"';
-    String v4='"first_name":"${fname.text}"';
-    String v5='"last_name":"${lname.text}"';
-    String v6='"gender":"$_radioValue"';
-    String v7='"birthday":"${dateController.text}"';
-    String v8='"profilepic":"${profilepic.text}"';
+    String v1 = '"username":"${username.text}"';
+    String v2 = '"password":"${password.text}"';
+    String v3 = '"email":"${email.text}"';
+    String v4 = '"first_name":"${fname.text}"';
+    String v5 = '"last_name":"${lname.text}"';
+    String v6 = '"gender":"$_radioValue"';
+    String v7 = '"birthday":"${dateController.text}"';
+    String v8 = '"profilepic":"${profilepic.text}"';
 
-    String jsondata='{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
-    var response=await http.post(url, headers: header, body: jsondata);
+    String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
+    var response = await http.post(url, headers: header, body: jsondata);
     print('---register newuser---');
-    print(response.body);  // view.py return token
+    print(response.body); // view.py return token
 
-    var resulttext=utf8.decode(response.bodyBytes);
-    var result_json=json.decode(resulttext);
-    String status=result_json['status'];
+    var resulttext = utf8.decode(response.bodyBytes);
+    var result_json = json.decode(resulttext);
+    String status = result_json['status'];
 
-    if(status=='account-created') {
-      String setresult='Congratulations, ${result_json['first_name']} ${result_json['last_name']}\nYou are already a new member.';
-      String token=result_json['token'];
-      setToken(token);  // เมื่อได้รับ token แล้ว ให้ทำการบันทึกลงไปในระบบ
+    if (status == 'account-created') {
+      String setresult =
+          'Congratulations, ${result_json['first_name']} ${result_json['last_name']}\nYou are already a new member.';
+      String token = result_json['token'];
+      setToken(token); // เมื่อได้รับ token แล้ว ให้ทำการบันทึกลงไปในระบบ
       setState(() {
         result = setresult;
         success = true;
       });
-    }
-    else if(status=='user-exist') {
+    } else if (status == 'user-exist') {
       setState(() {
-        result='Already has this user in our system, please try a new one!';
+        result = 'Already has this user in our system, please try a new one!';
       });
-    }
-    else {
+    } else {
       setState(() {
-        result='Incorrect information, please check again!';
+        result = 'Incorrect information, please check again!';
       });
     }
   }
 
   Future<void> setToken(token) async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('token', token);
   }
 }

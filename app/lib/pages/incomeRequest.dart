@@ -9,7 +9,6 @@ class Patient {
   Patient(this.id, this.name, this.pfp);
 }
 
-
 class IncomingRequestPage extends StatefulWidget {
   const IncomingRequestPage({Key? key}) : super(key: key);
 
@@ -18,7 +17,6 @@ class IncomingRequestPage extends StatefulWidget {
 }
 
 class _IncomingRequestPageState extends State<IncomingRequestPage> {
-
   // temp all patient to push into notification list
   List<Patient> allpatient = [
     Patient('3', 'Eva Elfie (sadly, no SFW gif available)',
@@ -54,10 +52,16 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Name: ${patient.name}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
+                    Text('Name: ${patient.name}',
+                        style:
+                            TextStyle(fontSize: 18.0, color: Colors.grey[800])),
                     SizedBox(height: 4),
-                    Text('Patient-id: P'+'${patient.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                    const SizedBox(height: 8,),
+                    Text('Patient-id: P' + '${patient.id}',
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     Row(
                       children: [
                         ElevatedButton(
@@ -72,7 +76,9 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
                               backgroundColor: Colors.green[900],
                             ),
                             child: const Text('Accept')),
-                        const SizedBox(width: 4,),
+                        const SizedBox(
+                          width: 4,
+                        ),
                         ElevatedButton(
                             onPressed: () {
                               // declineRequest()
@@ -87,30 +93,33 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
                             child: const Text('Decline')),
                       ],
                     ),
-
                   ],
                 ),
               ),
               Column(
                 children: [
-                  CircleAvatar(backgroundImage: NetworkImage(patient.pfp), radius: 60)
+                  CircleAvatar(
+                      backgroundImage: NetworkImage(patient.pfp), radius: 60)
                 ],
               ),
             ],
           ),
-        )
-    );
+        ));
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Incoming Requests'), backgroundColor: Colors.indigo[400]),
+      appBar: AppBar(
+          title: Text('Incoming Requests'),
+          backgroundColor: Colors.indigo[400]),
       body: ListView(
         children: [
           ...allpatient.map((patient) => requestCard(patient)).toList(),
-          const SizedBox(height: 16,)
+          const SizedBox(
+            height: 16,
+          )
         ],
       ),
-
     );
   }
 }

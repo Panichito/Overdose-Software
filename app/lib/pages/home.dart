@@ -368,10 +368,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> getAlerts() async {
     await getMyId();
     var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/get-alerts/$myid');
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/user-alerts/$myid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
-    print('RECEIVE MY ALERT LIST');
+    print('RECEIVE ALL OF MY ALERT');
     setState(() {
       getAlert = jsonDecode(result);
       allSchedule = [];

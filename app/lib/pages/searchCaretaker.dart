@@ -5,7 +5,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SearchCaretakerPage extends StatefulWidget {
   const SearchCaretakerPage({super.key});
 
@@ -40,19 +39,21 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
 
   void updateList(String value) {
     setState(() {
-      display_list = caretakers.where((element) => element.name.toLowerCase().contains(value.toLowerCase())).toList();
+      display_list = caretakers
+          .where((element) =>
+              element.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
   Widget caretakerCard(Caretaker care) {
-    if(care.owner == false) {
+    if (care.owner == false) {
       setState(() {
-        button_result="Request Service";
+        button_result = "Request Service";
       });
-    }
-    else {
+    } else {
       setState(() {
-        button_result="Cancel Service";
+        button_result = "Cancel Service";
       });
     }
     return Card(
@@ -63,25 +64,36 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
         margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Name: ${care.name}', style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-                      SizedBox(height: 4),
-                      Text('caretaker-id: C'+'${care.id}', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
-                      Text('work since: ${care.since}', style: TextStyle(fontSize: 14.0, color: Colors.grey[800])),
-                      const SizedBox(height: 8,),
-                      ElevatedButton(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Name: ${care.name}',
+                        style:
+                            TextStyle(fontSize: 18.0, color: Colors.grey[800])),
+                    SizedBox(height: 4),
+                    Text('caretaker-id: C' + '${care.id}',
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    Text('work since: ${care.since}',
+                        style:
+                            TextStyle(fontSize: 14.0, color: Colors.grey[800])),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    ElevatedButton(
                         onPressed: () {
-                          if(care.owner == true) {
-                            print('CANCEL C'+'${care.id}');
+                          if (care.owner == true) {
+                            print('CANCEL C' + '${care.id}');
                             request_caretaker(0);
                             final snackBar = SnackBar(
-                              content: Text('${care.name}'+' will no longer be your caretaker!', style: const TextStyle(fontSize: 14)),
+                              content: Text(
+                                  '${care.name}' +
+                                      ' will no longer be your caretaker!',
+                                  style: const TextStyle(fontSize: 14)),
                               backgroundColor: Colors.red[800],
                               action: SnackBarAction(
                                 label: 'Undo',
@@ -89,13 +101,16 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                                 onPressed: () {},
                               ),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          }
-                          else {
-                            print('REQUEST C'+'${care.id}');
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          } else {
+                            print('REQUEST C' + '${care.id}');
                             request_caretaker(care.id);
                             final snackBar = SnackBar(
-                              content: Text('${care.name}'+' is your caretaker from now!', style: const TextStyle(fontSize: 14)),
+                              content: Text(
+                                  '${care.name}' +
+                                      ' is your caretaker from now!',
+                                  style: const TextStyle(fontSize: 14)),
                               backgroundColor: Colors.green[800],
                               action: SnackBarAction(
                                 label: 'Undo',
@@ -103,27 +118,33 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                                 onPressed: () {},
                               ),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           }
                           setState(() {
                             getCaretaker();
                           });
                         },
-                        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(care.owner == true ? Colors.red : Colors.indigo), padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))),
-                        child: Text(button_result)
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(backgroundImage: NetworkImage(care.pfp), radius: 52)
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll<Color>(
+                                care.owner == true
+                                    ? Colors.red
+                                    : Colors.indigo),
+                            padding: MaterialStateProperty.all<EdgeInsets>(
+                                EdgeInsets.all(10))),
+                        child: Text(button_result)),
                   ],
                 ),
-              ],
-            ),
-        )
-    );
+              ),
+              Column(
+                children: [
+                  CircleAvatar(
+                      backgroundImage: NetworkImage(care.pfp), radius: 52)
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 
   @override
@@ -146,36 +167,43 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
   }
 
   Future<void> getCaretaker() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
-    var _thiscid=pref.getInt('cid');
-    print('NOW '+'$_thiscid');
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/all-caretaker');
-    var response=await http.get(url);
-    var result=utf8.decode(response.bodyBytes);
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    var _thiscid = pref.getInt('cid');
+    print('NOW ' + '$_thiscid');
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/all-caretaker');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
     print('==All Available Caretaker==');
     setState(() {
-      rawcaretaker=jsonDecode(result);
-      caretakers=[];
-      for(int i=0; i<rawcaretaker.length; ++i) {
-        bool check=rawcaretaker[i]['id']==_thiscid;
+      rawcaretaker = jsonDecode(result);
+      caretakers = [];
+      for (int i = 0; i < rawcaretaker.length; ++i) {
+        bool check = rawcaretaker[i]['id'] == _thiscid;
         //print('$check '+rawcaretaker[i]['fullname']);
-        caretakers.add(Caretaker(rawcaretaker[i]['id'], rawcaretaker[i]['fullname'], rawcaretaker[i]['image_url'], rawcaretaker[i]['Caretaker_since'], check));
+        caretakers.add(Caretaker(
+            rawcaretaker[i]['id'],
+            rawcaretaker[i]['fullname'],
+            rawcaretaker[i]['image_url'],
+            rawcaretaker[i]['Caretaker_since'],
+            check));
       }
-      display_list=List.from(caretakers);
+      display_list = List.from(caretakers);
     });
   }
 
   Future<void> request_caretaker(int cid) async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('cid', cid);
-    var _hereid=pref.getInt('id');
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/request-caretaker/$_hereid');
-    Map<String, String> header={"Content-type":"application/json"};
-    String jsondata='{"caretaker":$cid}';
-    if(cid == 0) {
-      jsondata='{"caretaker":null}';
+    var _hereid = pref.getInt('id');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/request-caretaker/$_hereid');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata = '{"caretaker":$cid}';
+    if (cid == 0) {
+      jsondata = '{"caretaker":null}';
     }
-    var response=await http.put(url, headers: header, body: jsondata);
+    var response = await http.put(url, headers: header, body: jsondata);
     print(response.body);
   }
 }

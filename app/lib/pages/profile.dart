@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 builder: (context) =>
                                     RecordPage(widget.patient.id)));
                       },
-                      child: const Text('View List of Records'),
+                      child: const Text('View list of Records'),
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.green,
                         foregroundColor: Colors.white,

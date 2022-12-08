@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 // alert constructor
 class Alert {
@@ -11,13 +14,25 @@ class Alert {
 }
 
 class ViewAlert extends StatefulWidget {
-  const ViewAlert({Key? key}) : super(key: key);
+  //const ViewAlert({Key? key}) : super(key: key);
+  final rid;
+  const ViewAlert(this.rid);
 
   @override
   State<ViewAlert> createState() => _ViewAlertState();
 }
 
 class _ViewAlertState extends State<ViewAlert> {
+  var _recordid;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _recordid=widget.rid;
+    getSpecificAlert();
+  }
+
   // list of alert temp
   List<Alert> allAlert = [
     Alert('A01', 'Covid', 'Viagra', '16:20'),
@@ -165,5 +180,17 @@ class _ViewAlertState extends State<ViewAlert> {
         ),
       ),
     );
+  }
+
+  Future<void> getSpecificAlert() async {
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    print(_recordid);
+    setState(() {
+      //getAlert = jsonDecode(result);
+      print(jsonDecode(result));
+    });
   }
 }

@@ -19,33 +19,35 @@ class UpdateProfilePage extends StatefulWidget {
 
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
   var _v1, _v2, _v3, _v4, _v5, _v6;
-  TextEditingController fname=TextEditingController();
-  TextEditingController lname=TextEditingController();
-  TextEditingController bdate=TextEditingController();
-  TextEditingController pfp=TextEditingController();
+  TextEditingController fname = TextEditingController();
+  TextEditingController lname = TextEditingController();
+  TextEditingController bdate = TextEditingController();
+  TextEditingController pfp = TextEditingController();
   String? gender;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _v1=widget.v1;  // id
-    _v2=widget.v2;  // first name
-    _v3=widget.v3;  // last name
-    _v4=widget.v4;  // birth date
-    _v5=widget.v5;  // gender
-    _v6=widget.v6;  // profile pic
-    fname.text=_v2;
-    lname.text=_v3;
-    bdate.text=_v4;
-    gender=_v5;
-    pfp.text=_v6;
+    _v1 = widget.v1; // id
+    _v2 = widget.v2; // first name
+    _v3 = widget.v3; // last name
+    _v4 = widget.v4; // birth date
+    _v5 = widget.v5; // gender
+    _v6 = widget.v6; // profile pic
+    fname.text = _v2;
+    lname.text = _v3;
+    bdate.text = _v4;
+    gender = _v5;
+    pfp.text = _v6;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Update Profile Info'),  backgroundColor: Colors.indigo[400]),
+      appBar: AppBar(
+          title: Text('Update Profile Info'),
+          backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
@@ -63,36 +65,35 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             genderRadio(),
             SizedBox(height: 30),
             TextField(
-              controller: bdate,
-              decoration: InputDecoration(
-                icon: Icon(Icons.calendar_today),
-                labelText: 'Enter Birth Date'
-              ),
-              readOnly: true,
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2101)
-                );
-                if(pickedDate!=null ){
-                  print(pickedDate);
-                  String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
-                  print(formattedDate);
-                  setState(() {
-                    bdate.text=formattedDate;
-                  });
-                }
-                else{
-                  print("Date is not selected");
-                }
-              }
-            ),
+                controller: bdate,
+                decoration: InputDecoration(
+                    icon: Icon(Icons.calendar_today),
+                    labelText: 'Enter Birth Date'),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2101));
+                  if (pickedDate != null) {
+                    print(pickedDate);
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    print(formattedDate);
+                    setState(() {
+                      bdate.text = formattedDate;
+                    });
+                  } else {
+                    print("Date is not selected");
+                  }
+                }),
             SizedBox(height: 30),
-            TextField(  // for demo profile url image
+            TextField(
+              // for demo profile url image
               controller: pfp,
-              decoration: InputDecoration(labelText: 'Profile Image URL (optional)'),
+              decoration:
+                  InputDecoration(labelText: 'Profile Image URL (optional)'),
             ),
             SizedBox(height: 30),
             Padding(
@@ -100,10 +101,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               child: ElevatedButton(
                 onPressed: () {
                   send_profile_info();
-                  final snackBar=SnackBar(content: const Text('Your information has been updated.'));
+                  final snackBar = SnackBar(
+                      content:
+                          const Text('Your information has been updated.'));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
-                child: Text("Edit Information", style: TextStyle(color: Colors.black)),
+                child: Text("Edit Information",
+                    style: TextStyle(color: Colors.black)),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.amber[700]),
                 ),
@@ -118,31 +122,39 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget genderRadio() {
     return Row(
       children: [
-        Radio(value: 'MALE', groupValue: gender, onChanged: (String? value) {
-          setState(() {
-            gender=value;
-          });
-        }),
+        Radio(
+            value: 'MALE',
+            groupValue: gender,
+            onChanged: (String? value) {
+              setState(() {
+                gender = value;
+              });
+            }),
         Text('Male', style: TextStyle(fontSize: 14)),
-        Radio(value: 'FEMALE', groupValue: gender, onChanged: (String? value) {
-          setState(() {
-            gender=value;
-          });
-        }),
+        Radio(
+            value: 'FEMALE',
+            groupValue: gender,
+            onChanged: (String? value) {
+              setState(() {
+                gender = value;
+              });
+            }),
         Text('Female', style: TextStyle(fontSize: 14)),
       ],
     );
   }
 
   Future<void> send_profile_info() async {
-    var url=Uri.https('weatherreporto.pythonanywhere.com', '/api/update-profile/$_v1');
-    Map<String, String> header={"Content-type":"application/json"};
-    String jsondata='{"first_name":"${fname.text}", "last_name":"${lname.text}", "Member_gender":"$gender", "Member_birthdate":"${bdate.text}", "Member_URLPic":"${pfp.text}"}';
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/update-profile/$_v1');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata =
+        '{"first_name":"${fname.text}", "last_name":"${lname.text}", "Member_gender":"$gender", "Member_birthdate":"${bdate.text}", "Member_URLPic":"${pfp.text}"}';
     //print(jsondata);
-    var response=await http.put(url, headers: header, body: jsondata);
+    var response = await http.put(url, headers: header, body: jsondata);
     print('update profile info here');
     print(response.body);
-    final SharedPreferences pref=await SharedPreferences.getInstance();
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('first_name', fname.text);
     pref.setString('last_name', lname.text);
     pref.setString('gender', gender!);

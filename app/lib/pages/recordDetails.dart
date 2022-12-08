@@ -74,11 +74,14 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _recordInfoText('Record ID: ${record!.recordId}'),
+                        _recordInfoText('Record ID: R${record!.recordId}'),
                         const SizedBox(
                           height: 8,
                         ),
-                        // should show medicine name instead of id
+                        _recordInfoText('Patient: ${record!.patientName}'),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         _recordInfoText('Medicine: ${record!.medicineName}'),
                         const SizedBox(
                           height: 8,
@@ -87,15 +90,15 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                         const SizedBox(
                           height: 8,
                         ),
+                        _recordInfoText('Amount: ${record!.amount.toString()}'),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         _recordInfoText('Start Date: ${record!.startDate}'),
                         const SizedBox(
                           height: 8,
                         ),
                         _recordInfoText('End Date: ${record!.endDate}'),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        _recordInfoText('Amount: ${record!.amount.toString()}'),
                         const SizedBox(
                           height: 8,
                         ),
@@ -117,7 +120,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditRecordPage()));
+                                            EditRecordPage(record!.medicineName, record!.disease, record!.startDate, record!.endDate, record!.amount, record!.note)));
                                 // change information
                               },
                               child: const Text('Edit'),
@@ -181,7 +184,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                             title: const Text(
                                                 'Complete the Medication'),
                                             content: const Text(
-                                                'All of the alert of this record will be cleared. Do you wish to proceed?'),
+                                                'All of the alert of this record will be accomplished. Do you wish to proceed?'),
                                             actions: [
                                               TextButton(
                                                 // cancel
@@ -215,7 +218,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                   ),
                 ),
                 // showing list of alert
-                ViewAlert(),
+                ViewAlert(record!.recordId),
               ],
             ),
           ),

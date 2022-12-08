@@ -7,7 +7,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditRecordPage extends StatefulWidget {
-  const EditRecordPage({Key? key}) : super(key: key);
+  //const EditRecordPage({Key? key}) : super(key: key);
+  final v1, v2, v3, v4, v5, v6;
+  EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6);
 
   @override
   State<EditRecordPage> createState() => _EditRecordPageState();
@@ -51,7 +53,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 24,
-        title: const Text('Edit Record'),
+        title: const Text('Edit Record for P'+'xxx'),
         backgroundColor: Colors.indigo[400],
       ),
       body: ListView(
@@ -87,8 +89,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
           ),
           ElevatedButton(
               onPressed: () {
-                if (patientId == null ||
-                    medList == null ||
+                if (medList == null ||
                     diseaseController.text.isEmpty ||
                     startDateController.text.isEmpty ||
                     endDateController.text.isEmpty ||
@@ -105,9 +106,9 @@ class _EditRecordPageState extends State<EditRecordPage> {
                           'End medicine intake date must be after Start date!';
                     });
                   } else {
-                    createRecord();
+                    updateRecord();
                     setState(() {
-                      result = 'Create a record successfully!';
+                      result = 'Data is saved, record has been updated successfully!';
                       success = true;
 
                       // We want user to be able to continuously edit record
@@ -372,7 +373,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     });
   }
 
-  Future<void> createRecord() async {
+  Future<void> updateRecord() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
     Map<String, String> header = {"Content-type": "application/json"};

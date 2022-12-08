@@ -14,12 +14,18 @@ List<Dummy> dummy = [
 
 Widget noSuggestSearch(updateList(String value)) {
   return SearchField(
-    suggestions: dummy.map((e) => SearchFieldListItem(
-      e.dummy,
-      item: e,
-    )).toList(),
-    searchStyle: const TextStyle(fontSize: 18,),
-    suggestionStyle: const TextStyle(fontSize: 18,),
+    suggestions: dummy
+        .map((e) => SearchFieldListItem(
+              e.dummy,
+              item: e,
+            ))
+        .toList(),
+    searchStyle: const TextStyle(
+      fontSize: 18,
+    ),
+    suggestionStyle: const TextStyle(
+      fontSize: 18,
+    ),
     searchInputDecoration: const InputDecoration(
       border: OutlineInputBorder(),
       contentPadding: EdgeInsets.fromLTRB(8, 16, 8, 16),

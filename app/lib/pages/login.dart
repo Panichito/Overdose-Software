@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   String result = '';
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(title: Text('Login'), backgroundColor: Colors.indigo[400]),
       body: Padding(
@@ -114,9 +114,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Future login() async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
     //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
     //var url=Uri.http('192.168.1.52:8000','/api/authenticate');
     Map<String, String> header = {"Content-type": "application/json"};
@@ -145,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
           result_json['gender'],
           result_json['cid'],
           result_json['id']);
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => UIPage()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => UIPage()));
     } else if (status == 'login-failed') {
       setState(() {
         result = 'Invalid username or password!';
@@ -163,7 +164,8 @@ class _LoginPageState extends State<LoginPage> {
     pref.setString('token', token);
   }
 
-  Future<void> setUserInfo(fname, lname, usr, role, pfp, bdate, gen, cid, id) async {
+  Future<void> setUserInfo(
+      fname, lname, usr, role, pfp, bdate, gen, cid, id) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('id', id);
     pref.setInt('cid', cid);
