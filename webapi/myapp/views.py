@@ -249,6 +249,21 @@ def add_alert(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['DELETE'])
+def delete_alert(request, AID):
+    alt=Alert.objects.get(id=AID)
+    if request.method=='DELETE':
+        data={}
+        delete=alt.delete()
+        if delete:
+            data['status']='This alert has been deleted'
+            statuscode=status.HTTP_200_OK
+        else:
+            data['status']='failed to delete alert'
+            statuscode=status.HTTP_400_BAD_REQUEST
+        return Response(data=data, status=statuscode)
+
+
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
     return render(request, 'overdoseweb/home.html')

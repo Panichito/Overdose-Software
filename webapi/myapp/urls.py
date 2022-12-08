@@ -18,4 +18,5 @@ urlpatterns = [
     path('api/user-alerts/<int:UID>', get_all_alerts),
     path('api/record-alerts/<int:RID>', get_specific_alerts),
     path('api/add-alert', add_alert),
+    path('api/delete-alert/<int:AID>', delete_alert),
 ]
