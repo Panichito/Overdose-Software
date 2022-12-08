@@ -117,7 +117,7 @@ class _ViewAlertState extends State<ViewAlert> {
                   ),
                   onPressed: () {
                     // delete the alert
-                    deleteAlert();
+                    deleteAlert(alert.alertId);
                     setState(() {
                       allThisAlert.remove(alert);
                     });
@@ -198,7 +198,11 @@ class _ViewAlertState extends State<ViewAlert> {
     print(uft8result);
   }
 
-  Future<void> deleteAlert() async {
+  Future<void> deleteAlert(int aid) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/delete-alert/$aid');
+    Map<String, String> header={"Content-type":"application/json"};
+    var response=await http.delete(url, headers: header);
+    print(response.body);
   }
 
   Future<void> getSpecificAlert() async {
