@@ -5,12 +5,13 @@ import 'dart:convert';
 
 // alert constructor
 class Alert {
-  String alertId;
+  int alertId;
   String disease;
   String medName;
   String time;
+  bool isTake;
 
-  Alert(this.alertId, this.disease, this.medName, this.time);
+  Alert(this.alertId, this.disease, this.medName, this.time, this.isTake);
 }
 
 class ViewAlert extends StatefulWidget {
@@ -29,25 +30,19 @@ class _ViewAlertState extends State<ViewAlert> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _recordid=widget.rid;
+    _recordid = widget.rid;
     getSpecificAlert();
   }
 
-  // list of alert temp
-  List<Alert> allAlert = [
-    Alert('A01', 'Covid', 'Viagra', '16:20'),
-    Alert('A02', 'Covid2', 'Viagra2', '16:23'),
-    Alert('A03', 'Covid3', 'Viagra3', '16:24'),
-  ];
+  List getAlert = [];
+  List<Alert> allThisAlert = [];
 
   // text in alert information
   // more convenient when styling
   Widget _alertText(text) {
     return Text(
       text,
-      style: const TextStyle(
-          fontSize: 16
-      ),
+      style: const TextStyle(fontSize: 16),
     );
   }
 
@@ -60,7 +55,9 @@ class _ViewAlertState extends State<ViewAlert> {
 
   Widget alertCard(Alert alert) {
     // convert current time from String to TimeOfDay
-    TimeOfDay time = TimeOfDay(hour:int.parse(alert.time.split(":")[0]),minute: int.parse(alert.time.split(":")[1]));
+    TimeOfDay time = TimeOfDay(
+        hour: int.parse(alert.time.split(":")[0]),
+        minute: int.parse(alert.time.split(":")[1]));
 
     return Card(
       color: Colors.blue[100],
@@ -74,9 +71,13 @@ class _ViewAlertState extends State<ViewAlert> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _alertText('${alert.medName}'),
-                const SizedBox(height: 4,),
+                const SizedBox(
+                  height: 4,
+                ),
                 _alertText('Medicine: ${alert.disease}'),
-                const SizedBox(height: 4,),
+                const SizedBox(
+                  height: 4,
+                ),
                 _alertText('Time: ${alert.time}'),
               ],
             ),
@@ -106,8 +107,8 @@ class _ViewAlertState extends State<ViewAlert> {
 
                     // change alert information
                     //placeholderUpdateAlert();
-                    
-                  },child: const Text('Edit'),
+                  },
+                  child: const Text('Edit'),
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
@@ -117,9 +118,10 @@ class _ViewAlertState extends State<ViewAlert> {
                   onPressed: () {
                     // delete the alert
                     setState(() {
-                      allAlert.remove(alert);
+                      allThisAlert.remove(alert);
                     });
-                  },child: const Text('Delete'),
+                  },
+                  child: const Text('Delete'),
                 ),
               ],
             )
@@ -160,22 +162,23 @@ class _ViewAlertState extends State<ViewAlert> {
                         context: context,
                         initialTime: time,
                       );
-                      
+
                       // if cancel return
                       if (newTime == null) return;
-                      
+
                       // if ok use new time to create new alert
                       setState(() {
                         // go nuts
                         print(newTime);
                       });
-                    },child: const Text('Add Alert'),
+                    },
+                    child: const Text('Add Alert'),
                   ),
                 ],
               ),
             ),
             // display alert items
-            ...allAlert.map((alert) => alertCard(alert)).toList(),
+            ...allThisAlert.map((alert) => alertCard(alert)).toList(),
           ],
         ),
       ),
@@ -183,14 +186,22 @@ class _ViewAlertState extends State<ViewAlert> {
   }
 
   Future<void> getSpecificAlert() async {
-    var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     print(_recordid);
     setState(() {
-      //getAlert = jsonDecode(result);
-      print(jsonDecode(result));
+      getAlert = jsonDecode(result);
+      allThisAlert = [];
+      for (int i = 0; i < getAlert.length; ++i) {
+        allThisAlert.add(Alert(
+            getAlert[i]['id'],
+            getAlert[i]['disease'],
+            getAlert[i]['medname'],
+            getAlert[i]['time'],
+            getAlert[i]['isTake']));
+      }
     });
   }
 }
