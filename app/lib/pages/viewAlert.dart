@@ -67,19 +67,21 @@ class _ViewAlertState extends State<ViewAlert> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _alertText('${alert.medName}'),
-                const SizedBox(
-                  height: 4,
-                ),
-                _alertText('Medicine: ${alert.disease}'),
-                const SizedBox(
-                  height: 4,
-                ),
-                _alertText('Time: ${alert.time}'),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _alertText('${alert.medName}'),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  _alertText('Medicine: ${alert.disease}'),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  _alertText('Time: ${alert.time}'),
+                ],
+              ),
             ),
             Column(
               // crossAxisAlignment: CrossAxisAlignment.end,
