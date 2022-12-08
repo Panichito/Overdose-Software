@@ -87,7 +87,15 @@ class _RecordPageState extends State<RecordPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RecordDetailsPage()));
+                            builder: (context) => RecordDetailsPage(
+                                record.recordId,
+                                record.patientName,
+                                record.medicineName,
+                                record.disease,
+                                record.amount,
+                                record.startDate,
+                                record.endDate,
+                                record.note)));
                   },
                 ),
               ],

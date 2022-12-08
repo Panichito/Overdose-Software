@@ -20,15 +20,15 @@ class UIPage extends StatefulWidget {
 
 class _UIPageState extends State<UIPage> {
   var _role;
-  int _selectedIndex=0;
+  int _selectedIndex = 0;
 
   void _onItem(int index) {
     setState(() {
-      _selectedIndex=index;
+      _selectedIndex = index;
     });
   }
 
-  String fullname='';
+  String fullname = '';
   @override
   void initState() {
     // TODO: implement initState
@@ -37,15 +37,25 @@ class _UIPageState extends State<UIPage> {
 
   @override
   Widget build(BuildContext context) {
-    var pagename=[];
-    List<Widget> widgetBottom=[];
-    if(_role=='PATIENT') {
-      pagename=['Home Page', 'Find Caretaker Page', 'All Medicine'];
-      widgetBottom=[HomePage(), SearchCaretakerPage(), MyMedsPage()];
-    }
-    else {  // either caretaker or admin is the stuff
-      pagename=['Home Page', 'Find Caretaker Page', 'All Medicine', 'Search My Patient'];
-      widgetBottom=[HomePage(), SearchCaretakerPage(), MyMedsPage(), SearchPatientAdv(),];
+    var pagename = [];
+    List<Widget> widgetBottom = [];
+    if (_role == 'PATIENT') {
+      pagename = ['Home Page', 'Find Caretaker Page', 'All Medicine'];
+      widgetBottom = [HomePage(), SearchCaretakerPage(), MyMedsPage()];
+    } else {
+      // either caretaker or admin is the stuff
+      pagename = [
+        'Home Page',
+        'Find Caretaker Page',
+        'All Medicine',
+        'Search My Patient'
+      ];
+      widgetBottom = [
+        HomePage(),
+        SearchCaretakerPage(),
+        MyMedsPage(),
+        SearchPatientAdv(),
+      ];
     }
     return DefaultTabController(
       length: 1,
@@ -56,16 +66,21 @@ class _UIPageState extends State<UIPage> {
           title: Text(pagename[_selectedIndex]),
           backgroundColor: Colors.indigo[400],
           actions: [
-            IconButton(onPressed: () {
-              print("Refresh");
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>UIPage()));
-            }, icon: Icon(Icons.refresh), color: Colors.white)
+            IconButton(
+                onPressed: () {
+                  print("Refresh");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UIPage()));
+                },
+                icon: Icon(Icons.refresh),
+                color: Colors.white)
           ],
         ),
         body: TabBarView(children: [
           Center(child: widgetBottom.elementAt(_selectedIndex)),
         ]),
-        bottomNavigationBar: _role=='PATIENT' ? buildBottomNavBar() : buildBottomNavBarStaff(),
+        bottomNavigationBar:
+            _role == 'PATIENT' ? buildBottomNavBar() : buildBottomNavBarStaff(),
       ),
     );
   }
@@ -101,102 +116,113 @@ class _UIPageState extends State<UIPage> {
 
   Widget buildDrawer() {
     return Drawer(
-      child: Column(
-        children: [
-          //Container(height: 100, color: Colors.indigo[400]),
-          UserAccountsDrawerHeader(accountName: Text(fullname), accountEmail: null, decoration: BoxDecoration(color: Colors.indigo[400])),
+        child: Column(
+      children: [
+        //Container(height: 100, color: Colors.indigo[400]),
+        UserAccountsDrawerHeader(
+            accountName: Text(fullname),
+            accountEmail: null,
+            decoration: BoxDecoration(color: Colors.indigo[400])),
+        ListTile(
+          leading: Icon(Icons.manage_accounts),
+          title: Text('Profile'),
+          onTap: () {
+            push_to_edit_page();
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.history_edu),
+          title: Text('History'),
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HistoryPage()));
+          },
+        ),
+        // user is caretaker show incoming request
+        if (_role == 'CARETAKER') ...[
           ListTile(
-            leading: Icon(Icons.manage_accounts),
-            title: Text('Profile'),
+            leading: Icon(Icons.notifications),
+            title: Text('Incoming Requests'),
             onTap: () {
-              push_to_edit_page();
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.history_edu),
-            title: Text('History'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>HistoryPage()));
-            },
-          ),
-          // user is caretaker show incoming request
-          if(_role=='CARETAKER') ...[
-            ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Incoming Requests'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>IncomingRequestPage()));
-              },
-            ),
-          ],
-          ListTile(
-            leading: Icon(Icons.contact_support),
-            title: Text('About'),
-            onTap: () {
-              launchURL();
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.lock_open),
-            title: Text('Logout'),
-            onTap: () {
-              logout(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => IncomingRequestPage()));
             },
           ),
         ],
-      )
-    );
+        ListTile(
+          leading: Icon(Icons.contact_support),
+          title: Text('About'),
+          onTap: () {
+            launchURL();
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.lock_open),
+          title: Text('Logout'),
+          onTap: () {
+            logout(context);
+          },
+        ),
+      ],
+    ));
   }
 
   Future<void> checkFullname() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
-    final checkvalue=pref.get('token') ?? 0;  // เช็คจาก token ดีกว่า เพราะตอน logout ลบออกแค่ token
-    if(checkvalue!=0) {  // get username
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final checkvalue = pref.get('token') ??
+        0; // เช็คจาก token ดีกว่า เพราะตอน logout ลบออกแค่ token
+    if (checkvalue != 0) {
+      // get username
       setState(() {
-        var fname=pref.getString('first_name');
-        var lname=pref.getString('last_name');
-        var gender=pref.getString('gender');
-        _role=pref.getString('role');
-        fullname='Hello, $fname $lname'+'\n'+'($gender $_role)';
+        var fname = pref.getString('first_name');
+        var lname = pref.getString('last_name');
+        var gender = pref.getString('gender');
+        _role = pref.getString('role');
+        fullname = 'Hello, $fname $lname' + '\n' + '($gender $_role)';
       });
     }
   }
 
   void push_to_edit_page() async {
-    final SharedPreferences pref=await SharedPreferences.getInstance();
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
-      var id=pref.getInt('id');
-      var fname=pref.getString('first_name');
-      var lname=pref.getString('last_name');
-      var bdate=pref.getString('birthdate');
-      var gen=pref.getString('gender');
-      var pfp=pref.getString('profilepic');
-      Navigator.push(context, MaterialPageRoute(
-        builder: (context)=>UpdateProfilePage(id, fname, lname, bdate, gen, pfp))).then((value) {
-          setState(() {
-            if(value=='delete') {
-            }
-            checkFullname();
-          });
+      var id = pref.getInt('id');
+      var fname = pref.getString('first_name');
+      var lname = pref.getString('last_name');
+      var bdate = pref.getString('birthdate');
+      var gen = pref.getString('gender');
+      var pfp = pref.getString('profilepic');
+      Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UpdateProfilePage(id, fname, lname, bdate, gen, pfp)))
+          .then((value) {
+        setState(() {
+          if (value == 'delete') {}
+          checkFullname();
         });
+      });
     });
   }
 
   Future<void> launchURL() async {
-    final Uri url=Uri.parse('https://weatherreporto.pythonanywhere.com/');
-    if(await canLaunchUrl(url)) {
+    final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/');
+    if (await canLaunchUrl(url)) {
       await launchUrl(url);
-    }
-    else {
+    } else {
       throw "Cannot launch $url";
     }
   }
 
   logout(BuildContext context) async {
-    final prefs=await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     //prefs.remove('token');
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }
