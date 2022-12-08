@@ -112,7 +112,11 @@ class _RecordPageState extends State<RecordPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddRecordPage(_userid)));
+              MaterialPageRoute(builder: (context) => AddRecordPage(_userid))).then((value) {
+                setState(() {
+                  getRecords();
+                });
+              });
         },
         child: Icon(Icons.add),
       ),
