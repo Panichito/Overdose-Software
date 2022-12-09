@@ -207,14 +207,14 @@ def get_records(request, UID):
     return Response(data=record_list, status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
-def complete_record(request, RID):
+def update_record(request, RID):  # for edit & mark as completed
     rec=Record.objects.get(id=RID)
     if request.method=='PUT':
         data={}
         serializer=RecordSerializer(rec, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            data['status']='This record is marked as complete'
+            data['status']='record information has been updated'
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
