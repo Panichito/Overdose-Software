@@ -95,7 +95,11 @@ class _RecordPageState extends State<RecordPage> {
                                 record.amount,
                                 record.startDate,
                                 record.endDate,
-                                record.note)));
+                                record.note))).then((value) {
+                                  setState(() {
+                                    getRecords();
+                                  });
+                                });
                   },
                 ),
               ],
