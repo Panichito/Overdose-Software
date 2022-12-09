@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/ask-caretakerid/<int:UID>', ask_caretakerid),
     path('api/get-mypatient/<int:CID>', get_mypatient),
     path('api/request-caretaker/<int:UID>', request_service),
-    path('api/get-record/<int:RID>', get_record),
+    path('api/medicine-info/<int:MID>', get_medinfo),
     path('api/get-user-records/<int:UID>', get_user_records),
     path('api/update-record/<int:RID>', update_record),
     path('api/delete-record/<int:RID>', delete_record),
