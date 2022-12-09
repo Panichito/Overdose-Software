@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/request-caretaker/<int:UID>', request_service),
     path('api/get-records/<int:UID>', get_records),
     path('api/update-record/<int:RID>', update_record),
+    path('api/delete-record/<int:RID>', delete_record),
     path('api/user-alerts/<int:UID>', get_all_alerts),
     path('api/record-alerts/<int:RID>', get_specific_alerts),
     path('api/add-alert', add_alert),

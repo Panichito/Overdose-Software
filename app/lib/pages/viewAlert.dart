@@ -42,7 +42,7 @@ class _ViewAlertState extends State<ViewAlert> {
   Widget _alertText(text) {
     return Text(
       text,
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
     );
   }
 
@@ -71,11 +71,11 @@ class _ViewAlertState extends State<ViewAlert> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _alertText('${alert.medName}'),
+                  Text('Medicine: ${alert.medName}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(
                     height: 4,
                   ),
-                  _alertText('Medicine: ${alert.disease}'),
+                  _alertText('${alert.disease}'),
                   const SizedBox(
                     height: 4,
                   ),

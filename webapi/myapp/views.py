@@ -220,6 +220,20 @@ def update_record(request, RID):  # for edit & mark as completed
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+@api_view(['DELETE'])
+def delete_record(request, RID):
+    rec=Record.objects.get(id=RID)
+    if request.method=='DELETE':
+        data={}
+        delete=rec.delete()
+        if delete:
+            data['status']='record has been deleted'
+            statuscode=status.HTTP_200_OK
+        else:
+            data['status']='failed to delete record'
+            statuscode=status.HTTP_400_BAD_REQUEST
+        return Response(data=data, status=statuscode)
+
 @api_view(['GET'])
 def get_all_alerts(request, UID):
     usr=User.objects.get(id=UID)
