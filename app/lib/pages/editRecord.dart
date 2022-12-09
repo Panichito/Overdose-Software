@@ -16,6 +16,7 @@ class EditRecordPage extends StatefulWidget {
 }
 
 class _EditRecordPageState extends State<EditRecordPage> {
+  String? jsondata;
   String result = 'Note field can be empty';
   // String? patientId;
   // String? medId;
@@ -117,11 +118,18 @@ class _EditRecordPageState extends State<EditRecordPage> {
                       result = 'End medicine intake date must be after Start date!';
                     });
                   } else {
-                    updateRecord();
-                    setState(() {
+                    setState(() async {
+                      await updateRecord();
                       // We want user to be able to continuously edit record
-                      result = 'Data is saved, record has been updated successfully!';
-                      success = true;
+                      //result = 'Data is saved, record has been updated successfully!';
+                      //success = true;
+                      final snackBar = SnackBar(
+                          content: Text('Data is saved, record has been updated successfully!',
+                            style: const TextStyle(fontSize: 15,),
+                          ),
+                          backgroundColor: Colors.green[900]);
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.pop(context, jsondata);
                     });
                   }
                 }
@@ -132,8 +140,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
                         fontSize: 16,
                       ),
                     ),
-                    backgroundColor:
-                        !success ? Colors.red[900] : Colors.green[900]);
+                    backgroundColor: success == false ? Colors.red[900] : Colors.green[900]);
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 success = false;
               },
@@ -345,7 +352,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     String v6='"Record_end":"${endDateController.text}"';
     String v7='"Record_info":"${noteController.text}"';
     String v8='"Record_isComplete":"false"';
-    String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
+    jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
     //print(jsondata);
 
     var response = await http.put(url, headers: header, body: jsondata);

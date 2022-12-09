@@ -160,7 +160,7 @@ class _RecordPageState extends State<RecordPage> {
 
   Future<void> getRecords() async {
     var url = Uri.https(
-        'weatherreporto.pythonanywhere.com', '/api/get-records/$_userid');
+        'weatherreporto.pythonanywhere.com', '/api/get-user-records/$_userid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     setState(() {

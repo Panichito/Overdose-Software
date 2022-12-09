@@ -143,7 +143,9 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                             record!.endDate,
                                             record!.amount,
                                             record!.note))).then((value) {
-                                              // เซ็คค่าใหม่
+                                              setState(() {
+                                                refreshRecord(record!.recordId);
+                                              });
                                             });
                                 // change information
                               },
@@ -246,6 +248,16 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
         ),
       ),
     );
+  }
+
+  Future<void> refreshRecord(int rid) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/get-record/$rid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    setState(() {
+      Map<String, dynamic> map = json.decode(response.body);
+      print(map['Record_disease']);
+    });
   }
 
   Future<void> deleteRecord(int rid) async {
