@@ -118,17 +118,11 @@ class _EditRecordPageState extends State<EditRecordPage> {
                       result = 'End medicine intake date must be after Start date!';
                     });
                   } else {
-                    setState(() async {
-                      await updateRecord();
-                      // We want user to be able to continuously edit record
-                      //result = 'Data is saved, record has been updated successfully!';
-                      //success = true;
-                      final snackBar = SnackBar(
-                          content: Text('Data is saved, record has been updated successfully!',
-                            style: const TextStyle(fontSize: 15,),
-                          ),
-                          backgroundColor: Colors.green[900]);
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    updateRecord();
+                    setState(() {
+                      // Infact, we want user to be able to continuously edit record
+                      result = 'Data is saved, record has been updated successfully!';
+                      success = true;
                       Navigator.pop(context, jsondata);
                     });
                   }
@@ -355,7 +349,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
     //print(jsondata);
 
-    var response = await http.put(url, headers: header, body: jsondata);
+    var response = await http.put(url, headers: header, body: jsondata);  // Note: รอจบแล้วที่ await แล้ว แต่มันปรินต์ช้าเฉยๆครับ
     var uft8result=utf8.decode(response.bodyBytes);
     print('UPDATE RECORD!');
     print(uft8result);

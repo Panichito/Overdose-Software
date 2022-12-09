@@ -144,7 +144,15 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                             record!.amount,
                                             record!.note))).then((value) {
                                               setState(() {
-                                                refreshRecord(record!.recordId);
+                                                Map<String, dynamic> map = jsonDecode(value);
+                                                record!.medicineId = map['medicine'];
+                                                refreshMedName(map['medicine']);
+                                                record!.disease = map['Record_disease'];
+                                                record!.amount = map['Record_amount'];
+                                                record!.startDate = map['Record_start'];
+                                                record!.endDate = map['Record_end'];
+                                                record!.note = map['Record_info'];
+                                                //refreshRecord(record!.recordId);
                                               });
                                             });
                                 // change information
@@ -250,13 +258,13 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
-  Future<void> refreshRecord(int rid) async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/get-record/$rid');
+  Future<void> refreshMedName(int mid) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/medicine-info/$mid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     setState(() {
-      Map<String, dynamic> map = json.decode(response.body);
-      print(map['Record_disease']);
+      Map<String, dynamic> medmap = json.decode(response.body);
+      record!.medicineName = medmap['Medicine_name'];
     });
   }
 
