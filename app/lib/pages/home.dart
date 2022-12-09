@@ -184,6 +184,16 @@ class _HomePageState extends State<HomePage> {
           */
           Column(
             children: [
+              Text('My Schedule',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.indigo[400],
+                      //fontFamily: 'Quicksand',
+                      fontWeight: FontWeight.bold)),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: noSuggestSearch((value) => updateList(value)),
+              ),
               Visibility(
                 visible: _isShow,
                 child: Row(
@@ -302,29 +312,18 @@ class _HomePageState extends State<HomePage> {
 
               IconButton(
                 onPressed: () {
-                  setState(
-                    () {
-                      _isShow = !_isShow;
-                    },
-                  );
+                  setState(() {
+                    _isShow = !_isShow;
+                  });
                 },
                 icon: Icon(
                   _isShow ? Icons.expand_less : Icons.expand_circle_down,
                   color: Colors.indigo[400],
                 ),
               ),
-              Text('My Schedule',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.indigo[400],
-                      //fontFamily: 'Quicksand',
-                      fontWeight: FontWeight.bold)),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: noSuggestSearch((value) => updateList(value)),
-          ),
+
           Expanded(
             child: ListView(
               children: [
