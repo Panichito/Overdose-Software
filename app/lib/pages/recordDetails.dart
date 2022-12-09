@@ -153,9 +153,9 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                             title: const Text(
-                                                'Delete this Record'),
+                                                '🗑️ Delete Record!'),
                                             content: const Text(
-                                                'All of the alert of this record will be cleared. Do you wish to proceed?'),
+                                                'All of the alert of this record will be deleted. Do you wish to proceed?'),
                                             actions: [
                                               TextButton(
                                                 // cancel
@@ -165,12 +165,11 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                                 child: const Text('Cancel'),
                                               ),
                                               TextButton(
-                                                // delete information
-                                                // placeholderDelete();
-
-                                                // pop to RecordPage
-                                                onPressed: () {
+                                                onPressed: () async {
+                                                  // delete information
+                                                  await deleteRecord(record!.recordId);
                                                   int count = 0;
+                                                  // pop to RecordPage
                                                   Navigator.popUntil(context,
                                                       (route) {
                                                     return count++ == 2;
@@ -196,27 +195,24 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                             title: const Text(
-                                                'Complete the Medication'),
+                                                '⏰ Complete Medication'),
                                             content: const Text(
                                                 'All of the alert of this record will be accomplished. Do you wish to proceed?'),
                                             actions: [
                                               TextButton(
-                                                // cancel
                                                 onPressed: () {
+                                                  // cancel
                                                   Navigator.pop(context);
                                                 },
                                                 child: const Text('Cancel'),
                                               ),
                                               TextButton(
-                                                // mark the record complete
-                                                // placeholderComplete();
-
-                                                // pop to RecordPage
                                                 onPressed: () async {
+                                                  // mark the record complete
                                                   await markRecordDone(record!.recordId, record!.patientId, record!.medicineId, record!.disease);
                                                   int count = 0;
-                                                  Navigator.popUntil(context,
-                                                      (route) {
+                                                  // pop to RecordPage
+                                                  Navigator.popUntil(context, (route) {
                                                     return count++ == 2;
                                                   });
                                                 },
@@ -240,6 +236,13 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
         ),
       ),
     );
+  }
+
+  Future<void> deleteRecord(int rid) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/delete-record/$rid');
+    Map<String, String> header={"Content-type":"application/json"};
+    var response=await http.delete(url, headers: header);
+    print(response.body);
   }
 
   Future<void> markRecordDone(int rid, int pid, int mid, String disease) async {
