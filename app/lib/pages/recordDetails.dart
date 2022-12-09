@@ -133,8 +133,18 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditRecordPage(record!.medicineName, record!.disease, record!.startDate, record!.endDate, record!.amount, record!.note)));
+                                        builder: (context) => EditRecordPage(
+                                            record!.recordId,
+                                            record!.patientId,
+                                            record!.medicineId,
+                                            record!.medicineName,
+                                            record!.disease,
+                                            record!.startDate,
+                                            record!.endDate,
+                                            record!.amount,
+                                            record!.note))).then((value) {
+                                              // เซ็คค่าใหม่
+                                            });
                                 // change information
                               },
                               child: const Text('Edit'),

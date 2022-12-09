@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EditRecordPage extends StatefulWidget {
   //const EditRecordPage({Key? key}) : super(key: key);
-  final v1, v2, v3, v4, v5, v6;
-  EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6);
+  final v1, v2, v3, v4, v5, v6, v7, v8, v9;
+  EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6, this.v7, this.v8, this.v9);
 
   @override
   State<EditRecordPage> createState() => _EditRecordPageState();
@@ -21,16 +21,15 @@ class _EditRecordPageState extends State<EditRecordPage> {
   // String? medId;
   bool success = false;
 
+  var _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9;
+
   // initialize value from the existing record
-  String patientId = 'P13: gus s';
-  String medId = 'M9: Ya Ma';
-  final diseaseController = TextEditingController(text: 'Ultra HIV');
-  final startDateController = TextEditingController(text: '2022-12-07');
-  final endDateController = TextEditingController(text: '2022-12-30');
-  final amountController = TextEditingController(text: '3');
-  final noteController =
-      TextEditingController(text: 'You will definitely die tomorrow.');
-  var caretakerid;
+  String? medId;
+  final diseaseController = TextEditingController();
+  final startDateController = TextEditingController();
+  final endDateController = TextEditingController();
+  final amountController = TextEditingController();
+  final noteController = TextEditingController();
 
   // list of patient
   List rawpatient = [];
@@ -43,6 +42,21 @@ class _EditRecordPageState extends State<EditRecordPage> {
   @override
   void initState() {
     super.initState();
+    _v1=widget.v1;
+    _v2=widget.v2;
+    _v3=widget.v3;
+    _v4=widget.v4;
+    _v5=widget.v5;
+    _v6=widget.v6;
+    _v7=widget.v7;
+    _v8=widget.v8;
+    _v9=widget.v9;
+    medId = 'M'+'$_v3'+': '+'$_v4';
+    diseaseController.text=_v5;
+    startDateController.text=_v6;
+    endDateController.text=_v7;
+    amountController.text='$_v8';
+    noteController.text=_v9;
 
     diseaseController.addListener(() => setState(() {}));
     getMedicine();
@@ -53,16 +67,14 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 24,
-        title: const Text('Edit Record for P'+'xxx'),
+        title: Text('Edit Record of P'+'$_v2'),
         backgroundColor: Colors.indigo[400],
       ),
       body: ListView(
         padding: EdgeInsets.fromLTRB(12, 16, 12, 12),
         children: [
-          buildPatientId(),
-          const SizedBox(
-            height: 16,
-          ),
+          //buildPatientId(),
+          //const SizedBox(height: 16,),
           buildMedicineId(),
           const SizedBox(
             height: 16,
@@ -102,23 +114,14 @@ class _EditRecordPageState extends State<EditRecordPage> {
                   DateTime timeEnd = DateTime.parse(endDateController.text);
                   if (timeStart.isAfter(timeEnd)) {
                     setState(() {
-                      result =
-                          'End medicine intake date must be after Start date!';
+                      result = 'End medicine intake date must be after Start date!';
                     });
                   } else {
                     updateRecord();
                     setState(() {
+                      // We want user to be able to continuously edit record
                       result = 'Data is saved, record has been updated successfully!';
                       success = true;
-
-                      // We want user to be able to continuously edit record
-                      // patientId=null;
-                      // medId=null;
-                      // diseaseController.clear();
-                      // startDateController.clear();
-                      // endDateController.clear();
-                      // amountController.clear();
-                      // noteController.clear();
                     });
                   }
                 }
@@ -141,47 +144,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
                 ),
               )),
         ],
-      ),
-    );
-  }
-
-  Widget buildPatientId() {
-    return Stack(
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(48, 2, 12, 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(
-              color: Colors.grey,
-            ),
-          ),
-          child: DropdownButton<String>(
-            // controller: patientIdController,
-            hint: Text('Patient ID'),
-            value: patientId,
-            isExpanded: true,
-            items: patientList.map(buildPatient).toList(),
-            onChanged: (String? value) => setState(() => patientId = value!),
-            // onChanged: (patientId) => setState(() => this.patientId = patientId),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 14.0, left: 12.0),
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
-
-  DropdownMenuItem<String> buildPatient(String patient) {
-    return DropdownMenuItem(
-      value: patient,
-      child: Text(
-        patient,
       ),
     );
   }
@@ -342,20 +304,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  Future<void> getCaretakerID() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    var id = pref.getInt('id');
-    var url = Uri.https(
-        'weatherreporto.pythonanywhere.com', '/api/ask-caretakerid/$id');
-    var response = await http.get(url);
-    var result = utf8.decode(response.bodyBytes);
-    print('get my careataker id');
-    print(result);
-    setState(() {
-      caretakerid = result;
-    });
-  }
-
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
@@ -374,14 +322,13 @@ class _EditRecordPageState extends State<EditRecordPage> {
   }
 
   Future<void> updateRecord() async {
-    var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-record/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String temp_string_mid = '';
     int temp_int_mid = 0;
     if (medId != null) {
-      temp_string_mid = medId;
+      temp_string_mid = medId!;
       int i = 1;
       while (temp_string_mid[i] != ':') {
         ++i;
@@ -390,8 +337,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
       temp_int_mid = int.parse(temp_string_mid);
     }
 
-/*
-    String v1='"patient":$temp_int_pid';
+    String v1='"patient":$_v2';
     String v2='"medicine":$temp_int_mid';
     String v3='"Record_disease":"${diseaseController.text}"';
     String v4='"Record_amount":${amountController.text}';
@@ -402,10 +348,9 @@ class _EditRecordPageState extends State<EditRecordPage> {
     String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
     //print(jsondata);
 
-    var response = await http.post(url, headers: header, body: jsondata);
+    var response = await http.put(url, headers: header, body: jsondata);
     var uft8result=utf8.decode(response.bodyBytes);
-    print('EDIT RECORD!');
+    print('UPDATE RECORD!');
     print(uft8result);
-*/
   }
 }
