@@ -1,48 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:app/pages/historyDetail.dart';
 
-class HistoryList {
-  String name;
-  String timeStamp;
-  HistoryList(this.name, this.timeStamp);
+class History {
+  String medicine;
+  String date;
+  String time;
+  History(this.medicine, this.date, this.time);
 }
 
-List<HistoryList> histories = [
-  HistoryList('Paracetamol', "31-12-2022"),
-  HistoryList('Pain killer', "30-12-2022"),
-  HistoryList('Antibiotics', "29-12-2022"),
-];
-
 class HistoryPage extends StatefulWidget {
-  //final void Function() onItem;  // what is onItem?
-  //const HistoryPage(this.onItem, {super.key});
+  const HistoryPage({super.key});
+
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+
+// temp list of history
+  List<History> histories = [
+    History('Ya Ba', "31-12-2022", "8:00"),
+    History('Ya Ba', "31-12-2022", "12:00"),
+    History('Ya Ba', "31-12-2022", "18:00"),
+    History('Ya Ma', "31-12-2022", "8:00"),
+    History('Ya Ma', "31-12-2022", "12:00"),
+    History('Ya Ma', "31-12-2022", "18:00"),
+    History('Ya Tum Yang Nee', "1-1-2023", "8:00"),
+    History('Ya Tum Yang Nee', "1-1-2023", "12:00"),
+    History('Ya Tum Yang Nee', "1-1-2023", "18:00"),
+    History('Mai Wa Gub Krai', "1-1-2023", "8:00"),
+    History('Mai Wa Gub Krai', "1-1-2023", "12:00"),
+    History('Mai Wa Gub Krai', "1-1-2023", "18:00"),
+    History('Kao Jai Mai?', "2-1-2023", "8:00"),
+    History('Kao Jai Mai?', "2-1-2023", "18:00"),
+    History('Kao Jai Mai?', "2-1-2023", "12:00"),
+    History('Mung Ma Tum Work Duay', "2-1-2023", "8:00"),
+    History('Mung Ma Tum Work Duay', "2-1-2023", "12:00"),
+    History('Mung Ma Tum Work Duay', "2-1-2023", "18:00"),
+  ];
+
+  // List of time to be display inside a datecard
+  List<History> displayList = [];
+
+  // unique date for displaying in dateCard
+  List<String> dateOfHistories = ["31-12-2022",  "1-1-2023", "2-1-2023"];
+
+  // A card displaying history
+  Widget dateCard(String date) {
+    // get only histories of the same date
+    displayList.clear();
+    for(var elem in histories) {
+      if (elem.date == date) {
+        displayList.add(elem);
+      }
+    }
+    return Card(
+      color: Colors.red[100],
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          children: [
+            Text('Date: $date'),
+            for(var history in displayList) timeCard(history),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // A card inside dateCard displaying each time a patient is taking medicine
+  Widget timeCard(History history) {
+    return Card(
+      color: Colors.blue[100],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            // Text('Date: ${history.date}'),
+            // const SizedBox(width: 16,),
+            Column(
+              children: [
+                Text('Time: ${history.time}'),
+              ],
+            ),
+            const SizedBox(width:24,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Medicine: ${history.medicine}'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text('History'), backgroundColor: Colors.indigo[400]),
-      body: Container(
-          child: (ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Icon(Icons.access_time_filled_sharp),
-            title: Text(histories[index].name),
-            subtitle: Text(histories[index].timeStamp),
-            trailing: Icon(Icons.search),
-            onTap: () {
-              //widget.onItem();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HistoryDetailPage()));
-            },
-          );
-        },
-        itemCount: histories.length,
-      ))),
+      appBar: AppBar(
+        title: Text('History'),
+        backgroundColor: Colors.indigo[400]
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ListView(
+          children: [
+            // display dateCard according to number of elements in dateOfHistories
+            for(var date in dateOfHistories) dateCard(date),
+          ],
+        ),
+      )
     );
   }
 }

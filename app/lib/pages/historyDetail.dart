@@ -1,3 +1,4 @@
+// Obsolete :)
 import 'package:flutter/material.dart';
 
 class HistoryDetail {
