@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RecordPage(myid)));
+                                    builder: (context) => RecordPage(myid, false)));
                           },
                           elevation: 2.0,
                           fillColor: Colors.white,

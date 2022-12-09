@@ -29,21 +29,22 @@ class BriefRecord {
 }
 
 class RecordPage extends StatefulWidget {
-  final uid;
-  const RecordPage(this.uid);
+  final uid, access;
+  const RecordPage(this.uid, this.access);
 
   @override
   State<RecordPage> createState() => _RecordPageState();
 }
 
 class _RecordPageState extends State<RecordPage> {
-  var _userid;
+  var _userid, _accessStatus;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _userid = widget.uid;
+    _accessStatus = widget.access;
     getRecords();
   }
 
@@ -84,34 +85,35 @@ class _RecordPageState extends State<RecordPage> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextButton(
-                  child: const Text('View Information'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RecordDetailsPage(
-                                record.recordId,
-                                record.patientId,
-                                record.medicineId,
-                                record.patientName,
-                                record.medicineName,
-                                record.disease,
-                                record.amount,
-                                record.startDate,
-                                record.endDate,
-                                record.note))).then((value) {
-                                  setState(() {
-                                    getRecords();
+              children:  [
+                if (_accessStatus) 
+                  TextButton(
+                    child: const Text('View Information'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RecordDetailsPage(
+                                  record.recordId,
+                                  record.patientId,
+                                  record.medicineId,
+                                  record.patientName,
+                                  record.medicineName,
+                                  record.disease,
+                                  record.amount,
+                                  record.startDate,
+                                  record.endDate,
+                                  record.note))).then((value) {
+                                    setState(() {
+                                      getRecords();
+                                    });
                                   });
-                                });
-                  },
-                ),
+                    },
+                  ),
               ],
             ),
           ],

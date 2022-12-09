@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      RecordPage(widget.patient.id)));
+                                      RecordPage(widget.patient.id, true)));
                         },
                         child: const Text(
                           'View List of Records',
