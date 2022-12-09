@@ -187,7 +187,13 @@ def request_service(request, UID):
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
-def get_records(request, UID):
+def get_record(request, RID):
+    this_record=Record.objects.get(id=RID)
+    serializer=RecordSerializer(this_record, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_user_records(request, UID):
     usr=User.objects.get(id=UID)
     mem=Member.objects.get(user=usr)
     ptn=Patient.objects.get(member=mem)
