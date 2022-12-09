@@ -8,15 +8,23 @@ import 'dart:convert';
 
 class BriefRecord {
   int recordId;
+  int patientId;
+  int medicineId;
+  int amount;
   String patientName;
   String medicineName;
   String disease;
-  int amount;
   String startDate;
   String endDate;
   String note;
 
-  BriefRecord(this.recordId, this.patientName, this.medicineName, this.disease,
+  BriefRecord(
+      this.recordId,
+      this.patientId,
+      this.medicineId,
+      this.patientName,
+      this.medicineName,
+      this.disease,
       this.amount, this.startDate, this.endDate, this.note);
 }
 
@@ -89,6 +97,8 @@ class _RecordPageState extends State<RecordPage> {
                         MaterialPageRoute(
                             builder: (context) => RecordDetailsPage(
                                 record.recordId,
+                                record.patientId,
+                                record.medicineId,
                                 record.patientName,
                                 record.medicineName,
                                 record.disease,
@@ -155,11 +165,13 @@ class _RecordPageState extends State<RecordPage> {
     var result = utf8.decode(response.bodyBytes);
     setState(() {
       getRec = jsonDecode(result);
-      print(getRec);
+      //print(getRec);
       allRecord = [];
       for (int i = 0; i < getRec.length; ++i) {
         allRecord.add(BriefRecord(
-            getRec[i]['id'],
+            getRec[i]['rid'],
+            getRec[i]['pid'],
+            getRec[i]['mid'],
             getRec[i]['patientname'],
             getRec[i]['medname'],
             getRec[i]['disease'],
