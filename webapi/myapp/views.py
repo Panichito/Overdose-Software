@@ -195,7 +195,9 @@ def get_records(request, UID):
     record_list=[]
     for r in rec:
         record_dict={}
-        record_dict['id']=r.id
+        record_dict['rid']=r.id
+        record_dict['pid']=r.patient.id
+        record_dict['mid']=r.medicine.id
         record_dict['patientname']=r.patient.member.user.first_name+' '+r.patient.member.user.last_name
         record_dict['medname']=r.medicine.Medicine_name
         record_dict['disease']=r.Record_disease
