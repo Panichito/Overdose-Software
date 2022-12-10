@@ -125,19 +125,12 @@ class _UIPageState extends State<UIPage> {
             decoration: BoxDecoration(color: Colors.indigo[400])),
         ListTile(
           leading: Icon(Icons.manage_accounts),
-          title: Text('Profile'),
+          title: Text('Profile settings'),
           onTap: () {
             push_to_edit_page();
           },
         ),
-        ListTile(
-          leading: Icon(Icons.history_edu),
-          title: Text('History'),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => HistoryPage()));
-          },
-        ),
+
         // user is caretaker show incoming request
         if (_role == 'CARETAKER') ...[
           ListTile(

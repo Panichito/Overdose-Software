@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class History {
   String medicine;
@@ -8,7 +11,9 @@ class History {
 }
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+  //const HistoryPage({super.key});
+  final uid;
+  HistoryPage(this.uid);
 
   @override
   State<HistoryPage> createState() => _HistoryPageState();
@@ -43,6 +48,14 @@ class _HistoryPageState extends State<HistoryPage> {
 
   // unique date for displaying in dateCard
   List<String> dateOfHistories = ["31-12-2022",  "1-1-2023", "2-1-2023"];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAllDate();
+    getHistory(widget.uid);
+  }
 
   // A card displaying history
   Widget dateCard(String date) {
@@ -114,5 +127,18 @@ class _HistoryPageState extends State<HistoryPage> {
         ),
       )
     );
+  }
+
+  Future<void> getAllDate() async {
+  }
+
+  Future<void> getHistory(int uid) async {
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/get-user-history/$uid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    print(result);
+    setState(() {
+    });
   }
 }

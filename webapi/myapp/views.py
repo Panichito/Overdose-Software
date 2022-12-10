@@ -336,6 +336,7 @@ def get_user_history(request, UID):
             for h in his:
                 history_dict={}
                 history_dict['id']=h.id
+                history_dict['medname']=h.alert.record.medicine.Medicine_name
                 history_dict['takeDate']=h.History_takeDate
                 history_dict['takeTime']=h.History_takeTime
                 history_list.append(history_dict)

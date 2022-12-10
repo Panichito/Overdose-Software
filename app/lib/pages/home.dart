@@ -3,6 +3,7 @@ import 'package:app/pages/noSuggestSearch.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/pages/viewRecord.dart';
+import 'package:app/pages/history.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -287,11 +288,16 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       children: [
                         RawMaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HistoryPage(myid)));
+                          },
                           elevation: 2.0,
                           fillColor: Colors.white,
                           child: Icon(
-                            Icons.question_mark,
+                            Icons.history_edu,
                             size: 35.0,
                             color: Colors.indigo[400],
                           ),
@@ -300,7 +306,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          'Empty',
+                          'My History',
                           style: TextStyle(
                               fontSize: 13,
                               color: Colors.indigo[400],
