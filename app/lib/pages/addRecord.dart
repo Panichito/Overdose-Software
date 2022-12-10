@@ -244,7 +244,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
                 icon: Icon(Icons.close),
                 onPressed: () => diseaseController.clear(),
               ),
-        border: OutlineInputBorder(),
       ),
       textInputAction: TextInputAction.done,
     );
