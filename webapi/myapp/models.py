@@ -64,11 +64,11 @@ class Alert(models.Model):
     Alert_isTake=models.BooleanField(default=False)
 
     def __str__(self):
-        return "A"+str(self.id)+' - '+self.record.patient.member.user.username+", "+str(self.Alert_time)
+        return "A"+str(self.id)+' - '+self.record.patient.member.user.username+', '+self.record.medicine.Medicine_name+", "+str(self.Alert_time)
 
 class History(models.Model):
     #alert=models.OneToOneField(Alert, on_delete=models.CASCADE)
-    alert=models.ForeignKey(Alert, on_delete=models.CASCADE, null=True, blank=True)
+    alert=models.ForeignKey(Alert, on_delete=models.CASCADE, null=True, blank=True)  # จากจะไม่ต้องมี On delete
     History_takeDate=models.DateField(auto_now=False, auto_now_add=False, null=True, blank=True)
     History_takeTime=models.TimeField(auto_now=False, auto_now_add=False, null=True, blank=True)
     

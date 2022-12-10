@@ -251,6 +251,7 @@ def get_all_alerts(request, UID):
         alt=Alert.objects.filter(record=r).order_by('Alert_time')
         for a in alt:
             alert_dict={}
+            alert_dict['id']=a.id
             alert_dict['disease']=a.record.Record_disease
             alert_dict['medname']=a.record.medicine.Medicine_name
             alert_dict['time']=a.Alert_time
@@ -311,16 +312,6 @@ def delete_alert(request, AID):
             statuscode=status.HTTP_400_BAD_REQUEST
         return Response(data=data, status=statuscode)
 
-@api_view(['POST'])
-def add_history(request):
-    if request.method=='POST':
-        serializer=HistorySerializer(data=request.data)
-        print(request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
-
 @api_view(['GET'])
 def get_user_history(request, UID):
     usr=User.objects.get(id=UID)
@@ -341,6 +332,16 @@ def get_user_history(request, UID):
                 history_dict['takeTime']=h.History_takeTime
                 history_list.append(history_dict)
     return Response(data=history_list, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def add_history(request):
+    if request.method=='POST':
+        serializer=HistorySerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
