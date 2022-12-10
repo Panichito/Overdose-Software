@@ -125,6 +125,7 @@ class _HistoryPageState extends State<HistoryPage> {
         histories.add(History(rawHistory[i]['medname'], rawHistory[i]['takeDate'], rawHistory[i]['takeTime']));
         dateSet.add(rawHistory[i]['takeDate']);
       }
+      //for(var e in dateSet) print(e);
       dateOfHistories = dateSet.toList();
     });
   }
