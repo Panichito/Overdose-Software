@@ -187,17 +187,22 @@ class _RecordPageState extends State<RecordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddRecordPage(_userid))).then((value) {
-                setState(() {
-                  getRecords();
+      floatingActionButton: !_accessStatus
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddRecordPage(_userid)))
+                    .then((value) {
+                  setState(() {
+                    getRecords();
+                  });
                 });
-              });
-        },
-        child: Icon(Icons.add),
-      ),
+              },
+              child: Icon(Icons.add),
+            ),
       appBar: AppBar(
         titleSpacing: 24,
         title: const Text('List of Records'),
