@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class History {
   String medicine;
@@ -46,13 +47,14 @@ class _HistoryPageState extends State<HistoryPage> {
         displayList.add(elem);
       }
     }
+    DateTime dt = DateTime.parse(date);
     return Card(
       color: Colors.red[100],
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(
           children: [
-            Text('Date: $date', style: TextStyle(fontSize: 15)),
+            Text(DateFormat.yMMMd().format(dt), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             for(var history in displayList) timeCard(history),
           ],
         ),
@@ -80,7 +82,7 @@ class _HistoryPageState extends State<HistoryPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Medicine: ${history.medicine}', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Medicine: ${history.medicine}', style: TextStyle(fontStyle: FontStyle.italic)),
                 ],
               ),
             ),
