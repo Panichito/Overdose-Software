@@ -420,18 +420,16 @@ class _HomePageState extends State<HomePage> {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/add-history');
     Map<String, String> header = {"Content-type": "application/json"};
+    DateTime internetTime = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
+    String formattedTime = DateFormat.Hms().format(internetTime);
     String v1 = '"alert":$aid';
-    String v2 = '"History_takeDate":$aid';
-    String v3 = '"History_takeTime":$aid';
+    String v2 = '"History_takeDate":"$formattedDate"';
+    String v3 = '"History_takeTime":"$formattedTime"';
     String jsondata = '{$v1, $v2, $v3}';
     print(jsondata);
-    DateTime internetTime = DateTime.now();
-    print(internetTime);
-    String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
-    print(formattedDate);
-    String formattedTime = DateFormat.Hms().format(internetTime);
-    print(formattedTime);
-    //var response = await http.post(url, headers: header, body: jsondata);
-    //var uft8result = utf8.decode(response.bodyBytes);
+    var response = await http.post(url, headers: header, body: jsondata);
+    var uft8result = utf8.decode(response.bodyBytes);
+    print(uft8result);
   }
 }
