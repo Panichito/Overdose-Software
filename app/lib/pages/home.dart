@@ -7,6 +7,8 @@ import 'package:app/pages/history.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:app/pages/notification.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 bool _isShow = false;
 
@@ -29,8 +31,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = "",
-      profilepic =
-          "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
+    profilepic =
+      "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
   int? myid;
   // schedules list
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   List<Schedule> allSchedule = [];
   List<Schedule> scheduleList = [];
   var _role;
-
+  NotificationService notificationService = NotificationService();
 
   @override
   void initState() {
@@ -51,9 +53,9 @@ class _HomePageState extends State<HomePage> {
   void updateList(String value) {
     setState(() {
       scheduleList = allSchedule
-          .where((element) =>
-              element.medName.toLowerCase().contains(value.toLowerCase()))
-          .toList();
+        .where((element) =>
+          element.medName.toLowerCase().contains(value.toLowerCase()))
+        .toList();
     });
   }
 
@@ -62,6 +64,9 @@ class _HomePageState extends State<HomePage> {
     String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     DateTime dt = DateTime.parse(formattedDate + " " + schedule.time).toLocal();
     String formattedTime = DateFormat('kk:mm').format(dt);
+    print(allSchedule);
+
+
     return Card(
       color: schedule.isTake ? Colors.green[100] : Colors.red[100],
       shape: RoundedRectangleBorder(
@@ -405,6 +410,11 @@ class _HomePageState extends State<HomePage> {
             getAlert[i]['isTake']));
       }
       scheduleList = List.from(allSchedule);  // map all schedule into the display list
+      tz.initializeTimeZones();
+      notificationService.initNotification();
+      if (allSchedule.isNotEmpty) {
+        notificationService.showNotification('Daily reminder', "Don't forget to take your medicine today!");
+      }
     });
   }
 
