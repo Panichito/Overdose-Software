@@ -109,6 +109,7 @@ class _HomePageState extends State<HomePage> {
                       if (schedule.isTake == false) {
                         setAlertStatus(schedule.alertId, true);
                         // create new history
+                        createHistory(schedule.alertId);
                       }
                       else {
                         setAlertStatus(schedule.alertId, false);
@@ -407,10 +408,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> setAlertStatus(int aid, bool status) async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
-    Map<String, String> header={"Content-type":"application/json"};
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
+    Map<String, String> header = {"Content-type": "application/json"};
     String jsondata = '{"Alert_isTake":"$status"}';
     var response = await http.put(url, headers: header, body: jsondata);
-    print(response.body);
+    //print(response.body);
+  }
+
+  Future<void> createHistory(int aid) async {
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/add-history');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String v1 = '"alert":$aid';
+    String v2 = '"History_takeDate":$aid';
+    String v3 = '"History_takeTime":$aid';
+    String jsondata = '{$v1, $v2, $v3}';
+    print(jsondata);
+    final now = new DateTime.now();
+    DateTime internetTime = DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    print('FU Thunder');
+    print(internetTime);
+    print('FF');
+    print(date);
+    //var response = await http.post(url, headers: header, body: jsondata);
+    //var uft8result = utf8.decode(response.bodyBytes);
   }
 }
