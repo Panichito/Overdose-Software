@@ -12,12 +12,13 @@ bool _isShow = false;
 
 // patient constructor
 class Schedule {
+  int alertId;
   String disease;
   String medName;
   String time;
   bool isTake;
 
-  Schedule(this.disease, this.medName, this.time, this.isTake);
+  Schedule(this.alertId, this.disease, this.medName, this.time, this.isTake);
 }
 
 class HomePage extends StatefulWidget {
@@ -105,7 +106,15 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     // set isTaken to false
                     setState(() {
-                      schedule.isTake = !schedule.isTake;
+                      if (schedule.isTake == false) {
+                        setAlertStatus(schedule.alertId, true);
+                        // create new history
+                      }
+                      else {
+                        setAlertStatus(schedule.alertId, false);
+                        // delete existing history
+                      }
+                      schedule.isTake = !schedule.isTake;  // เซ็ตไปด้วยเลยเพื่อความรวดเร็ว จะได้ไม่ต้อง reload
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -386,11 +395,22 @@ class _HomePageState extends State<HomePage> {
       getAlert = jsonDecode(result);
       allSchedule = [];
       for (int i = 0; i < getAlert.length; ++i) {
-        allSchedule.add(Schedule(getAlert[i]['disease'], getAlert[i]['medname'],
-            getAlert[i]['time'], getAlert[i]['isTake']));
+        allSchedule.add(Schedule(
+            getAlert[i]['id'],
+            getAlert[i]['disease'],
+            getAlert[i]['medname'],
+            getAlert[i]['time'],
+            getAlert[i]['isTake']));
       }
-      scheduleList =
-          List.from(allSchedule); // add all schedule into the display list
+      scheduleList = List.from(allSchedule);  // map all schedule into the display list
     });
+  }
+
+  Future<void> setAlertStatus(int aid, bool status) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
+    Map<String, String> header={"Content-type":"application/json"};
+    String jsondata = '{"Alert_isTake":"$status"}';
+    var response = await http.put(url, headers: header, body: jsondata);
+    print(response.body);
   }
 }
