@@ -114,6 +114,7 @@ class _HomePageState extends State<HomePage> {
                       else {
                         setAlertStatus(schedule.alertId, false);
                         // delete existing history
+                        clearHistory(schedule.alertId);
                       }
                       schedule.isTake = !schedule.isTake;  // เซ็ตไปด้วยเลยเพื่อความรวดเร็ว จะได้ไม่ต้อง reload
                     });
@@ -431,5 +432,13 @@ class _HomePageState extends State<HomePage> {
     var response = await http.post(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);
     print(uft8result);
+  }
+
+  Future<void> clearHistory(int aid) async {
+    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/delete-history/$aid');
+    Map<String, String> header={"Content-type":"application/json"};
+    var response=await http.delete(url, headers: header);
+    print('CLEAR TAKEN HISTORY');
+    print(response.body);
   }
 }
