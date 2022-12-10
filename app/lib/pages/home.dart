@@ -35,6 +35,8 @@ class _HomePageState extends State<HomePage> {
   List getAlert = [];
   List<Schedule> allSchedule = [];
   List<Schedule> scheduleList = [];
+  var _role;
+
 
   @override
   void initState() {
@@ -230,56 +232,58 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: Icon(
-                            Icons.question_mark,
-                            size: 35.0,
-                            color: Colors.indigo[400],
-                          ),
-                          padding: EdgeInsets.all(10.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Empty',
-                          style: TextStyle(
-                              fontSize: 13,
+                    if (_role == 'PATIENT')
+                      Column(
+                        children: [
+                          RawMaterialButton(
+                            onPressed: () {},
+                            elevation: 2.0,
+                            fillColor: Colors.white,
+                            child: Icon(
+                              Icons.account_box_rounded,
+                              size: 35.0,
                               color: Colors.indigo[400],
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {},
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: Icon(
-                            Icons.question_mark,
-                            size: 35.0,
-                            color: Colors.indigo[400],
+                            ),
+                            padding: EdgeInsets.all(10.0),
+                            shape: CircleBorder(),
                           ),
-                          padding: EdgeInsets.all(10.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'Empty',
-                          style: TextStyle(
-                              fontSize: 13,
+                          SizedBox(height: 5),
+                          Text(
+                            'My Profile',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.indigo[400],
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    if (_role == 'CARETAKER')
+                      Column(
+                        children: [
+                          RawMaterialButton(
+                            onPressed: () {},
+                            elevation: 2.0,
+                            fillColor: Colors.white,
+                            child: Icon(
+                              Icons.edit,
+                              size: 35.0,
                               color: Colors.indigo[400],
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                            ),
+                            padding: EdgeInsets.all(10.0),
+                            shape: CircleBorder(),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'Change Status',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.indigo[400],
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     Column(
                       children: [
                         RawMaterialButton(
@@ -350,6 +354,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         var usr_name = pref.getString('username');
         var profile_url = pref.getString('profilepic');
+        _role = pref.getString('role');
         username = "$usr_name";
         print(profile_url);
         if (profile_url != "no image") {
