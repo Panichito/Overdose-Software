@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/delete-alert/<int:AID>', delete_alert),
     path('api/add-history', add_history),
     path('api/get-user-history/<int:UID>', get_user_history),
+    path('api/delete-history/<int:AID>', delete_history),
 ]
