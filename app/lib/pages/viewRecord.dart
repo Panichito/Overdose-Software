@@ -52,75 +52,137 @@ class _RecordPageState extends State<RecordPage> {
   List<BriefRecord> allRecord = [];
 
   Widget recordCard(BriefRecord record) {
-    return Card(
-      color: Colors.red[100],
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Record ID: R${record.recordId}'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text('Disease: ${record.disease}'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  // it suppose to show a medicine name not id
-                  Text('Medicine: ${record.medicineName}'),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children:  [
-                if (_accessStatus) 
-                  TextButton(
-                    child: const Text('View Information'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
+    SizeConfig.init(context);
+    SizeConfig.mediaQueryData;
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+              width: SizeConfig.screenWidth * 0.95,
+              height: SizeConfig.screenHeight * 0.05,
+              decoration: BoxDecoration(
+                  color: Colors.indigo[400],
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(24),
+                  )),
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(14, 2, 0, 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('Record R${record.recordId}',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ))),
+          Container(
+              width: SizeConfig.screenWidth * 0.95,
+              height: SizeConfig.screenHeight * 0.18,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RecordDetailsPage(
-                                  record.recordId,
-                                  record.patientId,
-                                  record.medicineId,
-                                  record.patientName,
-                                  record.medicineName,
-                                  record.disease,
-                                  record.amount,
-                                  record.startDate,
-                                  record.endDate,
-                                  record.note))).then((value) {
-                                    setState(() {
-                                      getRecords();
-                                    });
-                                  });
-                    },
-                  ),
-              ],
-            ),
-          ],
-        ),
+                  ],
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(24),
+                  )),
+              //padding: EdgeInsets.all(1),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(14, 10, 10, 5),
+                child: Row(
+                  children: [
+                    Column(children: [
+                      Container(
+                        width: SizeConfig.screenWidth * 0.65,
+                        child: Text(
+                          'Disease:',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                        width: SizeConfig.screenWidth * 0.65,
+                        child: Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Text(
+                            '${record.disease}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 15, color: Colors.black87),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: SizeConfig.screenHeight * 0.005),
+                      Container(
+                        width: SizeConfig.screenWidth * 0.65,
+                        child: Text(
+                          'Medicine:',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Container(
+                          width: SizeConfig.screenWidth * 0.65,
+                          child: Padding(
+                            padding: EdgeInsets.all(3),
+                            child: Text(
+                              '${record.medicineName}',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.black),
+                            ),
+                          ))
+                    ]),
+                    if (_accessStatus)
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RecordDetailsPage(
+                                      record.recordId,
+                                      record.patientId,
+                                      record.medicineId,
+                                      record.patientName,
+                                      record.medicineName,
+                                      record.disease,
+                                      record.amount,
+                                      record.startDate,
+                                      record.endDate,
+                                      record.note))).then((value) {
+                            setState(() {
+                              getRecords();
+                            });
+                          });
+                        },
+                        child: Text('more'),
+                      )
+                  ],
+                ),
+              ))
+        ],
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
