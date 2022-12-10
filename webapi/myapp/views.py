@@ -257,8 +257,8 @@ def get_all_alerts(request, UID):
             alert_dict['time']=a.Alert_time
             alert_dict['isTake']=a.Alert_isTake
             alert_list.append(alert_dict)
-    newlist = sorted(alert_list, key=lambda d: d['time'])   # ไม่งั้นมันจะ sort ในแต่ละ record ไม่ใช่ all alerts
-    return Response(data=newlist, status=status.HTTP_200_OK)
+    sorted_list = sorted(alert_list, key=lambda d: d['time'])   # ไม่งั้นมันจะ sort ในแต่ละ record ไม่ใช่ all alerts
+    return Response(data=sorted_list, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_specific_alerts(request, RID):
@@ -331,7 +331,8 @@ def get_user_history(request, UID):
                 history_dict['takeDate']=h.History_takeDate
                 history_dict['takeTime']=h.History_takeTime
                 history_list.append(history_dict)
-    return Response(data=history_list, status=status.HTTP_200_OK)
+    sorted_list = sorted(history_list, key=lambda d: d['takeTime'])
+    return Response(data=sorted_list, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def add_history(request):
@@ -342,6 +343,22 @@ def add_history(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['DELETE'])
+def delete_history(request, AID):
+    alt=Alert.objects.get(id=AID)
+    if request.method=='DELETE':
+        data={}
+        # query for wanted history
+        his=History.objects.filter(alert=alt, History_takeDate=datetime.datetime.now().date())  # use filter in case of clear old data
+        delete=his.delete()
+        if delete:
+            data['status']='history has been cleared'
+            statuscode=status.HTTP_200_OK
+        else:
+            data['status']='failed to clear history'
+            statuscode=status.HTTP_400_BAD_REQUEST
+        return Response(data=data, status=statuscode)
 
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
