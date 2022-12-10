@@ -95,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
                                   child: Icon(
-                                    Icons.mail,
+                                    Icons.assignment_ind_sharp,
                                     size: 45.0,
                                     color: Colors.indigo[400],
                                   ),
