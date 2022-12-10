@@ -425,13 +425,12 @@ class _HomePageState extends State<HomePage> {
     String v3 = '"History_takeTime":$aid';
     String jsondata = '{$v1, $v2, $v3}';
     print(jsondata);
-    final now = new DateTime.now();
     DateTime internetTime = DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
-    print('FU Thunder');
     print(internetTime);
-    print('FF');
-    print(date);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
+    print(formattedDate);
+    String formattedTime = DateFormat.Hms().format(internetTime);
+    print(formattedTime);
     //var response = await http.post(url, headers: header, body: jsondata);
     //var uft8result = utf8.decode(response.bodyBytes);
   }
