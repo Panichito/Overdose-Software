@@ -191,10 +191,11 @@ class _AddRecordPageState extends State<AddRecordPage> {
         Container(
           padding: EdgeInsets.fromLTRB(48, 2, 12, 2),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(30),
             border: Border.all(
-              color: Colors.grey,
+              color: Colors.white,
             ),
+            color: Colors.white,
           ),
           child: DropdownButton<String>(
             hint: Text('Medicine ID'),
@@ -227,7 +228,14 @@ class _AddRecordPageState extends State<AddRecordPage> {
   Widget buildDisease() {
     return TextField(
       controller: diseaseController,
+      textAlignVertical: TextAlignVertical.bottom,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
         labelText: 'Disease',
         prefixIcon: Icon(Icons.medical_information),
         suffixIcon: diseaseController.text.isEmpty
@@ -246,7 +254,12 @@ class _AddRecordPageState extends State<AddRecordPage> {
     return TextField(
         controller: startDateController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
           prefixIcon: Icon(Icons.calendar_month),
           labelText: 'Start medicine intake Date',
         ),
@@ -281,7 +294,12 @@ class _AddRecordPageState extends State<AddRecordPage> {
     return TextField(
         controller: endDateController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
           prefixIcon: Icon(Icons.calendar_month),
           labelText: 'End medicine intake Date',
         ),
@@ -317,8 +335,13 @@ class _AddRecordPageState extends State<AddRecordPage> {
     return TextField(
       controller: amountController,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
         labelText: 'Amount of medicine',
-        border: OutlineInputBorder(),
       ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
@@ -334,8 +357,13 @@ class _AddRecordPageState extends State<AddRecordPage> {
       maxLines: 5,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
         labelText: 'Note (optional)',
-        border: OutlineInputBorder(),
       ),
     );
   }
