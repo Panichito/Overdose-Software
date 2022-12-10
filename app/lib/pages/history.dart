@@ -21,39 +21,19 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
 
-// temp list of history
-  List<History> histories = [
-    History('Ya Ba', "31-12-2022", "8:00"),
-    History('Ya Ba', "31-12-2022", "12:00"),
-    History('Ya Ba', "31-12-2022", "18:00"),
-    History('Ya Ma', "31-12-2022", "8:00"),
-    History('Ya Ma', "31-12-2022", "12:00"),
-    History('Ya Ma', "31-12-2022", "18:00"),
-    History('Ya Tum Yang Nee', "1-1-2023", "8:00"),
-    History('Ya Tum Yang Nee', "1-1-2023", "12:00"),
-    History('Ya Tum Yang Nee', "1-1-2023", "18:00"),
-    History('Mai Wa Gub Krai', "1-1-2023", "8:00"),
-    History('Mai Wa Gub Krai', "1-1-2023", "12:00"),
-    History('Mai Wa Gub Krai', "1-1-2023", "18:00"),
-    History('Kao Jai Mai?', "2-1-2023", "8:00"),
-    History('Kao Jai Mai?', "2-1-2023", "18:00"),
-    History('Kao Jai Mai?', "2-1-2023", "12:00"),
-    History('Mung Ma Tum Work Duay', "2-1-2023", "8:00"),
-    History('Mung Ma Tum Work Duay', "2-1-2023", "12:00"),
-    History('Mung Ma Tum Work Duay', "2-1-2023", "18:00"),
-  ];
+  List rawHistory = [];
+  List<History> histories = [];
 
   // List of time to be display inside a datecard
   List<History> displayList = [];
 
   // unique date for displaying in dateCard
-  List<String> dateOfHistories = ["31-12-2022",  "1-1-2023", "2-1-2023"];
+  List<String> dateOfHistories = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getAllDate();
     getHistory(widget.uid);
   }
 
@@ -72,7 +52,7 @@ class _HistoryPageState extends State<HistoryPage> {
         padding: const EdgeInsets.all(4.0),
         child: Column(
           children: [
-            Text('Date: $date'),
+            Text('Date: $date', style: TextStyle(fontSize: 15)),
             for(var history in displayList) timeCard(history),
           ],
         ),
@@ -92,7 +72,7 @@ class _HistoryPageState extends State<HistoryPage> {
             // const SizedBox(width: 16,),
             Column(
               children: [
-                Text('Time: ${history.time}'),
+                Text('Took at ${history.time}', style: TextStyle(fontStyle: FontStyle.italic)),
               ],
             ),
             const SizedBox(width:24,),
@@ -100,7 +80,7 @@ class _HistoryPageState extends State<HistoryPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text('Medicine: ${history.medicine}'),
+                  Text('Medicine: ${history.medicine}', style: TextStyle(fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -129,9 +109,6 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Future<void> getAllDate() async {
-  }
-
   Future<void> getHistory(int uid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/get-user-history/$uid');
@@ -139,6 +116,14 @@ class _HistoryPageState extends State<HistoryPage> {
     var result = utf8.decode(response.bodyBytes);
     print(result);
     setState(() {
+      rawHistory = jsonDecode(result);
+      histories = [];
+      Set<String> dateSet = {};
+      for (int i = 0; i < rawHistory.length; ++i) {
+        histories.add(History(rawHistory[i]['medname'], rawHistory[i]['takeDate'], rawHistory[i]['takeTime']));
+        dateSet.add(rawHistory[i]['takeDate']);
+      }
+      dateOfHistories = dateSet.toList();
     });
   }
 }
