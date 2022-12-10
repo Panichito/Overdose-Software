@@ -248,7 +248,7 @@ def get_all_alerts(request, UID):
     rec=Record.objects.filter(patient=ptn, Record_isComplete=False)
     alert_list=[]
     for r in rec:
-        alt=Alert.objects.filter(record=r)
+        alt=Alert.objects.filter(record=r).order_by('Alert_time')
         for a in alt:
             alert_dict={}
             alert_dict['disease']=a.record.Record_disease
@@ -256,7 +256,8 @@ def get_all_alerts(request, UID):
             alert_dict['time']=a.Alert_time
             alert_dict['isTake']=a.Alert_isTake
             alert_list.append(alert_dict)
-    return Response(data=alert_list, status=status.HTTP_200_OK)
+    newlist = sorted(alert_list, key=lambda d: d['time'])   # ไม่งั้นมันจะ sort ในแต่ละ record ไม่ใช่ all alerts
+    return Response(data=newlist, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_specific_alerts(request, RID):
@@ -310,6 +311,35 @@ def delete_alert(request, AID):
             statuscode=status.HTTP_400_BAD_REQUEST
         return Response(data=data, status=statuscode)
 
+@api_view(['POST'])
+def add_history(request):
+    if request.method=='POST':
+        serializer=HistorySerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_user_history(request, UID):
+    usr=User.objects.get(id=UID)
+    mem=Member.objects.get(user=usr)
+    ptn=Patient.objects.get(member=mem)
+    rec=Record.objects.filter(patient=ptn, Record_isComplete=False)
+    print(usr.username)
+    history_list=[]
+    for r in rec:
+        alt=Alert.objects.filter(record=r)
+        for a in alt:
+            his=History.objects.filter(alert=a).order_by('-History_takeDate', 'History_takeTime')
+            for h in his:
+                history_dict={}
+                history_dict['id']=h.id
+                history_dict['takeDate']=h.History_takeDate
+                history_dict['takeTime']=h.History_takeTime
+                history_list.append(history_dict)
+    return Response(data=history_list, status=status.HTTP_200_OK)
 
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})

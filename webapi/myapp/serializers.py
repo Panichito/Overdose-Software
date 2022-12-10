@@ -37,3 +37,8 @@ class AlertSerializer(serializers.ModelSerializer):
     class Meta:
         model=Alert
         fields='__all__'
+
+class HistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=History
+        fields='__all__'
