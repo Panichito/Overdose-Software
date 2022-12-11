@@ -47,8 +47,8 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     checkUsername();
-    getAlerts();
     checkAlertState();
+    getMyAlerts();
   }
 
   void updateList(String value) {
@@ -402,7 +402,7 @@ class _HomePageState extends State<HomePage> {
     myid = pref.getInt('id');
   }
 
-  Future<void> getAlerts() async {
+  Future<void> getMyAlerts() async {
     await getMyId();
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/user-alerts/$myid');
@@ -473,22 +473,26 @@ class _HomePageState extends State<HomePage> {
     var result = utf8.decode(response.bodyBytes);
     setState(() {
       Map<String, dynamic> date = jsonDecode(result);
-      //print('latest date is '+date['History_takeDate']);
+      print('latest date is '+date['History_takeDate']);
       DateTime internetTime = DateTime.now();
       String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
       if (date['History_takeDate'] != formattedDate) {
-        refreshAlertStatus(false);
+        print('RESET ALERT STATUS DAILY!');
+        refreshAlertStatus();
       }
     });
   }
 
-  Future<void> refreshAlertStatus(bool setTo) async {
+  Future<void> refreshAlertStatus() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/refresh-alerts');
     Map<String, String> header = {"Content-type": "application/json"};
-    String jsondata = '{"Alert_isTake":"$setTo"}';
-    var response = await http.post(url, headers: header, body: jsondata);
+    String jsondata = '{"Alert_isTake":"False"}';
+    var response = await http.put(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);
     print(uft8result);
+    setState(() {
+      getMyAlerts();
+    });
   }
 }
