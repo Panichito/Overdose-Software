@@ -280,11 +280,11 @@ class _HomePageState extends State<HomePage> {
                     // set isTaken to false
                     setState(() {
                       if (schedule.isTake == false) {
-                        setAlertStatus(schedule.alertId, true);
+                        setAlertStatus(schedule.alertId, "True");
                         // create new history
                         createHistory(schedule.alertId);
                       } else {
-                        setAlertStatus(schedule.alertId, false);
+                        setAlertStatus(schedule.alertId, "False");
                         // delete existing history
                         clearHistory(schedule.alertId);
                       }
@@ -431,13 +431,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> setAlertStatus(int aid, bool status) async {
+  Future<void> setAlertStatus(int aid, String status) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata = '{"Alert_isTake":"$status"}';
     var response = await http.put(url, headers: header, body: jsondata);
-    //print(response.body);
+    print('Change alert status');
+    print(response.body);
   }
 
   Future<void> createHistory(int aid) async {
@@ -478,16 +479,16 @@ class _HomePageState extends State<HomePage> {
       String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
       if (date['History_takeDate'] != formattedDate) {
         print('RESET ALERT STATUS DAILY!');
-        refreshAlertStatus();
+        refreshAlertStatus("False");
       }
     });
   }
 
-  Future<void> refreshAlertStatus() async {
+  Future<void> refreshAlertStatus(String setTo) async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/refresh-alerts');
     Map<String, String> header = {"Content-type": "application/json"};
-    String jsondata = '{"Alert_isTake":"False"}';
+    String jsondata = '{"Alert_isTake":"$setTo"}';
     var response = await http.put(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);
     print(uft8result);
