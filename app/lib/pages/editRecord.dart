@@ -9,7 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EditRecordPage extends StatefulWidget {
   //const EditRecordPage({Key? key}) : super(key: key);
   final v1, v2, v3, v4, v5, v6, v7, v8, v9;
-  EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6, this.v7, this.v8, this.v9);
+  EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6, this.v7,
+      this.v8, this.v9);
 
   @override
   State<EditRecordPage> createState() => _EditRecordPageState();
@@ -43,21 +44,21 @@ class _EditRecordPageState extends State<EditRecordPage> {
   @override
   void initState() {
     super.initState();
-    _v1=widget.v1;
-    _v2=widget.v2;
-    _v3=widget.v3;
-    _v4=widget.v4;
-    _v5=widget.v5;
-    _v6=widget.v6;
-    _v7=widget.v7;
-    _v8=widget.v8;
-    _v9=widget.v9;
-    medId = 'M'+'$_v3'+': '+'$_v4';
-    diseaseController.text=_v5;
-    startDateController.text=_v6;
-    endDateController.text=_v7;
-    amountController.text='$_v8';
-    noteController.text=_v9;
+    _v1 = widget.v1;
+    _v2 = widget.v2;
+    _v3 = widget.v3;
+    _v4 = widget.v4;
+    _v5 = widget.v5;
+    _v6 = widget.v6;
+    _v7 = widget.v7;
+    _v8 = widget.v8;
+    _v9 = widget.v9;
+    medId = 'M' + '$_v3' + ': ' + '$_v4';
+    diseaseController.text = _v5;
+    startDateController.text = _v6;
+    endDateController.text = _v7;
+    amountController.text = '$_v8';
+    noteController.text = _v9;
 
     diseaseController.addListener(() => setState(() {}));
     getMedicine();
@@ -68,7 +69,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 24,
-        title: Text('Edit Record of P'+'$_v2'),
+        title: Text('Edit Record of P' + '$_v2'),
         backgroundColor: Colors.indigo[400],
       ),
       body: ListView(
@@ -76,26 +77,32 @@ class _EditRecordPageState extends State<EditRecordPage> {
         children: [
           //buildPatientId(),
           //const SizedBox(height: 16,),
+          Text('Medicine ID'),
           buildMedicineId(),
           const SizedBox(
             height: 16,
           ),
+          Text('Disease'),
           buildDisease(),
           const SizedBox(
             height: 16,
           ),
+          Text('Start medicine intake Date'),
           buildStartDate(),
           const SizedBox(
             height: 16,
           ),
+          Text('End medicine intake Date'),
           buildEndDate(),
           const SizedBox(
             height: 16,
           ),
+          Text('Amount of medicine'),
           buildAmount(),
           const SizedBox(
             height: 16,
           ),
+          Text('Note (optional)'),
           buildNote(),
           const SizedBox(
             height: 16,
@@ -115,13 +122,15 @@ class _EditRecordPageState extends State<EditRecordPage> {
                   DateTime timeEnd = DateTime.parse(endDateController.text);
                   if (timeStart.isAfter(timeEnd)) {
                     setState(() {
-                      result = 'End medicine intake date must be after Start date!';
+                      result =
+                          'End medicine intake date must be after Start date!';
                     });
                   } else {
                     updateRecord();
                     setState(() {
                       // Infact, we want user to be able to continuously edit record
-                      result = 'Data is saved, record has been updated successfully!';
+                      result =
+                          'Data is saved, record has been updated successfully!';
                       success = true;
                       Navigator.pop(context, jsondata);
                     });
@@ -134,7 +143,8 @@ class _EditRecordPageState extends State<EditRecordPage> {
                         fontSize: 16,
                       ),
                     ),
-                    backgroundColor: success == false ? Colors.red[900] : Colors.green[900]);
+                    backgroundColor:
+                        success == false ? Colors.red[900] : Colors.green[900]);
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 success = false;
               },
@@ -155,10 +165,11 @@ class _EditRecordPageState extends State<EditRecordPage> {
         Container(
           padding: EdgeInsets.fromLTRB(48, 2, 12, 2),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(30),
             border: Border.all(
-              color: Colors.grey,
+              color: Colors.white,
             ),
+            color: Colors.white,
           ),
           child: DropdownButton<String>(
             hint: Text('Medicine ID'),
@@ -193,7 +204,12 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return TextField(
       controller: diseaseController,
       decoration: InputDecoration(
-        labelText: 'Disease',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
         prefixIcon: Icon(Icons.medical_information),
         suffixIcon: diseaseController.text.isEmpty
             ? Container(width: 0)
@@ -201,7 +217,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
                 icon: Icon(Icons.close),
                 onPressed: () => diseaseController.clear(),
               ),
-        border: OutlineInputBorder(),
       ),
       textInputAction: TextInputAction.done,
     );
@@ -211,9 +226,13 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return TextField(
         controller: startDateController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
           prefixIcon: Icon(Icons.calendar_month),
-          labelText: 'Start medicine intake Date',
         ),
         readOnly: true,
         onTap: () async {
@@ -246,9 +265,13 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return TextField(
         controller: endDateController,
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.white,
           prefixIcon: Icon(Icons.calendar_month),
-          labelText: 'End medicine intake Date',
         ),
         readOnly: true,
         onTap: () async {
@@ -282,8 +305,12 @@ class _EditRecordPageState extends State<EditRecordPage> {
     return TextField(
       controller: amountController,
       decoration: InputDecoration(
-        labelText: 'Amount of medicine',
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
       ),
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
@@ -299,8 +326,12 @@ class _EditRecordPageState extends State<EditRecordPage> {
       maxLines: 5,
       keyboardType: TextInputType.multiline,
       decoration: InputDecoration(
-        labelText: 'Note (optional)',
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: Colors.white,
       ),
     );
   }
@@ -323,7 +354,8 @@ class _EditRecordPageState extends State<EditRecordPage> {
   }
 
   Future<void> updateRecord() async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-record/$_v1');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/update-record/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String temp_string_mid = '';
@@ -338,19 +370,21 @@ class _EditRecordPageState extends State<EditRecordPage> {
       temp_int_mid = int.parse(temp_string_mid);
     }
 
-    String v1='"patient":$_v2';
-    String v2='"medicine":$temp_int_mid';
-    String v3='"Record_disease":"${diseaseController.text}"';
-    String v4='"Record_amount":${amountController.text}';
-    String v5='"Record_start":"${startDateController.text}"';
-    String v6='"Record_end":"${endDateController.text}"';
-    String v7='"Record_info":"${noteController.text}"';
-    String v8='"Record_isComplete":"false"';
+    String v1 = '"patient":$_v2';
+    String v2 = '"medicine":$temp_int_mid';
+    String v3 = '"Record_disease":"${diseaseController.text}"';
+    String v4 = '"Record_amount":${amountController.text}';
+    String v5 = '"Record_start":"${startDateController.text}"';
+    String v6 = '"Record_end":"${endDateController.text}"';
+    String v7 = '"Record_info":"${noteController.text}"';
+    String v8 = '"Record_isComplete":"false"';
     jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
     //print(jsondata);
 
-    var response = await http.put(url, headers: header, body: jsondata);  // Note: รอจบแล้วที่ await แล้ว แต่มันปรินต์ช้าเฉยๆครับ
-    var uft8result=utf8.decode(response.bodyBytes);
+    var response = await http.put(url,
+        headers: header,
+        body: jsondata); // Note: รอจบแล้วที่ await แล้ว แต่มันปรินต์ช้าเฉยๆครับ
+    var uft8result = utf8.decode(response.bodyBytes);
     print('UPDATE RECORD!');
     print(uft8result);
   }
