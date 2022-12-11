@@ -366,6 +366,17 @@ def ask_latest_history(request):
     serializer=HistorySerializer(latest_his)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['PUT'])
+def refresh_alerts(request):
+    # You talk when you cease to be at peace with your thoughts.
+    if request.method=='PUT':
+        all_alert=Alert.objects.all()
+        all_alert.update(Alert_isTake=request.data['Alert_isTake'])
+        data={}
+        data['status']='all alert values are now set to '+str(request.data['Alert_isTake'])
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
     return render(request, 'overdoseweb/home.html')
