@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+    <head>
+        <title>Overdose</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/icon/favicon1.ico' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <script>
+            var logopic = '{% static 'img/logo1.png' %}'
+            var big = '{% static 'img/big.jpg' %}'
+            var map = '{% static 'img/map.jpg' %}'
+            var min = '{% static 'img/min.jpg' %}'
+            var pup = '{% static 'img/pup.jpg' %}'
+            var gus = '{% static 'img/gus1.jpg' %}'
+        </script>
+        {% block extrahead %}
+        <script type="module" src="{% static 'js/ourTeam.js' %}" defer></script>
+        {% endblock %}
+    </head>
+    <body>
+        <!-- navBar goes here -->
+        <!--Topic-->
+        <div class="ex-feature">
+            <p class="color-bk">Our&nbsp;</p>
+            <p class="color-bl">team</p>
+        </div>
+        <!--Display team member-->
+        <div class="profile-container">
+            <div class="profile-row">
+                <!-- Member profiles go here -->
+            </div>
+        </div>
+        <!-- Footer goes here -->
+    </body>
+</html>

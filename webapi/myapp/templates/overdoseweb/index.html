@@ -1,0 +1,102 @@
+{% load static %}
+<html>
+    <head>
+        <title>Overdose</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/icon/favicon1.ico' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <script>
+            var home_app = '{% static 'img/home_app.jpg' %}'
+            var findCare_app = '{% static 'img/findCare_app.jpg' %}'
+            var medicine_app = '{% static 'img/medicine_app.jpg' %}'
+            var patient_app = '{% static 'img/patient_app.jpg' %}'
+            var Chart = '{% static 'img/Chart.webp' %}'
+            var red_alarm = '{% static 'img/red-alarm.jpg' %}'
+            var medicine = '{% static 'img/medicine.webp' %}'
+            var health = '{% static 'img/health.jpg' %}'
+            var logopic = '{% static 'img/logo1.png' %}'
+        </script>
+        {% block extrahead %}
+        <script type="module" src="{% static 'js/home.js' %}" defer> </script>
+        {% comment %} <script src="{% static 'js/navbar.js' %}"></script> {% endcomment %}
+        {% endblock %}
+    </head>
+    <body>
+        <!-- navbar goes here -->
+        <!-- App title section -->
+        <div class="content2">
+            <div class="content">
+                <h1>Patient Tracking Application</h1>
+                <form>
+                    <a class="button_howtouse" href="#howtouse">How to use</a>
+                </form>
+            </div>
+        </div>
+        <!--Main Features section-->
+        <section>
+            <div class="ex-col">
+                <div class="ex-feature">
+                    <p class="color-bk">Main&nbsp;</p>
+                    <p class="color-bl">Features</p>
+                </div>
+                <div class="ex-def">
+                    <p>Automated Early Warning Scores, Charting, & Reports, Pulse Decomposition AnalysisTM Technology</p>
+                </div>
+                <!-- Main features showcase goes here -->
+            </div>
+        </section>
+        <!--New software section -->
+        <section>
+            <div class="container">
+                <div class="ex-feature">
+                    <p class="color-bk">New&nbsp;</p>
+                    <p class="color-bl">Software</p>
+                </div>
+                <div class="software-detail">
+                    <img class="software-img" src="{% static 'img/internet-of-things.svg' %}">
+                    <div class="software-text section">
+                        <div class="software-text header">
+                            <p class="color-bk">New technology software<br>applied for<br></p>
+                            <p class="color-bl">Care Taker</p>
+                        </div>
+                        <div class="software-text para">
+                            <p>A big win for patient comfort and clinician productivity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Random Paragraph section-->
+        <section>
+            <div class="container">
+                <div class="ex-feature">
+                    <p class="color-bk">Random&nbsp;</p>
+                    <p class="color-bl">Paragraph</p>
+                </div>
+                <div class="random-paragraph">
+                    <span class="color-bk">
+                        &emsp;&emsp;&emsp;&emsp;Caretaker’s ability to stream continuous blood pressure and vital information using only a comfortable finger cuff 
+                        means I will no longer have to disturb my patients to ‘spot check’ vital signs using bulky wires, leads, or arm cuffs or deal with Alarm Fatigue associated. 
+                        This is a big win for patient comfort and clinician productivity, not to mention the value of having realtime streaming data to make better clinical decisions 
+                        without the “alarm fatigue” associated with in-room monitors
+                    </span>
+                </div>
+            </div>
+        </section>
+        <!--How to use section-->
+        <section class="how-to-use">
+            <div class="container">
+                <div class="ex-feature">
+                    <p class="color-bl" id="howtouse">How to use</p>
+                    <!-- How to use paragraphs go here -->
+                </div>
+            </div>
+        </section>
+        <!--Footer goes here-->
+    </body>
+</html>
