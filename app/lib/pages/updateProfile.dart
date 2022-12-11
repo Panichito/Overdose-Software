@@ -42,7 +42,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     pfp.text = _v6;
   }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -52,23 +52,48 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
+            Text('First Name'),
             TextField(
               controller: fname,
-              decoration: InputDecoration(labelText: 'First Name'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'First Name',
+              ),
             ),
             SizedBox(height: 30),
+            Text('Last Name'),
             TextField(
               controller: lname,
-              decoration: InputDecoration(labelText: 'Last Name'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Last Name',
+              ),
             ),
             SizedBox(height: 30),
+            Text('Gender'),
             genderRadio(),
             SizedBox(height: 30),
+            Text('Birthdate'),
             TextField(
                 controller: bdate,
                 decoration: InputDecoration(
-                    icon: Icon(Icons.calendar_today),
-                    labelText: 'Enter Birth Date'),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Enter Birthdate'),
                 readOnly: true,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
@@ -89,11 +114,18 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   }
                 }),
             SizedBox(height: 30),
+            Text('Profile Image (URL Only)'),
             TextField(
               // for demo profile url image
               controller: pfp,
-              decoration:
-                  InputDecoration(labelText: 'Profile Image URL (optional)'),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
             ),
             SizedBox(height: 30),
             Padding(
@@ -107,9 +139,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 child: Text("Edit Information",
-                    style: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.white)),
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.amber[700]),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.indigo[400]),
                 ),
               ),
             ),
