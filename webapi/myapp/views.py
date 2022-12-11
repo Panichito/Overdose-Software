@@ -359,6 +359,13 @@ def delete_history(request, AID):
             statuscode=status.HTTP_400_BAD_REQUEST
         return Response(data=data, status=statuscode)
 
+@api_view(['GET'])
+def ask_lastest_history(request):
+    #latest_his=History.objects.last()
+    latest_his=History.objects.latest('History_takeDate')
+    serializer=HistorySerializer(latest_his)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
     return render(request, 'overdoseweb/home.html')
