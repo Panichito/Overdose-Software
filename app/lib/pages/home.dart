@@ -249,58 +249,36 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    if (_role == 'PATIENT')
-                      Column(
-                        children: [
-                          RawMaterialButton(
-                            onPressed: () {},
-                            elevation: 2.0,
-                            fillColor: Colors.white,
-                            child: Icon(
-                              Icons.account_box_rounded,
-                              size: 35.0,
+                    Column(
+                      children: [
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RecordPage(myid, false)));
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.white,
+                          child: Icon(
+                            Icons.account_box_rounded,
+                            size: 35.0,
+                            color: Colors.indigo[400],
+                          ),
+                          padding: EdgeInsets.all(10.0),
+                          shape: CircleBorder(),
+                        ),
+                        SizedBox(height: 5),
+                        Text(
+                          'My Profile',
+                          style: TextStyle(
+                              fontSize: 13,
                               color: Colors.indigo[400],
-                            ),
-                            padding: EdgeInsets.all(10.0),
-                            shape: CircleBorder(),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            'My Profile',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.indigo[400],
-                                fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    if (_role == 'CARETAKER')
-                      Column(
-                        children: [
-                          RawMaterialButton(
-                            onPressed: () {},
-                            elevation: 2.0,
-                            fillColor: Colors.white,
-                            child: Icon(
-                              Icons.edit,
-                              size: 35.0,
-                              color: Colors.indigo[400],
-                            ),
-                            padding: EdgeInsets.all(10.0),
-                            shape: CircleBorder(),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            'Change Status',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.indigo[400],
-                                fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                     Column(
                       children: [
                         RawMaterialButton(
@@ -331,6 +309,32 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
+                    if (_role == 'CARETAKER')
+                      Column(
+                        children: [
+                          RawMaterialButton(
+                            onPressed: () {},
+                            elevation: 2.0,
+                            fillColor: Colors.white,
+                            child: Icon(
+                              Icons.swipe_vertical_sharp,
+                              size: 35.0,
+                              color: Colors.red[400],
+                            ),
+                            padding: EdgeInsets.all(10.0),
+                            shape: CircleBorder(),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'ON/OFF',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.red[400],
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
