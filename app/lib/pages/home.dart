@@ -31,8 +31,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String username = "",
-    profilepic =
-      "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
+      profilepic =
+          "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
   int? myid;
   // schedules list
@@ -48,14 +48,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     checkUsername();
     getAlerts();
+    checkAlertState();
   }
 
   void updateList(String value) {
     setState(() {
       scheduleList = allSchedule
-        .where((element) =>
-          element.medName.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+          .where((element) =>
+              element.medName.toLowerCase().contains(value.toLowerCase()))
+          .toList();
     });
   }
 
@@ -377,7 +378,6 @@ class _HomePageState extends State<HomePage> {
         // bottomNavigationBar: const bot(),
         );
   }
-  
 
   Future<void> checkUsername() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -404,8 +404,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getAlerts() async {
     await getMyId();
-    var url =
-        Uri.https('weatherreporto.pythonanywhere.com', '/api/user-alerts/$myid');
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/user-alerts/$myid');
     var response = await http.get(url);
     var result = utf8.decode(response.bodyBytes);
     print('RECEIVE ALL OF MY ALERT');
@@ -420,11 +420,13 @@ class _HomePageState extends State<HomePage> {
             getAlert[i]['time'],
             getAlert[i]['isTake']));
       }
-      scheduleList = List.from(allSchedule);  // map all schedule into the display list
+      scheduleList =
+          List.from(allSchedule); // map all schedule into the display list
       tz.initializeTimeZones();
       notificationService.initNotification();
       if (allSchedule.isNotEmpty) {
-        notificationService.showNotification('Daily reminder', "Don't forget to take your medicine today!");
+        notificationService.showNotification(
+            'Daily reminder', "Don't forget to take your medicine today!");
       }
     });
   }
@@ -456,10 +458,37 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> clearHistory(int aid) async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/delete-history/$aid');
-    Map<String, String> header={"Content-type":"application/json"};
-    var response=await http.delete(url, headers: header);
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/delete-history/$aid');
+    Map<String, String> header = {"Content-type": "application/json"};
+    var response = await http.delete(url, headers: header);
     print('CLEAR TAKEN HISTORY');
     print(response.body);
+  }
+
+  Future<void> checkAlertState() async {
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/latest-history');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    setState(() {
+      Map<String, dynamic> date = jsonDecode(result);
+      //print('latest date is '+date['History_takeDate']);
+      DateTime internetTime = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
+      if (date['History_takeDate'] != formattedDate) {
+        refreshAlertStatus(false);
+      }
+    });
+  }
+
+  Future<void> refreshAlertStatus(bool setTo) async {
+    var url =
+        Uri.https('weatherreporto.pythonanywhere.com', '/api/refresh-alerts');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String jsondata = '{"Alert_isTake":"$setTo"}';
+    var response = await http.post(url, headers: header, body: jsondata);
+    var uft8result = utf8.decode(response.bodyBytes);
+    print(uft8result);
   }
 }
