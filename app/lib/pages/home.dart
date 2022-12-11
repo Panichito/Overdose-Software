@@ -60,12 +60,179 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  Widget homeButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            RawMaterialButton(
+              onPressed: () {
+                getMyId();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RecordPage(myid, false)));
+              },
+              elevation: 2.0,
+              fillColor: Colors.white,
+              child: Icon(
+                Icons.edit_note_sharp,
+                size: 35.0,
+                color: Colors.indigo[400],
+              ),
+              padding: EdgeInsets.all(10.0),
+              shape: CircleBorder(),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'View Record',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.indigo[400],
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            RawMaterialButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RecordPage(myid, false)));
+              },
+              elevation: 2.0,
+              fillColor: Colors.white,
+              child: Icon(
+                Icons.account_box_rounded,
+                size: 35.0,
+                color: Colors.indigo[400],
+              ),
+              padding: EdgeInsets.all(10.0),
+              shape: CircleBorder(),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'My Profile',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.indigo[400],
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            RawMaterialButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HistoryPage(myid)));
+              },
+              elevation: 2.0,
+              fillColor: Colors.white,
+              child: Icon(
+                Icons.history_edu,
+                size: 35.0,
+                color: Colors.indigo[400],
+              ),
+              padding: EdgeInsets.all(10.0),
+              shape: CircleBorder(),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'My History',
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.indigo[400],
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        if (_role == 'CARETAKER')
+          Column(
+            children: [
+              RawMaterialButton(
+                onPressed: () {},
+                elevation: 2.0,
+                fillColor: Colors.white,
+                child: Icon(
+                  Icons.swipe_vertical_sharp,
+                  size: 35.0,
+                  color: Colors.red[400],
+                ),
+                padding: EdgeInsets.all(10.0),
+                shape: CircleBorder(),
+              ),
+              SizedBox(height: 5),
+              Text(
+                'ON/OFF',
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.red[400],
+                    fontFamily: 'Quicksand',
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+
+  Widget header() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.indigo[400],
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(24),
+            top: Radius.circular(24),
+          )),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Welcome Back,',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    )),
+                const SizedBox(height: 5),
+                Container(
+                  width: 150,
+                  child: Text(
+                    username,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(width: 100),
+            CircleAvatar(
+              backgroundImage: NetworkImage(profilepic),
+              radius: 30,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget scheduleCard(Schedule schedule) {
     String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     DateTime dt = DateTime.parse(formattedDate + " " + schedule.time).toLocal();
     String formattedTime = DateFormat('kk:mm').format(dt);
     print(allSchedule);
-
 
     return Card(
       color: schedule.isTake ? Colors.green[100] : Colors.red[100],
@@ -115,13 +282,13 @@ class _HomePageState extends State<HomePage> {
                         setAlertStatus(schedule.alertId, true);
                         // create new history
                         createHistory(schedule.alertId);
-                      }
-                      else {
+                      } else {
                         setAlertStatus(schedule.alertId, false);
                         // delete existing history
                         clearHistory(schedule.alertId);
                       }
-                      schedule.isTake = !schedule.isTake;  // เซ็ตไปด้วยเลยเพื่อความรวดเร็ว จะได้ไม่ต้อง reload
+                      schedule.isTake = !schedule
+                          .isTake; // เซ็ตไปด้วยเลยเพื่อความรวดเร็ว จะได้ไม่ต้อง reload
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -148,229 +315,69 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.indigo[400],
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(24),
-                    top: Radius.circular(24),
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Welcome Back,',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            )),
-                        const SizedBox(height: 5),
-                        Container(
-                          width: 150,
-                          child: Text(
-                            username,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(width: 100),
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(profilepic),
-                      radius: 30,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          /*Four circle button
+        body: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: ListView(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: header()),
+              /*Four circle button
             and text"Schedule"
             inside this Column()
           */
-          Column(
-            children: [
-              Text('My Schedule',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.indigo[400],
-                      //fontFamily: 'Quicksand',
-                      fontWeight: FontWeight.bold)),
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: noSuggestSearch((value) => updateList(value)),
-              ),
-              Visibility(
-                visible: _isShow,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {
-                            getMyId();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RecordPage(myid, false)));
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: Icon(
-                            Icons.edit_note_sharp,
-                            size: 35.0,
-                            color: Colors.indigo[400],
-                          ),
-                          padding: EdgeInsets.all(10.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'View Record',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.indigo[400],
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RecordPage(myid, false)));
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: Icon(
-                            Icons.account_box_rounded,
-                            size: 35.0,
-                            color: Colors.indigo[400],
-                          ),
-                          padding: EdgeInsets.all(10.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'My Profile',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.indigo[400],
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        RawMaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HistoryPage(myid)));
-                          },
-                          elevation: 2.0,
-                          fillColor: Colors.white,
-                          child: Icon(
-                            Icons.history_edu,
-                            size: 35.0,
-                            color: Colors.indigo[400],
-                          ),
-                          padding: EdgeInsets.all(10.0),
-                          shape: CircleBorder(),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          'My History',
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.indigo[400],
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    if (_role == 'CARETAKER')
-                      Column(
-                        children: [
-                          RawMaterialButton(
-                            onPressed: () {},
-                            elevation: 2.0,
-                            fillColor: Colors.white,
-                            child: Icon(
-                              Icons.swipe_vertical_sharp,
-                              size: 35.0,
-                              color: Colors.red[400],
-                            ),
-                            padding: EdgeInsets.all(10.0),
-                            shape: CircleBorder(),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            'ON/OFF',
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.red[400],
-                                fontFamily: 'Quicksand',
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                  ],
-                ),
-              ),
-              /* End of Four Button*/
+              Column(
+                children: [
+                  Text('My Schedule',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.indigo[400],
+                          //fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.bold)),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: noSuggestSearch((value) => updateList(value)),
+                  ),
+                  Visibility(visible: _isShow, child: homeButton()),
+                  /* End of Four Button*/
 
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _isShow = !_isShow;
-                  });
-                },
-                icon: Icon(
-                  _isShow ? Icons.expand_less : Icons.expand_circle_down,
-                  color: Colors.indigo[400],
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isShow = !_isShow;
+                      });
+                    },
+                    icon: Icon(
+                      _isShow ? Icons.expand_less : Icons.expand_circle_down,
+                      color: Colors.indigo[400],
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    ...scheduleList
+                        .map((schedule) => scheduleCard(schedule))
+                        .toList(),
+                    const SizedBox(
+                      height: 16,
+                    )
+                  ],
                 ),
               ),
             ],
           ),
+        )
+      ],
+    )
 
-          Expanded(
-            child: ListView(
-              children: [
-                ...scheduleList
-                    .map((schedule) => scheduleCard(schedule))
-                    .toList(),
-                const SizedBox(
-                  height: 16,
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-      // bottomNavigationBar: const bot(),
-    );
+        // bottomNavigationBar: const bot(),
+        );
   }
+  
 
   Future<void> checkUsername() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
