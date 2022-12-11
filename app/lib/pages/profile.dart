@@ -46,24 +46,50 @@ class _ProfilePageState extends State<ProfilePage> {
                           )),
                       SizedBox(height: 5),
                       /* Record page navigation button */
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecordPage(widget.patient.id, true)));
-                        },
-                        child: const Text(
-                          'View List of Records',
-                          style: TextStyle(fontSize: 10, color: Colors.white),
-                        ),
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.indigo[500],
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.all(5.0),
-                        ),
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RecordPage(widget.patient.id, true)));
+                            },
+                            child: const Text(
+                              'View List of Records',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.indigo[500],
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.all(5.0),
+                            ),
+                          ),
+                          SizedBox(width: 15),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RecordPage(widget.patient.id, true)));
+                            },
+                            child: const Text(
+                              'View History',
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white),
+                            ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.indigo[500],
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.all(10.0),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   )),
               /* End of the upper part of profile page */
