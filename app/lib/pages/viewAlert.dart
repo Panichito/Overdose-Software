@@ -60,7 +60,8 @@ class _ViewAlertState extends State<ViewAlert> {
         minute: int.parse(alert.time.split(":")[1]));
 
     return Card(
-      color: Colors.blue[100],
+      color: Colors.white,
+      elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
@@ -71,7 +72,9 @@ class _ViewAlertState extends State<ViewAlert> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Medicine: ${alert.medName}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text('Medicine: ${alert.medName}',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(
                     height: 4,
                   ),
@@ -89,7 +92,7 @@ class _ViewAlertState extends State<ViewAlert> {
                 TextButton(
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.indigo[400],
                   ),
                   onPressed: () async {
                     // time of new alert
@@ -103,7 +106,8 @@ class _ViewAlertState extends State<ViewAlert> {
                     updateAlert(alert.alertId, newTime);
                     setState(() {
                       // change time on the alert
-                      alert.time = formatTimeOfDay(newTime);  // i think it much faster than initState
+                      alert.time = formatTimeOfDay(
+                          newTime); // i think it much faster than initState
                     });
 
                     // change alert information
@@ -114,7 +118,7 @@ class _ViewAlertState extends State<ViewAlert> {
                 TextButton(
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.red[400],
                   ),
                   onPressed: () {
                     // delete the alert
@@ -136,8 +140,8 @@ class _ViewAlertState extends State<ViewAlert> {
   @override
   Widget build(BuildContext context) {
     TimeOfDay time = TimeOfDay.now();
-    return Card(
-      color: Colors.red[100],
+    return Container(
+      //color: Colors.red[100],
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(
@@ -147,16 +151,18 @@ class _ViewAlertState extends State<ViewAlert> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'List of all Alerts',
                     style: TextStyle(
-                      fontSize: 18,
-                    ),
+                        fontSize: 18,
+                        fontFamily: 'QuickSand',
+                        fontWeight: FontWeight.bold,
+                        color: Colors.indigo[400]),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Colors.indigo[400],
                     ),
                     onPressed: () async {
                       // time of new alert
@@ -200,17 +206,19 @@ class _ViewAlertState extends State<ViewAlert> {
   }
 
   Future<void> updateAlert(int aid, TimeOfDay newTimeToTake) async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
-    Map<String, String> header={"Content-type":"application/json"};
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
+    Map<String, String> header = {"Content-type": "application/json"};
     String jsondata = '{"Alert_time":"${formatTimeOfDay(newTimeToTake)}"}';
     var response = await http.put(url, headers: header, body: jsondata);
     print(response.body);
   }
 
   Future<void> deleteAlert(int aid) async {
-    var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/delete-alert/$aid');
-    Map<String, String> header={"Content-type":"application/json"};
-    var response=await http.delete(url, headers: header);
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/delete-alert/$aid');
+    Map<String, String> header = {"Content-type": "application/json"};
+    var response = await http.delete(url, headers: header);
     print(response.body);
   }
 
