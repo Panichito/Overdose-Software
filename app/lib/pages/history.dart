@@ -63,11 +63,13 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget timeCard(History history) {
+    SizeConfig.init(context);
+    SizeConfig.mediaQueryData;
     return Padding(
         padding: EdgeInsets.all(10),
         child: Container(
           width: SizeConfig.screenWidth * 0.95,
-          height: SizeConfig.screenHeight * 0.08,
+          height: SizeConfig.screenHeight * 0.1,
           decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -93,7 +95,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: SizeConfig.screenWidth * 0.75,
+                        width: SizeConfig.screenWidth * 0.6,
                         child: Text('Medicine: ${history.medicine}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
