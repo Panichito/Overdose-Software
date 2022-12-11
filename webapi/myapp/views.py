@@ -360,7 +360,7 @@ def delete_history(request, AID):
         return Response(data=data, status=statuscode)
 
 @api_view(['GET'])
-def ask_lastest_history(request):
+def ask_latest_history(request):
     #latest_his=History.objects.last()
     latest_his=History.objects.latest('History_takeDate')
     serializer=HistorySerializer(latest_his)
