@@ -74,10 +74,20 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
                     Text('Name: ${care.name}',
                         style:
                             TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-                    SizedBox(height: 4),
-                    Text('caretaker-id: C' + '${care.id}',
-                        style:
-                            TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                    SizedBox(height: 2),
+                    Row(
+                      children: [
+                        Text('Caretaker ',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.green[700],
+                                fontWeight: FontWeight.bold)),
+                        Text('C' + '${care.id}',
+                            style: TextStyle(
+                                fontSize: 16.0, color: Colors.grey[800])),
+                      ],
+                    ),
+                    SizedBox(height: 2),
                     Text('work since: ${care.since}',
                         style:
                             TextStyle(fontSize: 14.0, color: Colors.grey[800])),
