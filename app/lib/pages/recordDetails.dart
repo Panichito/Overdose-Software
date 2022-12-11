@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/editRecord.dart';
+import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/viewAlert.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -72,6 +73,8 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
 
   @override
   Widget styleForRecordInfoCard(IconData icon, text1, text2) {
+    SizeConfig.init(context);
+    SizeConfig.mediaQueryData;
     return Row(
       children: [
         Padding(
@@ -93,8 +96,11 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 3),
-            Text(text2,
-                style: TextStyle(fontSize: 12.0, color: Colors.grey[800]))
+            Container(
+              width: SizeConfig.screenWidth * 0.60,
+              child: Text(text2,
+                  style: TextStyle(fontSize: 12.0, color: Colors.grey[800])),
+            )
           ],
         )
       ],
