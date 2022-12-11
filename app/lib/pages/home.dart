@@ -357,17 +357,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    ...scheduleList
-                        .map((schedule) => scheduleCard(schedule))
-                        .toList(),
-                    const SizedBox(
-                      height: 16,
-                    )
-                  ],
-                ),
+              Column(
+                children: [
+                  ...scheduleList
+                      .map((schedule) => scheduleCard(schedule))
+                      .toList(),
+                  const SizedBox(
+                    height: 16,
+                  )
+                ],
               ),
             ],
           ),
@@ -474,7 +472,7 @@ class _HomePageState extends State<HomePage> {
     var result = utf8.decode(response.bodyBytes);
     setState(() {
       Map<String, dynamic> date = jsonDecode(result);
-      print('latest date is '+date['History_takeDate']);
+      print('latest date is ' + date['History_takeDate']);
       DateTime internetTime = DateTime.now();
       String formattedDate = DateFormat('yyyy-MM-dd').format(internetTime);
       if (date['History_takeDate'] != formattedDate) {
