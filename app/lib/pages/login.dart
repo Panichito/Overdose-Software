@@ -149,12 +149,12 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (BuildContext context) => UIPage()));
     } else if (status == 'login-failed') {
       setState(() {
-        result = 'Invalid username or password!';
+        result = 'Please try again, your password is incorrect!';
       });
     } else {
       // neither if nor elif means json reponse wrong
       setState(() {
-        result = 'Something is wrong, please try again!';
+        result = 'Sorry, this account does not exist in the system!';
       });
     }
   }
