@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/pages/searchPatient.dart';
 
 class MedicineDetail extends StatefulWidget {
   final v1, v2, v3, v4, v5;
@@ -23,40 +24,64 @@ class _MedicineDetailState extends State<MedicineDetail> {
   }
 
   @override
+  Widget content() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+          child: Container(
+              width: SizeConfig.screenWidth * 0.75,
+              child: Text(_v2,
+                  style: TextStyle(
+                      fontSize: 35,
+                      color: Colors.indigo[400],
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'QuickSand'))),
+        ),
+        Row(children: [
+          Text("Medicine ID: ",
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.bold)),
+          Text(_v1,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[600],
+              )),
+        ]),
+        SizedBox(height: 5),
+        Row(children: [
+          Text("Medicine Type: ",
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.bold)),
+          Text(_v3,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[600],
+              )),
+        ]),
+        SizedBox(height: 20),
+        Image.network(_v5),
+        SizedBox(height: 20),
+        Text(_v4)
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text(_v2 + " Infomation"),
           backgroundColor: Colors.indigo[400]),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(40),
         child: ListView(
           children: [
-            Center(
-                child: Text(_v2,
-                    style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic))),
-            SizedBox(height: 5),
-            Center(
-                child: Text("Medicine ID: " + _v1,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                        fontStyle: FontStyle.italic))),
-            SizedBox(height: 5),
-            Center(
-                child: Text("Type: " + _v3,
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                        fontStyle: FontStyle.italic))),
-            SizedBox(height: 10),
-            Image.network(_v5),
-            SizedBox(height: 10),
-            Text(_v4)
+            content(),
           ],
         ),
       ),
