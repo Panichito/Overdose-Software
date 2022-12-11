@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:app/pages/searchPatient.dart';
 
 class History {
   String medicine;
@@ -42,54 +43,77 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget dateCard(String date) {
     // get only histories of the same date
     displayList.clear();
-    for(var elem in histories) {
+    for (var elem in histories) {
       if (elem.date == date) {
         displayList.add(elem);
       }
     }
     DateTime dt = DateTime.parse(date);
-    return Card(
-      color: Colors.red[100],
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
+    return Container(
         child: Column(
-          children: [
-            Text(DateFormat.yMMMd().format(dt), style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-            for(var history in displayList) timeCard(history),
-          ],
-        ),
-      ),
-    );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+            padding: EdgeInsets.all(5),
+            child: Text(DateFormat.yMMMd().format(dt),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+        for (var history in displayList) timeCard(history),
+      ],
+    ));
   }
 
-  // A card inside dateCard displaying each time a patient is taking medicine
   Widget timeCard(History history) {
-    return Card(
-      color: Colors.blue[100],
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            // Text('Date: ${history.date}'),
-            // const SizedBox(width: 16,),
-            Column(
-              children: [
-                Text('Took at ${history.time}', style: TextStyle(fontStyle: FontStyle.italic)),
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Container(
+          width: SizeConfig.screenWidth * 0.95,
+          height: SizeConfig.screenHeight * 0.08,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 3,
+                  blurRadius: 12,
+                  offset: Offset(0, 7), // changes position of shadow
+                ),
               ],
-            ),
-            const SizedBox(width:24,),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('Medicine: ${history.medicine}', style: TextStyle(fontStyle: FontStyle.italic)),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(12),
+                bottom: Radius.circular(12),
+              )),
+          child: Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(15, 10, 20, 10),
+                  child: Icon(Icons.access_time)),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(5, 12, 5, 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: SizeConfig.screenWidth * 0.75,
+                        child: Text('Medicine: ${history.medicine}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                      ),
+                      Text(
+                        '${history.time}',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 15, color: Colors.black87),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+        ));
   }
 
   @override
