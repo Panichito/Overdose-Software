@@ -69,3 +69,5 @@ const memberProfile = (name, role, info, img, facebook, github, linkedin) => {
     // append profile container to the html
     profileRow.append(profile);
 };
+
+export default memberProfile;
