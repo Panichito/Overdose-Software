@@ -1,3 +1,4 @@
+// navBar factory function is a function that create navigation bar to navigates to other pages on html
 const navBar = (() => {
     // create navBar container
     const container = document.createElement('header');
@@ -24,7 +25,7 @@ const navBar = (() => {
         hamButton.append(hamBar);
     }
 
-    // create navlinks
+    // create links to pages on navBar
     const navLinks = document.createElement('ul');
     navLinks.classList.add('nav-links');
 
@@ -53,7 +54,9 @@ const navBar = (() => {
             default:
                 print('You are not suppose to reach here!');
         }
+        // append link to each list
         navLinksItem.append(link);
+        // append each list to the navLinks
         navLinks.append(navLinksItem);
     }
 
@@ -62,8 +65,11 @@ const navBar = (() => {
         navLinks.classList.toggle('active');
     });
 
+    // append logo, hamberger button, and links to other pages on navBar to the navigation bar
     navBar.append(logo, hamButton, navLinks);
+    // append navigation bar to the container
     container.append(navBar);
+    // append container to the html file before every elements
     document.body.insertBefore(container, document.body.firstChild);
 })();
 
