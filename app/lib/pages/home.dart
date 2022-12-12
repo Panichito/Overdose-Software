@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
           "https://t4.ftcdn.net/jpg/03/49/49/79/360_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg";
 
   int? myid;
+  bool? cstatus;
   // schedules list
   List getAlert = [];
   List<Schedule> allSchedule = [];
@@ -162,17 +163,28 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        if (_role == 'CARETAKER')
+        if (_role == 'CARETAKER' && cstatus != null)
           Column(
             children: [
               RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (cstatus == true) {
+                      switchCaretakingStatus("False");
+                    }
+                    else {
+                      switchCaretakingStatus("True");
+                    }
+                    cstatus = !(cstatus!);
+                  });
+                  print('Change my caretaking status to -> '+'${cstatus}');
+                },
                 elevation: 2.0,
                 fillColor: Colors.white,
                 child: Icon(
                   Icons.swipe_vertical_sharp,
                   size: 35.0,
-                  color: Colors.red[400],
+                  color: cstatus! ? Colors.greenAccent[700] : Colors.red[400],
                 ),
                 padding: EdgeInsets.all(10.0),
                 shape: CircleBorder(),
@@ -182,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                 'ON/OFF',
                 style: TextStyle(
                     fontSize: 13,
-                    color: Colors.red[400],
+                    color: cstatus! ? Colors.greenAccent[700] : Colors.red[400],
                     fontFamily: 'Quicksand',
                     fontWeight: FontWeight.bold),
               ),
@@ -406,6 +418,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> getMyId() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     myid = pref.getInt('id');
+    if(_role == "CARETAKER") {
+      print('go to check caretking');
+      getCaretakingStatus(myid!);
+    }
   }
 
   Future<void> getMyAlerts() async {
@@ -501,5 +517,28 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       getMyAlerts();
     });
+  }
+
+  Future<void> getCaretakingStatus(int myid) async {
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/get-care-status/$myid');
+    var response = await http.get(url);
+    var result = utf8.decode(response.bodyBytes);
+    setState(() {
+      Map<String, dynamic> currentstatus = jsonDecode(result);
+      cstatus = currentstatus['Caretaker_status'];
+    });
+  }
+
+  Future<void> switchCaretakingStatus(String setTo) async {
+    var url = Uri.https(
+        'weatherreporto.pythonanywhere.com', '/api/switch-care-status/$myid');
+    Map<String, String> header = {"Content-type": "application/json"};
+    String v1 = '"member":$myid';
+    String v2 = '"Caretaker_status":"$setTo"';
+    String jsondata = '{$v1, $v2}';
+    var response = await http.put(url, headers: header, body: jsondata);
+    var uft8result = utf8.decode(response.bodyBytes);
+    print(uft8result);
   }
 }

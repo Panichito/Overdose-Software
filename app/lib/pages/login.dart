@@ -136,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
     if (status == 'login-succeed') {
       setToken(result_json['token']); // save token into shared preferences
       setUserInfo(
+          result_json['id'],
           result_json['first_name'],
           result_json['last_name'],
           result_json['username'],
@@ -143,8 +144,7 @@ class _LoginPageState extends State<LoginPage> {
           result_json['profilepic'],
           result_json['birthdate'],
           result_json['gender'],
-          result_json['cid'],
-          result_json['id']);
+          result_json['cid']);
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (BuildContext context) => UIPage()));
     } else if (status == 'login-failed') {
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> setUserInfo(
-      fname, lname, usr, role, pfp, bdate, gen, cid, id) async {
+      id, fname, lname, usr, role, pfp, bdate, gen, cid) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('id', id);
     pref.setInt('cid', cid);
