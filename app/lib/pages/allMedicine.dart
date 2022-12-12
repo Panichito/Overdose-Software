@@ -39,7 +39,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
   Widget medCard(Medicine med) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
       height: 124,
       width: 334,
       decoration: BoxDecoration(
@@ -60,7 +60,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
                   fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.bold)),
-          SizedBox(height: 5),
+          const SizedBox(height: 5,),
           TextButton(
               onPressed: () {
                 print('MED INFO');
