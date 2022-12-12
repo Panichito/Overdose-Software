@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:app/pages/searchPatient.dart';
 
+// history constructor
 class History {
   String medicine;
   String date;
@@ -13,7 +14,6 @@ class History {
 }
 
 class HistoryPage extends StatefulWidget {
-  //const HistoryPage({super.key});
   final uid;
   HistoryPage(this.uid);
 
@@ -39,7 +39,7 @@ class _HistoryPageState extends State<HistoryPage> {
     getHistory(widget.uid);
   }
 
-  // A card displaying history
+  // create a container displaying a date when taking medicine
   Widget dateCard(String date) {
     // get only histories of the same date
     displayList.clear();
@@ -51,8 +51,8 @@ class _HistoryPageState extends State<HistoryPage> {
     DateTime dt = DateTime.parse(date);
     return Container(
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
         Padding(
             padding: EdgeInsets.all(5),
             child: Text(DateFormat.yMMMd().format(dt),
@@ -62,6 +62,7 @@ class _HistoryPageState extends State<HistoryPage> {
     ));
   }
 
+  // create a container displaying time when taking medicine
   Widget timeCard(History history) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -137,6 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
+  // get history data from the database to display
   Future<void> getHistory(int uid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/get-user-history/$uid');

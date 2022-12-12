@@ -15,7 +15,6 @@ class Alert {
 }
 
 class ViewAlert extends StatefulWidget {
-  //const ViewAlert({Key? key}) : super(key: key);
   final rid;
   const ViewAlert(this.rid);
 
@@ -37,7 +36,7 @@ class _ViewAlertState extends State<ViewAlert> {
   List getAlert = [];
   List<Alert> allThisAlert = [];
 
-  // text in alert information
+  // textStyle in alert information
   // more convenient when styling
   Widget _alertText(text) {
     return Text(
@@ -53,6 +52,7 @@ class _ViewAlertState extends State<ViewAlert> {
     return format;
   }
 
+  // create an alert card displaying alert information
   Widget alertCard(Alert alert) {
     // convert current time from String to TimeOfDay
     TimeOfDay time = TimeOfDay(
@@ -194,6 +194,7 @@ class _ViewAlertState extends State<ViewAlert> {
     );
   }
 
+  // add new alert to the database
   Future<void> addAlert(TimeOfDay timeToTake) async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/add-alert');
     Map<String, String> header = {"Content-type": "application/json"};
@@ -205,6 +206,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(uft8result);
   }
 
+  // update alert and send it to database
   Future<void> updateAlert(int aid, TimeOfDay newTimeToTake) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
@@ -214,6 +216,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(response.body);
   }
 
+  // delete alert from database
   Future<void> deleteAlert(int aid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/delete-alert/$aid');
@@ -222,6 +225,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(response.body);
   }
 
+  // get specific alert from database
   Future<void> getSpecificAlert() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');

@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddRecordPage extends StatefulWidget {
   final uid;
   const AddRecordPage(this.uid);
-  //const AddRecordPage({Key? key}) : super(key: key);
 
   @override
   State<AddRecordPage> createState() => _AddRecordPageState();
@@ -19,8 +18,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
   String result = 'Note field can be empty';
   String? patientId, medId;
   bool success = false;
-  //final patientIdController = TextEditingController();
-  //final medicineIdController = TextEditingController();
   final diseaseController = TextEditingController();
   final startDateController = TextEditingController();
   final endDateController = TextEditingController();
@@ -44,8 +41,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
     super.initState();
     _userid = widget.uid;
 
-    //patientIdController.addListener(() => setState(() {}));
-    //medicineIdController.addListener(() => setState(() {}));
     diseaseController.addListener(() => setState(() {}));
     getMyPatient();
     getMedicine();
@@ -62,8 +57,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
       body: ListView(
         padding: EdgeInsets.fromLTRB(12, 16, 12, 12),
         children: [
-          //buildPatientId(),
-          //const SizedBox(height: 16,),
           buildMedicineId(),
           const SizedBox(
             height: 16,
@@ -144,6 +137,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a patientId input field
   Widget buildPatientId() {
     return Stack(
       children: [
@@ -176,6 +170,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a dropdown menu for choosing patient to write record to
   DropdownMenuItem<String> buildPatient(String patient) {
     return DropdownMenuItem(
       value: patient,
@@ -185,6 +180,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a medicineId input field
   Widget buildMedicineId() {
     return Stack(
       children: [
@@ -216,6 +212,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a dropdown menu for choosing which medicine to assigns to patient
   DropdownMenuItem<String> buildMedicine(String medicine) {
     return DropdownMenuItem(
       value: medicine,
@@ -225,6 +222,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a disease input field
   Widget buildDisease() {
     return TextField(
       controller: diseaseController,
@@ -249,6 +247,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a date-to-start medication input field
   Widget buildStartDate() {
     return TextField(
         controller: startDateController,
@@ -289,6 +288,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
         });
   }
 
+  // build a date-to-end medication input field
   Widget buildEndDate() {
     return TextField(
         controller: endDateController,
@@ -330,6 +330,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
         });
   }
 
+  // build a amount of medicine-to-take-per-meal input field
   Widget buildAmount() {
     return TextField(
       controller: amountController,
@@ -349,6 +350,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // build a note input field
   Widget buildNote() {
     return TextFormField(
       controller: noteController,
@@ -367,6 +369,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     );
   }
 
+  // get caretakerID to query the user's patients
   Future<void> getCaretakerID() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     var id = pref.getInt('id');
@@ -381,6 +384,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     });
   }
 
+  // get patients the user's currently taking care of to put in the record field.
   Future<void> getMyPatient() async {
     await getCaretakerID();
     var url = Uri.https(
@@ -402,6 +406,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
     });
   }
 
+  // get the medicine from the database to put in the record field
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
@@ -419,23 +424,12 @@ class _AddRecordPageState extends State<AddRecordPage> {
     });
   }
 
+  // create a record and submit it to the database
   Future<void> createRecord() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/post-record');
     Map<String, String> header = {"Content-type": "application/json"};
-    /*
-    String temp_string_pid='';
-    int temp_int_pid=0;
-    if(patientId!=null) {
-      temp_string_pid=patientId!;
-      int i=1;
-      while(temp_string_pid[i]!=':') {
-        ++i;
-      }
-      temp_string_pid=temp_string_pid.substring(1, i);
-      temp_int_pid=int.parse(temp_string_pid);
-    }
-    */
+
     String temp_string_mid = '';
     int temp_int_mid = 0;
     if (medId != null) {
@@ -457,7 +451,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
     String v7 = '"Record_info":"${noteController.text}"';
     String v8 = '"Record_isComplete":"false"';
     String jsondata = '{$v1, $v2, $v3, $v4, $v5, $v6, $v7, $v8}';
-    //print(jsondata);
 
     var response = await http.post(url, headers: header, body: jsondata);
     var uft8result = utf8.decode(response.bodyBytes);

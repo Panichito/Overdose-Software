@@ -3,9 +3,7 @@ import 'package:app/pages/searchCaretaker.dart';
 import 'package:app/pages/home.dart';
 import 'package:app/pages/allMedicine.dart';
 import 'package:app/pages/login.dart';
-import 'package:app/pages/addRecord.dart';
 import 'package:app/pages/searchPatient.dart';
-import 'package:app/pages/history.dart';
 import 'package:app/pages/updateProfile.dart';
 import 'package:app/pages/incomeRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,6 +83,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
+  // build a bottom navigation bar for patients
   Widget buildBottomNavBar() {
     return BottomNavigationBar(
       items: [
@@ -99,6 +98,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
+  // build a bottom navigation bar for caretakers
   Widget buildBottomNavBarStaff() {
     return BottomNavigationBar(
       items: [
@@ -114,6 +114,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
+  // build a side drawer
   Widget buildDrawer() {
     return Drawer(
         child: Column(
@@ -124,15 +125,6 @@ class _UIPageState extends State<UIPage> {
             accountEmail: null,
             decoration: BoxDecoration(color: Colors.indigo[400])),
 
-        /* Duplicate the one on the home page.
-        ListTile(
-          leading: Icon(Icons.manage_accounts),
-          title: Text('Profile settings'),
-          onTap: () {
-            push_to_edit_page();
-          },
-        ),
-        */
         // user is caretaker show incoming request
         if (_role == 'CARETAKER') ...[
           ListTile(
@@ -180,6 +172,7 @@ class _UIPageState extends State<UIPage> {
       ],
     ));
   }
+
 
   Future<void> checkFullname() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -246,6 +239,7 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
+  // log out of the system
   logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();

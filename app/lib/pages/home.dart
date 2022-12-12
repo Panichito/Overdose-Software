@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     getMyAlerts();
   }
 
+  // update the schedule displaying list after input the search input
   void updateList(String value) {
     setState(() {
       scheduleList = allSchedule
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  // create a button panel for view user's record, edit profile, and view user's history
   Widget homeButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -204,6 +206,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // create a container displaying user's information
   Widget header() {
     return Container(
       decoration: BoxDecoration(
@@ -249,6 +252,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // create a schedule card for user to communicate with the database when taking medicine
   Widget scheduleCard(Schedule schedule) {
     String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     DateTime dt = DateTime.parse(formattedDate + " " + schedule.time).toLocal();
@@ -334,6 +338,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
@@ -397,6 +402,7 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
+  // check if username exists and query user information from database
   Future<void> checkUsername() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final checkvalue = pref.get('token') ?? 0;
@@ -415,15 +421,18 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  // get user's userid
   Future<void> getMyId() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     myid = pref.getInt('id');
     if(_role == "CARETAKER") {
-      print('go to check caretking');
+      print('go to check caretaking');
       getCaretakingStatus(myid!);
     }
   }
 
+  // get user's alerts from database
+  // if there's an alert of this user in the database, then do daily notification
   Future<void> getMyAlerts() async {
     await getMyId();
     var url = Uri.https(
@@ -453,6 +462,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // set the medication status
   Future<void> setAlertStatus(int aid, String status) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
@@ -463,6 +473,7 @@ class _HomePageState extends State<HomePage> {
     print(response.body);
   }
 
+  // create a history of medication
   Future<void> createHistory(int aid) async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/add-history');
@@ -480,6 +491,7 @@ class _HomePageState extends State<HomePage> {
     print(uft8result);
   }
 
+  // clear a history of medication
   Future<void> clearHistory(int aid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/delete-history/$aid');
@@ -489,6 +501,7 @@ class _HomePageState extends State<HomePage> {
     print(response.body);
   }
 
+  // check the status of medication
   Future<void> checkAlertState() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/latest-history');
@@ -506,6 +519,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // refresh the status of medication
   Future<void> refreshAlertStatus(String setTo) async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/refresh-alerts');
@@ -519,6 +533,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // get caretaker's status
   Future<void> getCaretakingStatus(int myid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/get-care-status/$myid');
@@ -530,6 +545,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // toggle caretaker's status
   Future<void> switchCaretakingStatus(String setTo) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/switch-care-status/$myid');

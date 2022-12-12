@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+// record information constructor
 class RecordInformation {
   int recordId;
   int patientId;
@@ -62,7 +63,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
         RecordInformation(_v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9, _v10);
   }
 
-  // text in record information
+  // textStyle in record information
   // more convenient when styling
   Widget _recordInfoText(text) {
     return Text(
@@ -71,7 +72,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
-  @override
+  // style using the record information card
   Widget styleForRecordInfoCard(IconData icon, text1, text2) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -107,6 +108,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -324,6 +326,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
+  // refresh medicine name
   Future<void> refreshMedName(int mid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/medicine-info/$mid');
@@ -335,6 +338,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     });
   }
 
+  // delete a record
   Future<void> deleteRecord(int rid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/delete-record/$rid');
@@ -343,6 +347,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     print(response.body);
   }
 
+  // mark a record as done
   Future<void> markRecordDone(int rid, int pid, int mid, String disease) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-record/$rid');

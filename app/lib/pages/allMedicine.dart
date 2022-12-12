@@ -25,8 +25,7 @@ class Medicine {
 
 class _MyMedsPageState extends State<MyMedsPage> {
   List getmeds = [];
-  static List<Medicine> meds =
-      []; // จะใช้ static ทำไมไม่รู้, แต่อย่าไปแก้ ติดไว้เฟี้ยสๆ
+  static List<Medicine> meds = [];
   List<Medicine> display_list = [];
 
   @override
@@ -36,26 +35,8 @@ class _MyMedsPageState extends State<MyMedsPage> {
     getMedicine();
   }
 
+  // create medicine card widget for displaying medicines
   Widget medCard(Medicine med) {
-    /* ไปลองใช้ container
-    return Card(
-      color: Colors.indigo[100],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(med.name, style: TextStyle(fontSize: 18.0, color: Colors.grey[800])),
-            TextButton(onPressed: () {
-            }, child: Text("More")),
-          ],
-        ),
-      )
-    ); */
     return Container(
       margin: EdgeInsets.only(bottom: 15),
       padding: EdgeInsets.all(20),
@@ -117,6 +98,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     );
   }
 
+  // update the medicine displaying list after input the search input
   void update_list(String value) {
     setState(() {
       display_list = meds
@@ -126,6 +108,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     });
   }
 
+  // get medicines from database
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');

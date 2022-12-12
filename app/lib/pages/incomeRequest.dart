@@ -35,7 +35,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
         'https://c.tenor.com/XrbWCFHfJVsAAAAC/gachi-happy-new-year.gif'),
   ];
 
-  @override
+  // create a request for service card
   Widget requestCard(Patient patient) {
     return Card(
         color: Colors.indigo[100],
@@ -107,6 +107,7 @@ class _IncomingRequestPageState extends State<IncomingRequestPage> {
         ));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

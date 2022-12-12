@@ -23,7 +23,7 @@ class _MedicineDetailState extends State<MedicineDetail> {
     _v5 = widget.v5;
   }
 
-  @override
+  // display medicine information
   Widget content() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,6 +72,7 @@ class _MedicineDetailState extends State<MedicineDetail> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

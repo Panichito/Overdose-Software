@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 // http method packages
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +39,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     pfp.text = _v6;
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -152,6 +149,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     );
   }
 
+  // build a gender selector
   Widget genderRadio() {
     return Row(
       children: [
@@ -177,6 +175,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     );
   }
 
+  // update user's profile and send data to database
   Future<void> send_profile_info() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-profile/$_v1');

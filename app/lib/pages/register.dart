@@ -243,6 +243,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  // build a gender selector
   Widget genderRadio() {
     return Row(
       children: [
@@ -268,10 +269,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  // register a new user in the database
   Future register_newuser() async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/newuser');
-    //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/newuser');
-    //var url=Uri.http('192.168.1.52:8000','/api/newuser');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String v1 = '"username":"${username.text}"';
@@ -312,6 +312,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // register token into the database
   Future<void> setToken(token) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('token', token);

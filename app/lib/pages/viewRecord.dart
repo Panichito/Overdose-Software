@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+// briefRecord constructor
 class BriefRecord {
   int recordId;
   int patientId;
@@ -51,6 +52,7 @@ class _RecordPageState extends State<RecordPage> {
   List getRec = [];
   List<BriefRecord> allRecord = [];
 
+  // create a record card displaying record information
   Widget recordCard(BriefRecord record) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -227,6 +229,7 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 
+  // get records from database
   Future<void> getRecords() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/get-user-records/$_userid');
@@ -234,7 +237,6 @@ class _RecordPageState extends State<RecordPage> {
     var result = utf8.decode(response.bodyBytes);
     setState(() {
       getRec = jsonDecode(result);
-      //print(getRec);
       allRecord = [];
       for (int i = 0; i < getRec.length; ++i) {
         allRecord.add(BriefRecord(

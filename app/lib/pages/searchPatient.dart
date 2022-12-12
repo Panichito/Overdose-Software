@@ -56,6 +56,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
     getMyPatient();
   }
 
+  // update the patient displaying list after input the search input
   void updateList(String value) {
     setState(() {
       display_list = allpatient
@@ -65,6 +66,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
     });
   }
 
+  // create a patient card displaying patient information
   Widget patientCard(Patient patient) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -147,6 +149,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
     );
   }
 
+  // get caretakerID
   Future<void> getCaretakerID() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     var id = pref.getInt('id');
@@ -161,6 +164,7 @@ class _SearchPatientState extends State<SearchPatientAdv> {
     });
   }
 
+  // query user's patients from database
   Future<void> getMyPatient() async {
     await getCaretakerID();
     var url = Uri.https(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/UI.dart';
-import 'package:app/pages/home.dart';
 import 'package:app/pages/register.dart';
 // http method packages
 import 'package:http/http.dart' as http;
@@ -22,7 +21,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text('Login'), backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
@@ -114,11 +112,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // log into the system
   Future login() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
-    //var url=Uri.http('weatherreporto.pythonanywhere.com','/api/authenticate');
-    //var url=Uri.http('192.168.1.52:8000','/api/authenticate');
     Map<String, String> header = {"Content-type": "application/json"};
 
     String v1 = '"username":"${username.text}"';
@@ -152,18 +149,20 @@ class _LoginPageState extends State<LoginPage> {
         result = 'Please try again, your password is incorrect!';
       });
     } else {
-      // neither if nor elif means json reponse wrong
+      // neither if nor elif means json response wrong
       setState(() {
         result = 'Sorry, this account does not exist in the system!';
       });
     }
   }
 
+  // set user token
   Future<void> setToken(token) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('token', token);
   }
 
+  // set user information
   Future<void> setUserInfo(
       id, fname, lname, usr, role, pfp, bdate, gen, cid) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
@@ -178,15 +177,5 @@ class _LoginPageState extends State<LoginPage> {
 
     if (pfp == null || pfp == "") pfp = "no image"; // old school method
     pref.setString('profilepic', pfp);
-    /*
-    final response=await http.head(Uri.parse(pfp));
-    print(response.statusCode);
-    if(response.statusCode==200) {  // validate URL (maybe not image but nvm)
-      pref.setString('profilepic', pfp);
-    }
-    else {
-      pref.setString('profilepic', "no image");
-    }
-    */
   }
 }

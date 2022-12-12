@@ -15,6 +15,7 @@ class NotificationService {
 
   NotificationService._internal();
 
+  // initialize notification system
   Future<void> initNotification() async {
 
     // Android initialization
@@ -24,12 +25,12 @@ class NotificationService {
     final InitializationSettings initializationSettings =
     InitializationSettings(
         android: initializationSettingsAndroid,
-        // iOS: initializationSettingsIOS
     );
-    // the initialization settings are initialized after they are setted
+    // the initialization settings are initialized after they are set
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
+  // show notification daily
   Future<void> showNotification(String title, String body) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,

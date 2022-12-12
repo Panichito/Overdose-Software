@@ -4,10 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EditRecordPage extends StatefulWidget {
-  //const EditRecordPage({Key? key}) : super(key: key);
   final v1, v2, v3, v4, v5, v6, v7, v8, v9;
   EditRecordPage(this.v1, this.v2, this.v3, this.v4, this.v5, this.v6, this.v7,
       this.v8, this.v9);
@@ -19,8 +17,6 @@ class EditRecordPage extends StatefulWidget {
 class _EditRecordPageState extends State<EditRecordPage> {
   String? jsondata;
   String result = 'Note field can be empty';
-  // String? patientId;
-  // String? medId;
   bool success = false;
 
   var _v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9;
@@ -75,8 +71,6 @@ class _EditRecordPageState extends State<EditRecordPage> {
       body: ListView(
         padding: EdgeInsets.fromLTRB(12, 16, 12, 12),
         children: [
-          //buildPatientId(),
-          //const SizedBox(height: 16,),
           Text('Medicine ID'),
           buildMedicineId(),
           const SizedBox(
@@ -159,6 +153,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // build a medicineId input field
   Widget buildMedicineId() {
     return Stack(
       children: [
@@ -191,6 +186,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // build a dropdown menu for choosing which medicine to assigns to patient
   DropdownMenuItem<String> buildMedicine(String medicine) {
     return DropdownMenuItem(
       value: medicine,
@@ -200,6 +196,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // build a disease input field
   Widget buildDisease() {
     return TextField(
       controller: diseaseController,
@@ -222,6 +219,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // build a date-to-start medication input field
   Widget buildStartDate() {
     return TextField(
         controller: startDateController,
@@ -261,6 +259,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
         });
   }
 
+  // build a date-to-end medication input field
   Widget buildEndDate() {
     return TextField(
         controller: endDateController,
@@ -301,6 +300,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
         });
   }
 
+  // build a amount of medicine-to-take-per-meal input field
   Widget buildAmount() {
     return TextField(
       controller: amountController,
@@ -319,6 +319,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // build a note input field
   Widget buildNote() {
     return TextFormField(
       controller: noteController,
@@ -336,6 +337,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
+  // get the medicine from the database to put in the record field
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
@@ -353,6 +355,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     });
   }
 
+  // update a record and submit it to the database
   Future<void> updateRecord() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-record/$_v1');
