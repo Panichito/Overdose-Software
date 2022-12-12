@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import *  # import serializers in here
 
+# API for new user register/subscriptions
 from django.contrib.auth.models import User
 import uuid
 @api_view(['POST'])
@@ -61,6 +62,7 @@ def register_newuser(request):
             dt={'status':'user-exist'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
+# An API to check if the user has logged in by checking if this user exists? Is the password correct?
 from django.contrib.auth import authenticate, login
 @api_view(['POST'])
 def authentiate_app(request):
@@ -92,6 +94,7 @@ def authentiate_app(request):
             dt={'status':'login-failed'}
             return Response(data=dt, status=status.HTTP_400_BAD_REQUEST)
 
+# An API to display all caregivers in the system that are open to patients.
 @api_view(['GET'])
 def all_caretaker(request):
     allcaretaker=Caretaker.objects.filter(Caretaker_status=True)
@@ -108,12 +111,14 @@ def all_caretaker(request):
     #print(dt)
     return Response(data=caretaker_list, status=status.HTTP_200_OK)
 
+# An API for displaying drugs contained in the database.
 @api_view(['GET'])
 def all_medicine(request):
     allmedicine=Medicine.objects.all()
     serializer=MedicineSerializer(allmedicine, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+# An API for a caregiver to write prescriptions.
 @api_view(['POST'])
 def post_record(request):
     allpatient=Patient.objects.all()
@@ -131,6 +136,7 @@ def post_record(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# API for editing personal profiles
 @api_view(['PUT'])
 def update_profile(request, UID):
     usr=User.objects.get(id=UID)
@@ -149,6 +155,7 @@ def update_profile(request, UID):
             return Response(serializer2.errors, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer1.errors, status=status.HTTP_404_NOT_FOUND)
 
+# An API for caregivers to display patient results in their care.
 @api_view(['GET'])
 def get_mypatient(request, CID):
     mypatient=Patient.objects.filter(caretaker=CID)
@@ -167,12 +174,14 @@ def get_mypatient(request, CID):
     print(patient_list)
     return Response(data=patient_list, status=status.HTTP_200_OK)
 
+# API for asking for the ID of the caregiver
 @api_view(['GET'])
 def ask_caretakerid(request, UID):
     this_member=Member.objects.get(user=UID)
     this_caretaker=Caretaker.objects.get(member=this_member)
     return Response(data=this_caretaker.id, status=status.HTTP_200_OK)
 
+# An API to ask if this patient's caregiver is available.
 @api_view(['GET'])
 def get_care_status(request, UID):
     this_member=Member.objects.get(user=UID)
@@ -181,6 +190,7 @@ def get_care_status(request, UID):
     caretaker_struct['Caretaker_status']=this_caretaker.Caretaker_status
     return Response(data=caretaker_struct, status=status.HTTP_200_OK)
 
+# API for changing caregiver status For example, if accepting more patients, then closing the patient to take care of.
 @api_view(['PUT'])
 def switch_care_status(request, UID):
     this_member=Member.objects.get(user=UID)
@@ -192,6 +202,7 @@ def switch_care_status(request, UID):
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# API for patients choosing caregivers
 @api_view(['PUT'])
 def request_service(request, UID):
     usr=User.objects.get(id=UID)
@@ -208,12 +219,14 @@ def request_service(request, UID):
             return Response(data=caretaker_upd, status=status.HTTP_201_CREATED)
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# API for requesting more information about the that specific drug
 @api_view(['GET'])
 def get_medinfo(request, MID):
     this_med=Medicine.objects.get(id=MID)
     serializer=MedicineSerializer(this_med, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+# An API for users to see what prescriptions they have.
 @api_view(['GET'])
 def get_user_records(request, UID):
     usr=User.objects.get(id=UID)
@@ -236,6 +249,7 @@ def get_user_records(request, UID):
         record_list.append(record_dict)
     return Response(data=record_list, status=status.HTTP_200_OK)
 
+# API for caregivers wishing to modify prescription information.
 @api_view(['PUT'])
 def update_record(request, RID):  # for edit & mark as completed
     rec=Record.objects.get(id=RID)
@@ -248,6 +262,7 @@ def update_record(request, RID):  # for edit & mark as completed
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# An API for caregivers who want to delete that prescription.
 @api_view(['DELETE'])
 def delete_record(request, RID):
     rec=Record.objects.get(id=RID)
@@ -262,6 +277,7 @@ def delete_record(request, RID):
             statuscode=status.HTTP_400_BAD_REQUEST
         return Response(data=data, status=statuscode)
 
+# An API for users to check which pills they need to take at what time.
 @api_view(['GET'])
 def get_all_alerts(request, UID):
     usr=User.objects.get(id=UID)
@@ -282,6 +298,7 @@ def get_all_alerts(request, UID):
     sorted_list = sorted(alert_list, key=lambda d: d['time'])   # ไม่งั้นมันจะ sort ในแต่ละ record ไม่ใช่ all alerts
     return Response(data=sorted_list, status=status.HTTP_200_OK)
 
+# An API for users to check which pills they need to take at what time. Which will choose only those that are related to that drug (from prescription)
 @api_view(['GET'])
 def get_specific_alerts(request, RID):
     rec=Record.objects.get(id=RID)
@@ -298,6 +315,7 @@ def get_specific_alerts(request, RID):
             alert_list.append(alert_dict)
     return Response(data=alert_list, status=status.HTTP_200_OK)
 
+# An API for caregivers who want to add medication reminders for that prescription.
 @api_view(['POST'])
 def add_alert(request):
     if request.method=='POST':
@@ -308,6 +326,7 @@ def add_alert(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# An API for caregivers who wish to modify alert time of that prescription.
 @api_view(['PUT'])
 def update_alert(request, AID):
     alt=Alert.objects.get(id=AID)
@@ -320,6 +339,7 @@ def update_alert(request, AID):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# API for caregivers who want to remove that medication reminder time.
 @api_view(['DELETE'])
 def delete_alert(request, AID):
     alt=Alert.objects.get(id=AID)
@@ -340,6 +360,7 @@ from functools import cmp_to_key
 def cmp(x, y):
     return (x > y) - (x < y)
 
+# The sort function deals with the sorting of a list of dict by more than one key.
 def multikeysort(items, columns):
     comparers = [
         ((i(col[1:].strip()), -1) if col.startswith('-') else (i(col.strip()), 1))
@@ -353,6 +374,8 @@ def multikeysort(items, columns):
         return next((result for result in comparer_iter if result), 0)
     return sorted(items, key=cmp_to_key(comparer))
 
+''' An API for users to retrieve their medication history. The latest date and time will be sorted to display first, 
+    so the sort function must be called. '''
 @api_view(['GET'])
 def get_user_history(request, UID):
     usr=User.objects.get(id=UID)
@@ -376,6 +399,8 @@ def get_user_history(request, UID):
     sorted_list = multikeysort(history_list, ['-takeDate', '-takeTime'])
     return Response(data=sorted_list, status=status.HTTP_200_OK)
 
+''' API for the system, when the user presses taking the pill, it will record the date and time when pressed. 
+    -> go put in the database to keep it as a history '''
 @api_view(['POST'])
 def add_history(request):
     if request.method=='POST':
@@ -386,6 +411,7 @@ def add_history(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+# API for the system when the user presses to cancel taking the pill. Medication history that was written before must be cleared.
 @api_view(['DELETE'])
 def delete_history(request, AID):
     alt=Alert.objects.get(id=AID)
@@ -402,6 +428,7 @@ def delete_history(request, AID):
             statuscode=status.HTTP_400_BAD_REQUEST
         return Response(data=data, status=statuscode)
 
+# API for the system to check when this patient took the last medicine.
 @api_view(['GET'])
 def ask_latest_history(request):
     #latest_his=History.objects.last()
@@ -409,6 +436,8 @@ def ask_latest_history(request):
     serializer=HistorySerializer(latest_his)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+''' API for update pill notification time & took status.
+    The system will use it when the day is over because all alerts must still be notified for the new day. '''
 @api_view(['PUT'])
 def refresh_alerts(request):
     # You talk when you cease to be at peace with your thoughts.
@@ -419,13 +448,15 @@ def refresh_alerts(request):
         data['status']='all alert values are now set to '+str(request.data['Alert_isTake'])
         return Response(data=data, status=status.HTTP_200_OK)
 
-
+# run home page html
 def Home(request):
     #return JsonResponse(data=oldhomedata, safe=False, json_dumps_params={'ensure_ascii': False})
     return render(request, 'overdoseweb/index.html')
 
+# run about page html
 def About(request):
     return render(request, 'overdoseweb/ourTeam.html')
 
+# run contact page html
 def Contact(request):
     return render(request, 'overdoseweb/contact.html')
