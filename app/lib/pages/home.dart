@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app/pages/viewRecord.dart';
 import 'package:app/pages/history.dart';
+import 'package:app/pages/updateProfile.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -99,16 +100,23 @@ class _HomePageState extends State<HomePage> {
         Column(
           children: [
             RawMaterialButton(
-              onPressed: () {
+              onPressed: () async {
+                final SharedPreferences pref = await SharedPreferences.getInstance();
+                var id = pref.getInt('id');
+                var fname = pref.getString('first_name');
+                var lname = pref.getString('last_name');
+                var bdate = pref.getString('birthdate');
+                var gen = pref.getString('gender');
+                var pfp = pref.getString('profilepic');
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RecordPage(myid, false)));
+                        builder: (context) => UpdateProfilePage(id, fname, lname, bdate, gen, pfp)));
               },
               elevation: 2.0,
               fillColor: Colors.white,
               child: Icon(
-                Icons.account_box_rounded,
+                Icons.manage_accounts,
                 size: 35.0,
                 color: Colors.indigo[400],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/searchPatient.dart';
 import 'package:app/pages/viewRecord.dart';
+import 'package:app/pages/history.dart';
 
 class ProfilePage extends StatefulWidget {
   final Patient patient;
@@ -75,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          RecordPage(widget.patient.id, true)));
+                                          HistoryPage(int.parse(widget.patient.id))));
                             },
                             child: const Text(
                               'View History',

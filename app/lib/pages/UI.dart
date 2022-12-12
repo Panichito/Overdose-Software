@@ -123,6 +123,8 @@ class _UIPageState extends State<UIPage> {
             accountName: Text(fullname),
             accountEmail: null,
             decoration: BoxDecoration(color: Colors.indigo[400])),
+
+        /* Duplicate the one on the home page.
         ListTile(
           leading: Icon(Icons.manage_accounts),
           title: Text('Profile settings'),
@@ -130,7 +132,7 @@ class _UIPageState extends State<UIPage> {
             push_to_edit_page();
           },
         ),
-
+        */
         // user is caretaker show incoming request
         if (_role == 'CARETAKER') ...[
           ListTile(
@@ -145,10 +147,26 @@ class _UIPageState extends State<UIPage> {
           ),
         ],
         ListTile(
-          leading: Icon(Icons.contact_support),
+          leading: Icon(Icons.menu_book),
+          title: Text('How to use'),
+          onTap: () {
+            homeURL();
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.people),
           title: Text('About'),
           onTap: () {
-            launchURL();
+            aboutURL();
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.support_agent),
+          title: Text('Contact'),
+          onTap: () {
+            contactURL();
             Navigator.pop(context);
           },
         ),
@@ -165,8 +183,7 @@ class _UIPageState extends State<UIPage> {
 
   Future<void> checkFullname() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    final checkvalue = pref.get('token') ??
-        0; // เช็คจาก token ดีกว่า เพราะตอน logout ลบออกแค่ token
+    final checkvalue = pref.get('token') ?? 0; // เช็คจาก token ดีกว่า เพราะตอน logout ลบออกแค่ token
     if (checkvalue != 0) {
       // get username
       setState(() {
@@ -202,8 +219,26 @@ class _UIPageState extends State<UIPage> {
     });
   }
 
-  Future<void> launchURL() async {
+  Future<void> homeURL() async {
     final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw "Cannot launch $url";
+    }
+  }
+
+  Future<void> aboutURL() async {
+    final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/about/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw "Cannot launch $url";
+    }
+  }
+
+  Future<void> contactURL() async {
+    final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/contact/');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

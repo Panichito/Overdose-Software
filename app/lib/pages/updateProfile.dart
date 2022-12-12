@@ -46,7 +46,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Update Profile Info'),
+          title: Text('My Profile Information'),
           backgroundColor: Colors.indigo[400]),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -138,7 +138,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           const Text('Your information has been updated.'));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
-                child: Text("Edit Information",
+                child: Text("Udate Information",
                     style: TextStyle(color: Colors.white)),
                 style: ButtonStyle(
                   backgroundColor:
