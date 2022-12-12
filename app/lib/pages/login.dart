@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // log into the system
+  /* log into the system */
   Future login() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/authenticate');
@@ -156,13 +156,13 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  // set user token
+  /* set user token */
   Future<void> setToken(token) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString('token', token);
   }
 
-  // set user information
+  /* set user information */
   Future<void> setUserInfo(
       id, fname, lname, usr, role, pfp, bdate, gen, cid) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();

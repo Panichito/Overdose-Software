@@ -36,8 +36,8 @@ class _ViewAlertState extends State<ViewAlert> {
   List getAlert = [];
   List<Alert> allThisAlert = [];
 
-  // textStyle in alert information
-  // more convenient when styling
+  /* textStyle in alert information
+    more convenient when styling */
   Widget _alertText(text) {
     return Text(
       text,
@@ -45,14 +45,14 @@ class _ViewAlertState extends State<ViewAlert> {
     );
   }
 
-  // convert TimeOfDay to String
+  /* convert TimeOfDay to String */
   String formatTimeOfDay(TimeOfDay tod) {
     String format;
     format = '${tod.hour.toString()}:${tod.minute.toString().padLeft(2, '0')}';
     return format;
   }
 
-  // create an alert card displaying alert information
+  /* create an alert card displaying alert information */
   Widget alertCard(Alert alert) {
     // convert current time from String to TimeOfDay
     TimeOfDay time = TimeOfDay(
@@ -194,7 +194,7 @@ class _ViewAlertState extends State<ViewAlert> {
     );
   }
 
-  // add new alert to the database
+  /* add new alert to the database */
   Future<void> addAlert(TimeOfDay timeToTake) async {
     var url = Uri.https('weatherreporto.pythonanywhere.com', '/api/add-alert');
     Map<String, String> header = {"Content-type": "application/json"};
@@ -206,7 +206,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(uft8result);
   }
 
-  // update alert and send it to database
+  /* update alert and send it to database */
   Future<void> updateAlert(int aid, TimeOfDay newTimeToTake) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-alert/$aid');
@@ -216,7 +216,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(response.body);
   }
 
-  // delete alert from database
+  /* delete alert from database */
   Future<void> deleteAlert(int aid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/delete-alert/$aid');
@@ -225,7 +225,7 @@ class _ViewAlertState extends State<ViewAlert> {
     print(response.body);
   }
 
-  // get specific alert from database
+  /* get specific alert from database */
   Future<void> getSpecificAlert() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/record-alerts/$_recordid');

@@ -39,7 +39,7 @@ class _HistoryPageState extends State<HistoryPage> {
     getHistory(widget.uid);
   }
 
-  // create a container displaying a date when taking medicine
+  /* create a container displaying a date when taking medicine */
   Widget dateCard(String date) {
     // get only histories of the same date
     displayList.clear();
@@ -62,7 +62,7 @@ class _HistoryPageState extends State<HistoryPage> {
     ));
   }
 
-  // create a container displaying time when taking medicine
+  /* create a container displaying time when taking medicine */
   Widget timeCard(History history) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -138,7 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  // get history data from the database to display
+  /* get history data from the database to display */
   Future<void> getHistory(int uid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/get-user-history/$uid');

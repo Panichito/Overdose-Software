@@ -36,7 +36,7 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
     getCaretaker();
   }
 
-  // update the caretaker displaying list after input the search input
+  /* update the caretaker displaying list after input the search input */
   void updateList(String value) {
     setState(() {
       display_list = caretakers
@@ -46,7 +46,7 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
     });
   }
 
-  // create a caretaker card displaying caretaker information
+  /* create a caretaker card displaying caretaker information */
   Widget caretakerCard(Caretaker care) {
     if (care.owner == false) {
       setState(() {
@@ -177,7 +177,7 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
     );
   }
 
-  // get caretaker from the database
+  /* get caretaker from the database */
   Future<void> getCaretaker() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     var _thiscid = pref.getInt('cid');
@@ -204,7 +204,7 @@ class _SearchCaretakerPageState extends State<SearchCaretakerPage> {
     });
   }
 
-  // request service from caretaker
+  /* request service from caretaker */
   Future<void> request_caretaker(int cid) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setInt('cid', cid);

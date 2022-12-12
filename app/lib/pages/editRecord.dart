@@ -153,7 +153,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // build a medicineId input field
+  /* build a medicineId input field */
   Widget buildMedicineId() {
     return Stack(
       children: [
@@ -186,7 +186,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // build a dropdown menu for choosing which medicine to assigns to patient
+  /* build a dropdown menu for choosing which medicine to assigns to patient */
   DropdownMenuItem<String> buildMedicine(String medicine) {
     return DropdownMenuItem(
       value: medicine,
@@ -196,7 +196,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // build a disease input field
+  /* build a disease input field */
   Widget buildDisease() {
     return TextField(
       controller: diseaseController,
@@ -219,7 +219,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // build a date-to-start medication input field
+  /* build a date-to-start medication input field */
   Widget buildStartDate() {
     return TextField(
         controller: startDateController,
@@ -259,7 +259,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
         });
   }
 
-  // build a date-to-end medication input field
+  /* build a date-to-end medication input field */
   Widget buildEndDate() {
     return TextField(
         controller: endDateController,
@@ -300,7 +300,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
         });
   }
 
-  // build a amount of medicine-to-take-per-meal input field
+  /* build a amount of medicine-to-take-per-meal input field */
   Widget buildAmount() {
     return TextField(
       controller: amountController,
@@ -319,7 +319,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // build a note input field
+  /* build a note input field */
   Widget buildNote() {
     return TextFormField(
       controller: noteController,
@@ -337,7 +337,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     );
   }
 
-  // get the medicine from the database to put in the record field
+  /* get the medicine from the database to put in the record field */
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');
@@ -355,7 +355,7 @@ class _EditRecordPageState extends State<EditRecordPage> {
     });
   }
 
-  // update a record and submit it to the database
+  /* update a record and submit it to the database */
   Future<void> updateRecord() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-record/$_v1');

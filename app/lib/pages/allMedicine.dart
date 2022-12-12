@@ -35,7 +35,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     getMedicine();
   }
 
-  // create medicine card widget for displaying medicines
+  /* create medicine card widget for displaying medicines */
   Widget medCard(Medicine med) {
     return Container(
       margin: EdgeInsets.only(bottom: 15),
@@ -98,7 +98,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     );
   }
 
-  // update the medicine displaying list after input the search input
+  /* update the medicine displaying list after input the search input */
   void update_list(String value) {
     setState(() {
       display_list = meds
@@ -108,7 +108,7 @@ class _MyMedsPageState extends State<MyMedsPage> {
     });
   }
 
-  // get medicines from database
+  /* get medicines from database */
   Future<void> getMedicine() async {
     var url =
         Uri.https('weatherreporto.pythonanywhere.com', '/api/all-medicine');

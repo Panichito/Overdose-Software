@@ -30,14 +30,14 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  // show notification daily
+  /* show notification daily */
   Future<void> showNotification(String title, String body) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       title,
       body,
       // tz.TZDateTime.from(schedule, tz.local),
-      _scheduleDaily(Time(7)),
+      _scheduleDaily(Time(0)),  // GMT+0
       const NotificationDetails(
           android: AndroidNotificationDetails(
               'your channel id', 'your channel name',

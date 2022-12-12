@@ -37,6 +37,7 @@ class _UIPageState extends State<UIPage> {
   Widget build(BuildContext context) {
     var pagename = [];
     List<Widget> widgetBottom = [];
+    /* Each role has a different scope of use. */
     if (_role == 'PATIENT') {
       pagename = ['Home Page', 'Find Caretaker Page', 'All Medicine'];
       widgetBottom = [HomePage(), SearchCaretakerPage(), MyMedsPage()];
@@ -55,6 +56,7 @@ class _UIPageState extends State<UIPage> {
         SearchPatientAdv(),
       ];
     }
+    /* This section of code handles Tab in each pages. We will configure the navbar to be the same on every page to make it easier to use and edit. */
     return DefaultTabController(
       length: 1,
       initialIndex: 0,
@@ -83,7 +85,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
-  // build a bottom navigation bar for patients
+  /* build a bottom navigation bar for patients */
   Widget buildBottomNavBar() {
     return BottomNavigationBar(
       items: [
@@ -98,7 +100,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
-  // build a bottom navigation bar for caretakers
+  /* build a bottom navigation bar for caretakers */
   Widget buildBottomNavBarStaff() {
     return BottomNavigationBar(
       items: [
@@ -114,7 +116,7 @@ class _UIPageState extends State<UIPage> {
     );
   }
 
-  // build a side drawer
+  /* build a side drawer */
   Widget buildDrawer() {
     return Drawer(
         child: Column(
@@ -125,7 +127,7 @@ class _UIPageState extends State<UIPage> {
             accountEmail: null,
             decoration: BoxDecoration(color: Colors.indigo[400])),
 
-        // user is caretaker show incoming request
+        // user is caretaker show incoming request as demo for further development
         if (_role == 'CARETAKER') ...[
           ListTile(
             leading: Icon(Icons.notifications),
@@ -174,6 +176,7 @@ class _UIPageState extends State<UIPage> {
   }
 
 
+  /* Requesting the current username through the API to display the greeting message. */
   Future<void> checkFullname() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final checkvalue = pref.get('token') ?? 0; // เช็คจาก token ดีกว่า เพราะตอน logout ลบออกแค่ token
@@ -189,6 +192,7 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
+  /* When users want to edit personal information, we will fetch the current information and put it in a text field to prepare for editing. */
   void push_to_edit_page() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
@@ -212,6 +216,7 @@ class _UIPageState extends State<UIPage> {
     });
   }
 
+  /* Open home page link */
   Future<void> homeURL() async {
     final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/');
     if (await canLaunchUrl(url)) {
@@ -221,6 +226,7 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
+  /* Open about page link */
   Future<void> aboutURL() async {
     final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/about/');
     if (await canLaunchUrl(url)) {
@@ -230,6 +236,7 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
+  /* Open contact page link */
   Future<void> contactURL() async {
     final Uri url = Uri.parse('https://weatherreporto.pythonanywhere.com/contact/');
     if (await canLaunchUrl(url)) {
@@ -239,7 +246,7 @@ class _UIPageState extends State<UIPage> {
     }
   }
 
-  // log out of the system
+  /* Log out of the system and clear all saved data. */
   logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();

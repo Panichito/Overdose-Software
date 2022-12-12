@@ -63,8 +63,8 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
         RecordInformation(_v1, _v2, _v3, _v4, _v5, _v6, _v7, _v8, _v9, _v10);
   }
 
-  // textStyle in record information
-  // more convenient when styling
+  /* textStyle in record information
+    more convenient when styling */
   Widget _recordInfoText(text) {
     return Text(
       text,
@@ -72,7 +72,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
-  // style using the record information card
+  /* style using the record information card */
   Widget styleForRecordInfoCard(IconData icon, text1, text2) {
     SizeConfig.init(context);
     SizeConfig.mediaQueryData;
@@ -326,7 +326,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     );
   }
 
-  // refresh medicine name
+  /* refresh medicine name when finished edit record (medicine maybe changed) */
   Future<void> refreshMedName(int mid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/medicine-info/$mid');
@@ -338,7 +338,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     });
   }
 
-  // delete a record
+  /* delete a selected record */
   Future<void> deleteRecord(int rid) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/delete-record/$rid');
@@ -347,7 +347,7 @@ class _RecordDetailsPageState extends State<RecordDetailsPage> {
     print(response.body);
   }
 
-  // mark a record as done
+  /* mark a record as done */
   Future<void> markRecordDone(int rid, int pid, int mid, String disease) async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-record/$rid');

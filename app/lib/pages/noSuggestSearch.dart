@@ -12,7 +12,7 @@ List<Dummy> dummy = [
   Dummy(''),
 ];
 
-// create a search field without suggestions
+/* create a search field without suggestions */
 Widget noSuggestSearch(updateList(String value)) {
   return SearchField(
     suggestions: dummy

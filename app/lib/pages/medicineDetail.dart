@@ -23,7 +23,7 @@ class _MedicineDetailState extends State<MedicineDetail> {
     _v5 = widget.v5;
   }
 
-  // display medicine information
+  /* display medicine information */
   Widget content() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

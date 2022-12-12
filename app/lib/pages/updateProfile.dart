@@ -149,7 +149,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     );
   }
 
-  // build a gender selector
+  /* build a gender selector */
   Widget genderRadio() {
     return Row(
       children: [
@@ -175,7 +175,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     );
   }
 
-  // update user's profile and send data to database
+  /* update user's profile and send data to database */
   Future<void> send_profile_info() async {
     var url = Uri.https(
         'weatherreporto.pythonanywhere.com', '/api/update-profile/$_v1');
