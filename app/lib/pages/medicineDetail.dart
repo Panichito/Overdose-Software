@@ -25,6 +25,8 @@ class _MedicineDetailState extends State<MedicineDetail> {
 
   /* display medicine information */
   Widget content() {
+    SizeConfig.init(context);
+    SizeConfig.mediaQueryData;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

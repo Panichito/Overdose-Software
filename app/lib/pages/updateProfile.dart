@@ -135,7 +135,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                           const Text('Your information has been updated.'));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
-                child: Text("Udate Information",
+                child: Text("Update Information",
                     style: TextStyle(color: Colors.white)),
                 style: ButtonStyle(
                   backgroundColor:
