@@ -381,7 +381,7 @@ def get_user_history(request, UID):
     usr=User.objects.get(id=UID)
     mem=Member.objects.get(user=usr)
     ptn=Patient.objects.get(member=mem)
-    rec=Record.objects.filter(patient=ptn, Record_isComplete=False)
+    rec=Record.objects.filter(patient=ptn)
     history_list=[]
     for r in rec:
         alt=Alert.objects.filter(record=r)
