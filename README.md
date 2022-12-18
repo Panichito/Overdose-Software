@@ -1,7 +1,10 @@
 # Overdose-Software
  The final project for CPE327: Software Engineering
 
-<h3 align="left">Web Demo: <a href="https://weatherreporto.pythonanywhere.com/">here</a></h3>
+<h3 align="left">Responsive web demo: <a href="https://weatherreporto.pythonanywhere.com/">Home page</a></h3>
+<h3 align="left">About us: <a href="https://weatherreporto.pythonanywhere.com/about/">About page</a></h3>
+<h3 align="left">Contact us: <a href="https://weatherreporto.pythonanywhere.com/contact/">Contact page</a></h3>
+<h3 align="left">Install APK: <a href="https://drive.google.com/drive/folders/11B1iHNkQi0HDjUran_029edsGej3-9QN">Download link</a></h3>
 
 <h3 align="left">Scope & Details:</h3>
 
