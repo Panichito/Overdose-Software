@@ -1,7 +1,7 @@
 # Overdose-Software
  The final project for CPE327: Software Engineering
  
- <img src="demo_pic/findCare_app.png" width="212">&ensp;<img src="demo_pic/home_app.png" width="212">&ensp;<img src="demo_pic/medicine_app.png" width="212">&ensp;<img src="demo_pic/patient_app.png" width="212">
+ <img src="demo_pic/findCare_app.png" width="179">&ensp;<img src="demo_pic/home_app.png" width="179">&ensp;<img src="demo_pic/medicine_app.png" width="179">&ensp;<img src="demo_pic/patient_app.png" width="179">
 
 <h3 align="left">Responsive web demo: <a href="https://weatherreporto.pythonanywhere.com/">Home page</a></h3>
 <h3 align="left">Responsive web github: <a href="https://github.com/Miran-Mirantee/Overdose-webpage">Github</a></h3>
